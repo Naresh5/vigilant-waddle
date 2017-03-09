@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.e("VISIBLE ITEM  Count  :", first);
                 Log.e("Total ITEM  Count  :", visible);
 
-                if ((lastInScreen == totalItemCount) && (totalItemCount - 1 != 0) && isSearch == false) {
+                if ((lastInScreen == totalItemCount) && (totalItemCount - 1 != 0) && !isSearch) {
                     if (!isLoading) {
                         Log.e("ERR -:", "Scrolling List view");
                         pageCount++;
@@ -86,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
         mListView.setAdapter(adapter);
 
         boolean isNetwork = Utility.networkIsAvailable(context);
-        if (isNetwork != true) {
+        if (!isNetwork != true) {
             Toast.makeText(context, "Failed to Connect with Internet", Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(context, "Network Available. . .!", Toast.LENGTH_SHORT).show();
@@ -121,6 +121,7 @@ public class MainActivity extends AppCompatActivity {
         });
         return true;
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
@@ -128,7 +129,7 @@ public class MainActivity extends AppCompatActivity {
         if (id == R.id.action_option) {
 
             MyDialogFragment MyDialogFragment = new MyDialogFragment();
-            MyDialogFragment.show(getSupportFragmentManager(),null);
+            MyDialogFragment.show(getSupportFragmentManager(), null);
 
             Toast.makeText(context, "Option Menu..", Toast.LENGTH_LONG).show();
 
