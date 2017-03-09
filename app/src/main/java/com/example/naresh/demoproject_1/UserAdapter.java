@@ -16,7 +16,6 @@ import com.example.naresh.demoproject_1.models.BadgeCounts;
 import com.example.naresh.demoproject_1.models.User;
 import com.squareup.picasso.Picasso;
 
-import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -107,7 +106,6 @@ public class UserAdapter extends BaseAdapter implements Filterable {
 
             valueFilter = new ValueFilter();
         }
-
         return valueFilter;
     }
 
@@ -146,6 +144,5 @@ public class UserAdapter extends BaseAdapter implements Filterable {
             items = (ArrayList<User>) results.values;
             notifyDataSetChanged();
         }
-
     }
 }
