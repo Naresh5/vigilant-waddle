@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_order"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="false"
+            android:layout_weight="1"
+            android:padding="@dimen/dialog_fragment_padding"
+            android:text="Order" />
+
+        <Spinner
+            android:id="@+id/spinner_order"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="@dimen/dialog_fragment_padding"
+            android:text="No" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_order"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_sort"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="false"
+            android:layout_weight="1"
+            android:padding="@dimen/dialog_fragment_padding"
+            android:text="Sort" />
+        <Spinner
+            android:id="@+id/spinner_sort"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="@dimen/dialog_fragment_padding"
+            android:text="No" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_order"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_from_date"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="false"
+            android:layout_weight="1"
+            android:padding="@dimen/dialog_fragment_padding"
+            android:text="From Date" />
+        <Button
+            android:id="@+id/btn_from_date_picker"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="@dimen/dialog_fragment_padding"
+            android:text="Pick From Date" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_order"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_to_date"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="false"
+            android:layout_weight="1"
+            android:padding="@dimen/dialog_fragment_padding"
+            android:text="From Date" />
+        <Button
+            android:id="@+id/btn_to_date_picker"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="@dimen/dialog_fragment_padding"
+            android:text="Pick From Date" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_to_date"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_yes"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="false"
+            android:layout_weight="1"
+            android:padding="@dimen/dialog_fragment_padding"
+            android:text="Yes" />
+
+        <Button
+            android:id="@+id/btn_no"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="@dimen/dialog_fragment_padding"
+            android:text="No" />
+
+    </LinearLayout>
+
+</LinearLayout>

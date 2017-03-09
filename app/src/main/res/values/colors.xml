@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="badge_gold">#e9a30b</color>
+    <color name="badge_silver">#dcd6d8</color>
+    <color name="badge_bronze">#af9178</color>
+
+    <color name="badge_text">#888888</color>
+    <color name="reputation">#080808</color>
+    <color name="userName">#4093b9</color>
+    <color name="imageBackground">#695858</color>
+
+</resources>
