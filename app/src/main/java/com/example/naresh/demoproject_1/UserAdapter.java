@@ -11,6 +11,7 @@ import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.naresh.demoproject_1.models.BadgeCounts;
 import com.example.naresh.demoproject_1.models.User;
@@ -147,5 +148,11 @@ public class UserAdapter extends BaseAdapter implements Filterable {
             notifyDataSetChanged();
         }
 
+    }
+    
+    void demoMethod(){
+        
+        System.out.print("Created another Branch");
+        Toast.makeText(context, "Name =  UserBranch", Toast.LENGTH_SHORT).show();
     }
 }
