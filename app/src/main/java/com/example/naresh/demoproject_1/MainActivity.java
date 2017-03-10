@@ -235,5 +235,6 @@ public class MainActivity extends AppCompatActivity implements MyDialogFragment.
             mProgressBar.setVisibility(View.GONE);
             footerView.setVisibility(View.VISIBLE);
         }
+        //test
     }
 }
