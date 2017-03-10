@@ -28,7 +28,7 @@ import com.google.gson.Gson;
 import java.net.MalformedURLException;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements MyDialogFragment.OnInfoChangedListener {
 
     private String TAG = MainActivity.class.getSimpleName();
     private ProgressBar mProgressBar;
@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
         mListView = (ListView) findViewById(R.id.list_view);
 
         mProgressBar = (ProgressBar) findViewById(R.id.progress_bar);
-        FragmentManager fragmentManager;
+        // FragmentManager fragmentManager;
 
         footerView = ((LayoutInflater) this
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE))
@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
                     if (!isLoading) {
                         Log.e("ERR -:", "Scrolling List view");
                         pageCount++;
-                        new LoadJsonData().execute();
+                        new LoadJsonData(Constants.ORDER_ASC, Constants.SORT_BY_REPUTATION, null, null).execute();
                     }
                 }
             }
@@ -86,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
         mListView.setAdapter(adapter);
 
         boolean isNetwork = Utility.networkIsAvailable(context);
-        if (!isNetwork != true) {
+        if (!isNetwork) {
             Toast.makeText(context, "Failed to Connect with Internet", Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(context, "Network Available. . .!", Toast.LENGTH_SHORT).show();
@@ -138,7 +138,29 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private class LoadJsonData extends AsyncTask<Object, Object, List<User>> {
+// Implement method of Interface
+
+    @Override
+    public void onInfoChanged(String order, String sort, String FromDate, String ToDate) {
+        //  mListView.setAdapter(null);
+
+        adapter.clearAdapter();
+
+        new LoadJsonData(order, sort, FromDate, ToDate).execute();
+
+    }
+
+    public class LoadJsonData extends AsyncTask<Object, Object, List<User>> {
+
+        String order, sort, fromDate, toDate;
+
+        public LoadJsonData(String order, String sort, String fromDate, String toDate) {
+            Log.d(TAG, "LoadJsonData: ");
+            this.order = order;
+            this.sort = sort;
+            this.fromDate = fromDate;
+            this.toDate = toDate;
+        }
 
         @Override
         protected void onPreExecute() {
@@ -149,27 +171,34 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected List<User> doInBackground(Object... arg0) {
+
             JSONParser sh = new JSONParser();    //Request to url and getting response
+            //  Uri buildURI;
             String jsonStr = null;
             try {
-                Uri buildURI = Uri.parse(Constants.BASE_URL).buildUpon()
+                Uri.Builder uriBuilder = Uri.parse(Constants.BASE_URL).buildUpon()
                         .appendPath("2.2")
                         .appendPath("users")
                         .appendQueryParameter("pagesize", Constants.PAGE_SIZE)
                         .appendQueryParameter("page", String.valueOf(pageCount))
-                        .appendQueryParameter("order", Constants.ORDER_DESC)
-                        .appendQueryParameter("sort", Constants.SORT_BY_REPUTATION)
                         .appendQueryParameter("site", Constants.SITE)
-                        .build();
-                jsonStr = sh.makeServiceCall(buildURI.toString());
-                String FullURL = buildURI.toString();
-                Log.e("Full Build URL :::", FullURL);
+                        .appendQueryParameter("sort", sort)
+                        .appendQueryParameter("order", order);
+                if (fromDate != null) {
+                    uriBuilder.appendQueryParameter("fromdate", fromDate);
+                }
+                if (toDate != null) {
+                    uriBuilder.appendQueryParameter("todate", toDate);
+                }
+                Uri uri = uriBuilder.build();
+                jsonStr = sh.makeServiceCall(uri.toString());
+
             } catch (MalformedURLException e) {
                 e.printStackTrace();
                 Log.e("ERROR OCCURRED", "FAILED TO LOAD Json");
             }
-            Log.e(TAG, "Response from url: " + jsonStr);
 
+            Log.e(TAG, "Response from url: " + jsonStr);
             if (jsonStr != null) {
                 Gson gson = new Gson();
                 UserResponse userResponse = gson.fromJson(jsonStr, UserResponse.class);
