@@ -47,7 +47,6 @@ public class UserAdapter extends BaseAdapter implements Filterable {
         myStringFilterList.clear();
         notifyDataSetChanged();
     }
-
     @Override
     public int getCount() {
         return items.size();
@@ -150,8 +149,4 @@ public class UserAdapter extends BaseAdapter implements Filterable {
             notifyDataSetChanged();
         }
     }
-
-
 }
-
-
