@@ -7,7 +7,7 @@ package com.example.naresh.demoproject_1.utils;
 public class Constants {
 
     public static final String BASE_URL = " https://api.stackexchange.com/";
-    public static final String PAGE_SIZE = "99";
+    public static final String PAGE_SIZE = "20";
     public static final String ORDER_ASC = "asc";
     public static final String ORDER_DESC = "desc";
     public static final String SORT_BY_REPUTATION = "reputation";

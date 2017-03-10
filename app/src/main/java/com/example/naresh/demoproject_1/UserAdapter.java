@@ -17,7 +17,6 @@ import com.example.naresh.demoproject_1.models.BadgeCounts;
 import com.example.naresh.demoproject_1.models.User;
 import com.squareup.picasso.Picasso;
 
-import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,6 +43,11 @@ public class UserAdapter extends BaseAdapter implements Filterable {
         notifyDataSetChanged();
     }
 
+    public void clearAdapter() {
+        items.clear();
+        myStringFilterList.clear();
+        notifyDataSetChanged();
+    }
     @Override
     public int getCount() {
         return items.size();
@@ -59,7 +63,6 @@ public class UserAdapter extends BaseAdapter implements Filterable {
     public long getItemId(int position) {
         return 0;
     }
-
 
     static class ViewHolder {
         ImageView userImage;
@@ -108,7 +111,6 @@ public class UserAdapter extends BaseAdapter implements Filterable {
 
             valueFilter = new ValueFilter();
         }
-
         return valueFilter;
     }
 
@@ -147,7 +149,6 @@ public class UserAdapter extends BaseAdapter implements Filterable {
             items = (ArrayList<User>) results.values;
             notifyDataSetChanged();
         }
-
     }
     
     void demoMethod(){
