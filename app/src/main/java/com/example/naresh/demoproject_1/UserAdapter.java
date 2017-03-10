@@ -42,6 +42,11 @@ public class UserAdapter extends BaseAdapter implements Filterable {
         notifyDataSetChanged();
     }
 
+    public void clearAdapter() {
+        items.clear();
+        myStringFilterList.clear();
+        notifyDataSetChanged();
+    }
     @Override
     public int getCount() {
         return items.size();
@@ -57,7 +62,6 @@ public class UserAdapter extends BaseAdapter implements Filterable {
     public long getItemId(int position) {
         return 0;
     }
-
 
     static class ViewHolder {
         ImageView userImage;
