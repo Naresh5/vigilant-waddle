@@ -151,7 +151,7 @@ public class UserAdapter extends BaseAdapter implements Filterable {
     }
     
     void demoMethod(){
-        
+        int newBranch = 01;
         System.out.print("Created another Branch");
         Toast.makeText(context, "Name =  UserBranch", Toast.LENGTH_SHORT).show();
     }
