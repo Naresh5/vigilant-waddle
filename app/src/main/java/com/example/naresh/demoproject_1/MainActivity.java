@@ -1,11 +1,11 @@
 package com.example.naresh.demoproject_1;
 
+import android.app.FragmentManager;
 import android.app.SearchManager;
 import android.content.Context;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.util.Log;
@@ -38,8 +38,8 @@ public class MainActivity extends AppCompatActivity implements MyDialogFragment.
     private UserAdapter adapter;
     private boolean isSearch = false;
     private boolean isLoading = false;
-    public int pageCount = 0;
-
+    private int pageCount = 0;
+    private String orderValue = "asc", sortValue = "reputation", fromDateValue, toDateValue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,10 +48,8 @@ public class MainActivity extends AppCompatActivity implements MyDialogFragment.
         mListView = (ListView) findViewById(R.id.list_view);
 
         mProgressBar = (ProgressBar) findViewById(R.id.progress_bar);
-        // FragmentManager fragmentManager;
 
-        footerView = ((LayoutInflater) this
-                .getSystemService(Context.LAYOUT_INFLATER_SERVICE))
+        footerView = ((LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE))
                 .inflate(R.layout.listview_footer, null, false);
         mListView.addFooterView(footerView);
         footerView.setVisibility(View.INVISIBLE);
@@ -129,23 +127,35 @@ public class MainActivity extends AppCompatActivity implements MyDialogFragment.
         if (id == R.id.action_option) {
 
             MyDialogFragment MyDialogFragment = new MyDialogFragment();
-            MyDialogFragment.show(getSupportFragmentManager(), null);
 
-            Toast.makeText(context, "Option Menu..", Toast.LENGTH_LONG).show();
+            Bundle bundle = new Bundle();
+
+            bundle.putString("orderValue", orderValue);
+            bundle.putString("sortValue", sortValue);
+            bundle.putString("FromDateValue", fromDateValue);
+            bundle.putString("ToDateValue", toDateValue);
+            MyDialogFragment.setArguments(bundle);
+
+            MyDialogFragment.show(getSupportFragmentManager(), null);
 
             return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
-// Implement method of Interface
+    // Implementing method of Interface
 
     @Override
     public void onInfoChanged(String order, String sort, String FromDate, String ToDate) {
-        //  mListView.setAdapter(null);
+
+        this.orderValue = order;
+        this.sortValue = sort;
+        this.fromDateValue = FromDate;
+        this.toDateValue = ToDate;
+
+        // Toast.makeText(context, "Order" + order + "\nSort" + sort + "\nFromDate" + FromDate + "\nToDate" + ToDate, Toast.LENGTH_LONG).show();
 
         adapter.clearAdapter();
-
         new LoadJsonData(order, sort, FromDate, ToDate).execute();
 
     }
@@ -173,7 +183,7 @@ public class MainActivity extends AppCompatActivity implements MyDialogFragment.
         protected List<User> doInBackground(Object... arg0) {
 
             JSONParser sh = new JSONParser();    //Request to url and getting response
-            //  Uri buildURI;
+
             String jsonStr = null;
             try {
                 Uri.Builder uriBuilder = Uri.parse(Constants.BASE_URL).buildUpon()
@@ -190,8 +200,10 @@ public class MainActivity extends AppCompatActivity implements MyDialogFragment.
                 if (toDate != null) {
                     uriBuilder.appendQueryParameter("todate", toDate);
                 }
+
                 Uri uri = uriBuilder.build();
                 jsonStr = sh.makeServiceCall(uri.toString());
+                Log.e(TAG, " JsonRes for DFragment" + jsonStr);
 
             } catch (MalformedURLException e) {
                 e.printStackTrace();
@@ -235,6 +247,5 @@ public class MainActivity extends AppCompatActivity implements MyDialogFragment.
             mProgressBar.setVisibility(View.GONE);
             footerView.setVisibility(View.VISIBLE);
         }
-        //test
     }
 }

@@ -13,11 +13,7 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.Spinner;
-import android.widget.TextView;
 
-import com.example.naresh.demoproject_1.utils.Constants;
-
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -28,11 +24,13 @@ import java.util.Locale;
  */
 
 public class MyDialogFragment extends DialogFragment {
-    public Context context = getContext();
+    private String TAG = MyDialogFragment.class.getSimpleName();
     private View rootView;
     private Spinner spinnerOrder, spinnerSort;
     private Button btnFromDatePicker, btnToDatePicker, btnYes, btnNo;
-    public String myDateFormat = "dd/MM/yyyy";
+    private String myDateFormat = "dd/MM/yyyy";
+    private String toDateValue, fromDateValue;
+
     Calendar FromCalender = Calendar.getInstance();
     Calendar ToCalender = Calendar.getInstance();
 
@@ -47,7 +45,6 @@ public class MyDialogFragment extends DialogFragment {
         } catch (ClassCastException e) {
             e.printStackTrace();
         }
-
     }
 
     DatePickerDialog.OnDateSetListener fromDateListener, toDateListener;
@@ -66,14 +63,38 @@ public class MyDialogFragment extends DialogFragment {
         btnYes = (Button) rootView.findViewById(R.id.btn_yes);
         btnNo = (Button) rootView.findViewById(R.id.btn_no);
 
+        Bundle bundle = getArguments();
+
+        String orderVal = bundle.getString("orderValue");
+        String sortVal = bundle.getString("sortValue");
+        String fromDateVal = bundle.getString("FromDateValue");
+        String toDateVal = bundle.getString("ToDateValue");
+
+        Log.e(TAG, "Order Value" + orderVal);
+        Log.e(TAG, "SortValue" + sortVal);
+        Log.e(TAG, "FromDate Value" + fromDateVal);
+        Log.e(TAG, "ToDate Value" + toDateVal);
+
+        int orderPosition = getItemPosition(R.array.order_arrays, orderVal);
+        int sortPosition = getItemPosition(R.array.sort_arrays, sortVal);
+
+        if (orderPosition != -1) {
+            spinnerOrder.setSelection(orderPosition);
+        }
+        if (sortPosition != -1) {
+            spinnerSort.setSelection(sortPosition);
+        }
+        btnFromDatePicker.setText(fromDateVal);
+        btnToDatePicker.setText(toDateVal);
+
         fromDateListener = new DatePickerDialog.OnDateSetListener() {
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
 
                 FromCalender.set(year, month, dayOfMonth);
-
                 updateFromDatePicker();
             }
         };
+
         toDateListener = new DatePickerDialog.OnDateSetListener() {
             public void onDateSet(DatePicker ToDatePicker, int year, int month, int dayOfMonth) {
 
@@ -81,6 +102,7 @@ public class MyDialogFragment extends DialogFragment {
                 updateTODatePicker();
             }
         };
+
         btnFromDatePicker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -88,11 +110,11 @@ public class MyDialogFragment extends DialogFragment {
                 int year = FromCalender.get(Calendar.YEAR);
                 int month = FromCalender.get(Calendar.MONTH);
                 int day = FromCalender.get(Calendar.DAY_OF_MONTH);
-                new DatePickerDialog(getContext(), fromDateListener, year, month, day)
-                        .show();
+                new DatePickerDialog(getContext(), fromDateListener, year, month, day).show();
 
             }
         });
+
         btnToDatePicker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -114,18 +136,16 @@ public class MyDialogFragment extends DialogFragment {
                 String order = (String) spinnerOrder.getSelectedItem();
                 String sort = (String) spinnerSort.getSelectedItem();
 
+                String fromDate = null;
+                String toDate = null;
 
-                String fromDate = convertDateFormat(FromCalender.getTimeInMillis(), "yyyy-MM-dd");
-                String toDate = convertDateFormat(ToCalender.getTimeInMillis(), "yyyy-MM-dd");
-
-                Log.e(" Order ", order);
-                Log.e(" Sort ", sort);
-                Log.e(" From Date ", fromDate);
-                Log.e(" To Date ", toDate);
-
-
+                if (fromDateValue != null) {
+                    fromDate = convertDateFormat(FromCalender.getTimeInMillis(), "yyyy-MM-dd");
+                }
+                if (toDateValue != null) {
+                    toDate = convertDateFormat(ToCalender.getTimeInMillis(), "yyyy-MM-dd");
+                }
                 listener.onInfoChanged(order, sort, fromDate, toDate);
-
                 dismiss();
             }
         });
@@ -136,12 +156,16 @@ public class MyDialogFragment extends DialogFragment {
                 dismiss();
             }
         });
+
         return rootView;
+
     }
+
+    // Interfaces Declarations
 
     public interface OnInfoChangedListener {
 
-        public void onInfoChanged(String order, String sort, String FromDate, String ToDate);
+        void onInfoChanged(String order, String sort, String FromDate, String ToDate);
 
     }
 
@@ -153,17 +177,32 @@ public class MyDialogFragment extends DialogFragment {
 
     }
 
-
     private void updateFromDatePicker() {
 
         SimpleDateFormat sdf = new SimpleDateFormat(myDateFormat, Locale.US);
-
-        btnFromDatePicker.setText(sdf.format(FromCalender.getTime()));
+        fromDateValue = sdf.format(FromCalender.getTime());
+        btnFromDatePicker.setText(fromDateValue);
     }
 
     private void updateTODatePicker() {
 
         SimpleDateFormat sdf = new SimpleDateFormat(myDateFormat, Locale.US);
-        btnToDatePicker.setText(sdf.format(ToCalender.getTime()));
+        toDateValue = sdf.format(ToCalender.getTime());
+        btnToDatePicker.setText(toDateValue);
+    }
+
+    private int getItemPosition(int strArray, String value) {
+
+        String[] listArray;
+        listArray = getResources().getStringArray(strArray);
+
+        int position = -1;
+        for (int i = 0; i < listArray.length; i++) {
+            if (listArray[i].equals(value)) {
+                position = i;
+                break;
+            }
+        }
+        return position;
     }
 }
