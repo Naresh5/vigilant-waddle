@@ -1,8 +1,8 @@
 package com.example.naresh.demoproject_1;
 
-import android.app.FragmentManager;
 import android.app.SearchManager;
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -14,10 +14,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.example.naresh.demoproject_1.adapters.UserAdapter;
+import com.example.naresh.demoproject_1.dialog.FilterDialogFragment;
 import com.example.naresh.demoproject_1.models.User;
 import com.example.naresh.demoproject_1.models.UserResponse;
 import com.example.naresh.demoproject_1.utils.Constants;
@@ -28,7 +31,7 @@ import com.google.gson.Gson;
 import java.net.MalformedURLException;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements MyDialogFragment.OnInfoChangedListener {
+public class MainActivity extends AppCompatActivity implements FilterDialogFragment.OnInfoChangedListener {
 
     private String TAG = MainActivity.class.getSimpleName();
     private ProgressBar mProgressBar;
@@ -53,6 +56,15 @@ public class MainActivity extends AppCompatActivity implements MyDialogFragment.
                 .inflate(R.layout.listview_footer, null, false);
         mListView.addFooterView(footerView);
         footerView.setVisibility(View.INVISIBLE);
+
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                Intent intent = new Intent(MainActivity.this, UserDetailActivity.class);
+                startActivity(intent);
+            }
+        });
 
         mListView.setOnScrollListener(new AbsListView.OnScrollListener() {
             @Override
@@ -97,7 +109,6 @@ public class MainActivity extends AppCompatActivity implements MyDialogFragment.
 
         SearchManager searchManager =
                 (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-
         SearchView searchView =
                 (SearchView) menu.findItem(R.id.action_search).getActionView();
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
@@ -126,7 +137,7 @@ public class MainActivity extends AppCompatActivity implements MyDialogFragment.
 
         if (id == R.id.action_option) {
 
-            MyDialogFragment MyDialogFragment = new MyDialogFragment();
+            FilterDialogFragment FilterDialogFragment = new FilterDialogFragment();
 
             Bundle bundle = new Bundle();
 
@@ -134,9 +145,9 @@ public class MainActivity extends AppCompatActivity implements MyDialogFragment.
             bundle.putString("sortValue", sortValue);
             bundle.putString("FromDateValue", fromDateValue);
             bundle.putString("ToDateValue", toDateValue);
-            MyDialogFragment.setArguments(bundle);
+            FilterDialogFragment.setArguments(bundle);
 
-            MyDialogFragment.show(getSupportFragmentManager(), null);
+            FilterDialogFragment.show(getSupportFragmentManager(), null);
 
             return true;
         }
