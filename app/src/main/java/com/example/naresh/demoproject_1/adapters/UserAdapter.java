@@ -1,4 +1,4 @@
-package com.example.naresh.demoproject_1;
+package com.example.naresh.demoproject_1.adapters;
 
 import android.content.Context;
 import android.os.Build;
@@ -12,6 +12,7 @@ import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.naresh.demoproject_1.R;
 import com.example.naresh.demoproject_1.models.BadgeCounts;
 import com.example.naresh.demoproject_1.models.User;
 import com.squareup.picasso.Picasso;
@@ -47,6 +48,7 @@ public class UserAdapter extends BaseAdapter implements Filterable {
         myStringFilterList.clear();
         notifyDataSetChanged();
     }
+
     @Override
     public int getCount() {
         return items.size();

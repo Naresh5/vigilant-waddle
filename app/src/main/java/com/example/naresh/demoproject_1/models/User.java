@@ -1,10 +1,6 @@
 package com.example.naresh.demoproject_1.models;
 
-import android.content.Context;
-
 import com.google.gson.annotations.SerializedName;
-
-import java.util.List;
 
 /**
  * Created by naresh on 27/2/17.

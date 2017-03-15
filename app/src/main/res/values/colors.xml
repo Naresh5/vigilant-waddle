@@ -3,13 +3,26 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
-    <color name="badge_gold">#e9a30b</color>
-    <color name="badge_silver">#dcd6d8</color>
-    <color name="badge_bronze">#af9178</color>
+    <color name="badge_gold">#F6C402</color>
+    <color name="badge_silver">#C4C4C4</color>
+    <color name="badge_bronze">#CF9862</color>
 
     <color name="badge_text">#888888</color>
     <color name="reputation">#080808</color>
     <color name="userName">#4093b9</color>
     <color name="imageBackground">#695858</color>
+
+
+    <color name="colorUserNameText">#0C0D0F</color>
+    <color name="colorItem_Badge_Text">#69717B</color>
+    <color name="colorTabLayoutBackground">#EBECEE</color>
+    <color name="colorFragmentBackground">#F7F7F7</color>
+    <color name="colorSelectedTabBorder">#E68130</color>
+    <color name="colorTabBorderLine">#D0D4D7</color>
+
+
+
+
+
 
 </resources>

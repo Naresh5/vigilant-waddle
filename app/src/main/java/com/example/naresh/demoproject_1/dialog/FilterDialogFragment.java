@@ -1,4 +1,4 @@
-package com.example.naresh.demoproject_1;
+package com.example.naresh.demoproject_1.dialog;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
@@ -14,6 +14,8 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.Spinner;
 
+import com.example.naresh.demoproject_1.R;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -23,8 +25,8 @@ import java.util.Locale;
  * Created by naresh on 8/3/17.
  */
 
-public class MyDialogFragment extends DialogFragment {
-    private String TAG = MyDialogFragment.class.getSimpleName();
+public class FilterDialogFragment extends DialogFragment {
+    private String TAG = FilterDialogFragment.class.getSimpleName();
     private View rootView;
     private Spinner spinnerOrder, spinnerSort;
     private Button btnFromDatePicker, btnToDatePicker, btnYes, btnNo;

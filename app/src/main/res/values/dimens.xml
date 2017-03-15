@@ -2,10 +2,10 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
-    <dimen name="badge_size">5dp</dimen>
+    <dimen name="badge_size">8dp</dimen>
     <dimen name="image_size">50dp</dimen>
-    <dimen name="badge_text_size">13sp</dimen>
-    <dimen name="badge_drawable_padding">5dp</dimen>
+    <dimen name="badge_text_size">14sp</dimen>
+    <dimen name="badge_drawable_padding">7dp</dimen>
     <dimen name="badge_padding_left">8dp</dimen>
     <dimen name="dialog_fragment_padding">8dp</dimen>
     <dimen name="dialog_fragment_layout_padding_top">6dp</dimen>
@@ -13,5 +13,5 @@
     <dimen name="dialog_fragment_layout_padding_right">6dp</dimen>
 
     <dimen name="dialog_fragment_text_size">20sp</dimen>
-
+    <dimen name="item_badge_text_size">16sp</dimen>
 </resources>
