@@ -89,6 +89,7 @@ public class User implements Parcelable {
     public int describeContents() {
         return 0;
     }
+
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.profileImage);
@@ -96,16 +97,14 @@ public class User implements Parcelable {
         dest.writeLong(this.reputation);
         dest.writeInt(this.userId);
         dest.writeParcelable(this.badgeCounts, flags);
-
     }
 
-    private User(Parcel in) {
+    protected User(Parcel in) {
         this.profileImage = in.readString();
         this.displayName = in.readString();
-        this.reputation = in.readInt();
-        this.userId=in.readInt();
+        this.reputation = in.readLong();
+        this.userId = in.readInt();
         this.badgeCounts = in.readParcelable(BadgeCounts.class.getClassLoader());
-
     }
 
     public static final Creator<User> CREATOR = new Creator<User>() {
@@ -113,7 +112,6 @@ public class User implements Parcelable {
         public User createFromParcel(Parcel source) {
             return new User(source);
         }
-
 
         @Override
         public User[] newArray(int size) {
