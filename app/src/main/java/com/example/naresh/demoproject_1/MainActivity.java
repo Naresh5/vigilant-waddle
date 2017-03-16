@@ -21,6 +21,8 @@ import android.widget.Toast;
 
 import com.example.naresh.demoproject_1.adapters.UserAdapter;
 import com.example.naresh.demoproject_1.dialog.FilterDialogFragment;
+import com.example.naresh.demoproject_1.fragments.ActivityFragment;
+import com.example.naresh.demoproject_1.fragments.ProfileFragment;
 import com.example.naresh.demoproject_1.models.User;
 import com.example.naresh.demoproject_1.models.UserResponse;
 import com.example.naresh.demoproject_1.utils.Constants;
@@ -42,7 +44,7 @@ public class MainActivity extends AppCompatActivity implements FilterDialogFragm
     private boolean isSearch = false;
     private boolean isLoading = false;
     private int pageCount = 0;
-    private String orderValue = "asc", sortValue = "reputation", fromDateValue, toDateValue;
+    private String orderValue = "desc", sortValue = "reputation", fromDateValue, toDateValue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,8 +63,10 @@ public class MainActivity extends AppCompatActivity implements FilterDialogFragm
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                Intent intent = new Intent(MainActivity.this, UserDetailActivity.class);
-                startActivity(intent);
+                User user = (User) adapter.getItem(position);
+                Intent intentUserDetailActivity = UserDetailActivity.startIntent(MainActivity.this, user);
+                startActivity(intentUserDetailActivity);
+
             }
         });
 
@@ -174,6 +178,7 @@ public class MainActivity extends AppCompatActivity implements FilterDialogFragm
     public class LoadJsonData extends AsyncTask<Object, Object, List<User>> {
 
         String order, sort, fromDate, toDate;
+
 
         public LoadJsonData(String order, String sort, String fromDate, String toDate) {
             Log.d(TAG, "LoadJsonData: ");

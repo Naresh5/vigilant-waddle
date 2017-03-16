@@ -28,7 +28,9 @@ public class User implements Parcelable {
 
     private long reputation;
 
+    @SerializedName("user_id")
     private int userId;
+
 
     @SerializedName("badge_counts")
     private BadgeCounts badgeCounts;
@@ -82,6 +84,15 @@ public class User implements Parcelable {
 
     public void setBadgeCounts(BadgeCounts badgeCounts) {
         this.badgeCounts = badgeCounts;
+    }
+
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
 

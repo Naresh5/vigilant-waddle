@@ -52,7 +52,7 @@ public class BadgeCounts implements Parcelable{
     public BadgeCounts() {
     }
 
-    private BadgeCounts(Parcel in) {
+    protected BadgeCounts(Parcel in) {
         this.bronze = in.readInt();
         this.silver = in.readInt();
         this.gold = in.readInt();

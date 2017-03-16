@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.naresh.demoproject_1.R;
 
@@ -20,10 +21,12 @@ import com.example.naresh.demoproject_1.R;
  * create an instance of this fragment.
  */
 public class ProfileFragment extends Fragment {
+    private View rootView;
+    private TextView profileUID;
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private static final String ARG_USER_ID = "user_id";
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -35,38 +38,37 @@ public class ProfileFragment extends Fragment {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment ProfileFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static ProfileFragment newInstance(String param1, String param2) {
-        ProfileFragment fragment = new ProfileFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
+
+    public static Fragment newInstance(int key) {
+        ProfileFragment profileFragment = new ProfileFragment();
+        Bundle bundle = new Bundle();
+        bundle.putInt(ARG_USER_ID, key);
+        profileFragment.setArguments(bundle);
+
+        return profileFragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            mParam1 = getArguments().getString(ARG_USER_ID);
         }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_profile, container, false);
+        rootView = inflater.inflate(R.layout.fragment_profile, container, false);
+        profileUID = (TextView) rootView.findViewById(R.id.tv_profile_fragment);
+
+        Bundle bundle = getArguments();
+        int UID = bundle.getInt("user_id");
+        String userID = String.valueOf(UID);
+        profileUID.setText(userID);
+
+        return rootView;
+
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -79,12 +81,12 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-      /*  if (context instanceof OnFragmentInteractionListener) {
+        if (context instanceof OnFragmentInteractionListener) {
             mListener = (OnFragmentInteractionListener) context;
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
-        }*/
+        }
     }
 
     @Override

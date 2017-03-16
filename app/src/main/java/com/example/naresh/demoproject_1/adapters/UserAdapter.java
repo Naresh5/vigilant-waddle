@@ -90,7 +90,6 @@ public class UserAdapter extends BaseAdapter implements Filterable {
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-
         User currentItem = (User) getItem(position);
         BadgeCounts badgeCount = currentItem.getBadgeCounts();
 
@@ -152,3 +151,5 @@ public class UserAdapter extends BaseAdapter implements Filterable {
         }
     }
 }
+
+
