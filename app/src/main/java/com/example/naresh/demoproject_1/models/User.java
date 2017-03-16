@@ -1,12 +1,25 @@
 package com.example.naresh.demoproject_1.models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.SerializedName;
 
 /**
  * Created by naresh on 27/2/17.
  */
 
-public class User {
+public class User implements Parcelable {
+
+
+    public User(String displayName, String profileImage, int reputation, BadgeCounts badgeCounts) {
+        this.displayName = displayName;
+        this.profileImage = profileImage;
+        this.reputation = reputation;
+        this.badgeCounts = badgeCounts;
+    }
+
+
     @SerializedName("profile_image")
     private String profileImage;
 
@@ -14,6 +27,8 @@ public class User {
     private String displayName;
 
     private long reputation;
+
+    private int userId;
 
     @SerializedName("badge_counts")
     private BadgeCounts badgeCounts;
@@ -30,7 +45,6 @@ public class User {
     public String getDisplayName() {
         return displayName;
     }
-
 
     public String getReputation() {
 
@@ -69,4 +83,41 @@ public class User {
     public void setBadgeCounts(BadgeCounts badgeCounts) {
         this.badgeCounts = badgeCounts;
     }
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.profileImage);
+        dest.writeString(this.displayName);
+        dest.writeLong(this.reputation);
+        dest.writeInt(this.userId);
+        dest.writeParcelable(this.badgeCounts, flags);
+
+    }
+
+    private User(Parcel in) {
+        this.profileImage = in.readString();
+        this.displayName = in.readString();
+        this.reputation = in.readInt();
+        this.userId=in.readInt();
+        this.badgeCounts = in.readParcelable(BadgeCounts.class.getClassLoader());
+
+    }
+
+    public static final Creator<User> CREATOR = new Creator<User>() {
+        @Override
+        public User createFromParcel(Parcel source) {
+            return new User(source);
+        }
+
+
+        @Override
+        public User[] newArray(int size) {
+            return new User[size];
+        }
+    };
 }
