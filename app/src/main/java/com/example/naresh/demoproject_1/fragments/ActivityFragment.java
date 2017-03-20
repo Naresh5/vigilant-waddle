@@ -5,8 +5,6 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.text.Html;
-import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.example.naresh.demoproject_1.R;
@@ -25,12 +22,7 @@ import com.example.naresh.demoproject_1.utils.JSONParser;
 import com.example.naresh.demoproject_1.utils.Utility;
 import com.google.gson.Gson;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLConnection;
 import java.util.List;
 
 
@@ -81,13 +73,13 @@ public class ActivityFragment extends Fragment {
         userId = bundle.getInt("user_id");
         // String userID = String.valueOf(UID);
 
-        new GetUserDetailFromJson().execute();
+        new getUserDetailFromJson().execute();
 
         return rootView;
 
     }
 
-    private class GetUserDetailFromJson extends AsyncTask<Object, Object, List<User>> {
+    private class getUserDetailFromJson extends AsyncTask<Object, Object, List<User>> {
 
         @Override
         protected void onPreExecute() {
@@ -122,7 +114,7 @@ public class ActivityFragment extends Fragment {
                 Log.e("ERROR OCCURRED", "FAILED TO LOAD Json");
             }
 
-            Log.e(TAG, "Response from url ACTIVITYFRAGMENT: " + jsonStr);
+            Log.e(TAG, "Response from url ACTIVITY FRAGMENT: " + jsonStr);
             if (jsonStr != null) {
                 Gson gson = new Gson();
                 UserResponse userResponse = gson.fromJson(jsonStr, UserResponse.class);
@@ -146,15 +138,11 @@ public class ActivityFragment extends Fragment {
 
                 //    mTextAboutUser.setMovementMethod(LinkMovementMethod.getInstance());
 
-
             } else {
                 Log.e(TAG, "Couldn't Fetch Data .....");
             }
-
-
         }
     }
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -177,7 +165,9 @@ public class ActivityFragment extends Fragment {
 
     public void setUserDetail(User user) {
         String aboutMeException = "User Detail Not Available. . .";
+
         String aboutMe = user.getAboutMe();
+
         String answers = String.valueOf(user.getAnswerCount());
         String questions = String.valueOf(user.getQuestionCount());
         String views = String.valueOf(user.getViewCount());
@@ -187,8 +177,8 @@ public class ActivityFragment extends Fragment {
         //For About Me
 
         if (aboutMe != null && !aboutMe.isEmpty()) {
-            Spanned htmlAsSpanned = Html.fromHtml(aboutMe);
-            mTextAboutUser.setText(htmlAsSpanned);
+           // Spanned htmlAsSpanned = Html.fromHtml(aboutMe);
+            mTextAboutUser.setText(Utility.convertTextToHTML(aboutMe));
             mTextAboutUser.setMovementMethod(LinkMovementMethod.getInstance());
         }
         else if (aboutMe == null || aboutMe.equals(null))
@@ -205,7 +195,8 @@ public class ActivityFragment extends Fragment {
         //For Location
 
         if (location != null && !location.isEmpty() ) {
-            mTextUserLocation.setText(location);
+            mTextUserLocation.setText(Utility.convertTextToHTML(location));
+            mTextUserLocation.setMovementMethod(LinkMovementMethod.getInstance());
         }
         else if (location == null || location.equals(null))
         {

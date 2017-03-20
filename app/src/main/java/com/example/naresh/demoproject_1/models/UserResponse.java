@@ -10,9 +10,9 @@ public class UserResponse {
 
     private ArrayList<User> items;
 
-
     public ArrayList<User> getItems() {
         return items;
     }
+
 
 }

@@ -35,7 +35,6 @@ public class UserDetailActivity extends AppCompatActivity {
     private ViewPager mViewPager;
     private TabLayout mTabLayout;
     private ViewPagerAdapter viewPagerAdapter;
-
     private TextView textUserName, textUserReputation, textSilverBadge, textBronzeBadge, textGoldBadge;
     private ImageView imageUser;
     private User user;
@@ -72,9 +71,9 @@ public class UserDetailActivity extends AppCompatActivity {
 
         viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
 
-        viewPagerAdapter.addFragments(ActivityFragment.newInstance(user.getUserId()), "ACTIVITY");
+        viewPagerAdapter.addFragments(ActivityFragment.newInstance(user.getUserId()), "PROFILE");
 
-        viewPagerAdapter.addFragments(ProfileFragment.newInstance(user.getUserId()), "PROFILE");
+        viewPagerAdapter.addFragments(ProfileFragment.newInstance(user.getUserId()), "ACTIVITY");
 
         mViewPager.setAdapter(viewPagerAdapter);
         mTabLayout.setupWithViewPager(mViewPager);
@@ -90,8 +89,6 @@ public class UserDetailActivity extends AppCompatActivity {
                 .placeholder(R.drawable.ic_userdemo)
                 .into(imageUser);
     }
-
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
