@@ -3,16 +3,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorFragmentBackground"
-    tools:context="com.example.naresh.demoproject_1.fragments.ProfileFragment">
-
+    tools:context="com.example.naresh.demoproject_1.fragments.ActivityFragment">
     <!-- TODO: Update blank fragment layout -->
     <TextView
         android:id="@+id/tv_profile_fragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:textAlignment="center"
-        android:text="PROFILE FRAGMENT"
         android:paddingTop="200dp"
-        android:textSize="30dp"/>
+        android:text="PROFILE FRAGMENT"
+        android:textAlignment="center"
+        android:textSize="30dp" />
+
 
 </FrameLayout>

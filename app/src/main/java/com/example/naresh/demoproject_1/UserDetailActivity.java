@@ -26,7 +26,7 @@ import com.squareup.picasso.Picasso;
 import static android.R.attr.fragment;
 import static com.example.naresh.demoproject_1.R.id.toolbar;
 
-public class UserDetailActivity extends AppCompatActivity implements ProfileFragment.OnFragmentInteractionListener{
+public class UserDetailActivity extends AppCompatActivity {
     private String TAG = UserDetailActivity.class.getSimpleName();
 
     public static final String EXTRA_USER = "data";
@@ -61,9 +61,6 @@ public class UserDetailActivity extends AppCompatActivity implements ProfileFrag
         textGoldBadge = (TextView) findViewById(R.id.item_user_gold);
         textSilverBadge = (TextView) findViewById(R.id.item_user_silver);
         textBronzeBadge = (TextView) findViewById(R.id.item_user_bronze);
-
-
-
 
 
         mToolBar = (Toolbar) findViewById(toolbar);
@@ -109,11 +106,5 @@ public class UserDetailActivity extends AppCompatActivity implements ProfileFrag
             finish();
         }
         return super.onOptionsItemSelected(item);
-    }
-
-
-    @Override
-    public void onFragmentInteraction(Uri uri) {
-
     }
 }

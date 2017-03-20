@@ -11,6 +11,9 @@ import com.google.gson.annotations.SerializedName;
 
 public class User implements Parcelable {
 
+    public User(){
+
+    }
 
     public User(String displayName, String profileImage, int reputation, BadgeCounts badgeCounts) {
         this.displayName = displayName;
@@ -31,9 +34,27 @@ public class User implements Parcelable {
     @SerializedName("user_id")
     private int userId;
 
+    @SerializedName("answer_count")
+    private long answerCount ;
+
+    @SerializedName("question_count")
+    private long questionCount ;
+
+    @SerializedName("view_count")
+    private long viewCount;
 
     @SerializedName("badge_counts")
     private BadgeCounts badgeCounts;
+
+    @SerializedName("location")
+    private String location;
+
+    @SerializedName("website_url")
+    private String websiteUrl;
+
+    @SerializedName("about_me")
+    private String aboutMe;
+
 
     /*public User(Context context, List<User> userList) {
 
@@ -93,6 +114,54 @@ public class User implements Parcelable {
 
     public void setUserId(int userId) {
         this.userId = userId;
+    }
+
+    public long getAnswerCount() {
+        return answerCount;
+    }
+
+    public void setAnswerCount(long answerCount) {
+        this.answerCount = answerCount;
+    }
+
+    public long getQuestionCount() {
+        return questionCount;
+    }
+
+    public void setQuestionCount(long questionCount) {
+        this.questionCount = questionCount;
+    }
+
+    public long getViewCount() {
+        return viewCount;
+    }
+
+    public void setViewCount(long viewCount) {
+        this.viewCount = viewCount;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public String getWebsiteUrl() {
+        return websiteUrl;
+    }
+
+    public void setWebsiteUrl(String websiteUrl) {
+        this.websiteUrl = websiteUrl;
+    }
+
+    public String getAboutMe() {
+        return aboutMe;
+    }
+
+    public void setAboutMe(String aboutMe) {
+        this.aboutMe = aboutMe;
     }
 
 

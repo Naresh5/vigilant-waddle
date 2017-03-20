@@ -20,9 +20,15 @@
     <color name="colorSelectedTabBorder">#E68130</color>
     <color name="colorTabBorderLine">#D0D4D7</color>
 
-
-
-
+    //FOR ACTIVITY FRAGMENT LAYOUT
+    <color name="colorUrlText">#0275CC</color>
+    <color name="colorAboutUser">#0F0F0F</color>
+    <color name="colorViewForLine">#D0D4D7</color>
+    <color name="colorCount">#0B0D0F</color>
+    <color name="colorCountText">#767E87</color>
+    <color name="colorBlackDot">#0B0D0F</color>
+    <color name="colorActivityFragmentBackground">#F8F8F8</color>
+    <color name="colorActivityToolBar">#EBECEE</color>
 
 
 </resources>

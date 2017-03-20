@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity implements FilterDialogFragm
     private boolean isSearch = false;
     private boolean isLoading = false;
     private int pageCount = 0;
-    private String orderValue = "desc", sortValue = "reputation", fromDateValue, toDateValue;
+    private String orderValue = "asc", sortValue = "reputation", fromDateValue, toDateValue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -168,17 +168,13 @@ public class MainActivity extends AppCompatActivity implements FilterDialogFragm
         this.fromDateValue = FromDate;
         this.toDateValue = ToDate;
 
-        // Toast.makeText(context, "Order" + order + "\nSort" + sort + "\nFromDate" + FromDate + "\nToDate" + ToDate, Toast.LENGTH_LONG).show();
-
         adapter.clearAdapter();
         new LoadJsonData(order, sort, FromDate, ToDate).execute();
-
     }
 
     public class LoadJsonData extends AsyncTask<Object, Object, List<User>> {
 
         String order, sort, fromDate, toDate;
-
 
         public LoadJsonData(String order, String sort, String fromDate, String toDate) {
             Log.d(TAG, "LoadJsonData: ");
@@ -187,7 +183,6 @@ public class MainActivity extends AppCompatActivity implements FilterDialogFragm
             this.fromDate = fromDate;
             this.toDate = toDate;
         }
-
         @Override
         protected void onPreExecute() {
             super.onPreExecute();

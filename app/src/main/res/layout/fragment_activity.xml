@@ -1,18 +1,173 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorFragmentBackground"
-    tools:context="com.example.naresh.demoproject_1.fragments.ActivityFragment">
+    android:background="@color/colorActivityFragmentBackground"
+    android:orientation="vertical">
 
-    <!-- TODO: Update blank fragment layout -->
+
+    <ProgressBar
+        android:id="@+id/progressbar_activity_fragment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="gone" />
+
     <TextView
-        android:id="@+id/tv_activity_fragment"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingTop="200dp"
-        android:text="ACTIVITY FRAGMENT"
-        android:textAlignment="center"
-        android:textSize="30dp" />
+        android:id="@+id/text_loading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Please Wait"
+        android:textSize="10sp"
+        android:visibility="gone" />
 
-</FrameLayout>
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/linearLayout_main"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="visible"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/text_about_user"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/user_profile_text_margin"
+                android:layout_marginLeft="@dimen/user_profile_text_margin"
+                android:layout_marginTop="@dimen/user_profile_text_margin"
+                android:textColor="@color/colorAboutUser"
+                android:textColorLink="@color/colorUrlText" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginBottom="5dp"
+                android:background="@color/colorViewForLine" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:orientation="horizontal"
+                android:weightSum="3">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="60dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical">
+
+
+                    <TextView
+                        android:id="@+id/text_answer_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:text="33607"
+                        android:textColor="@color/colorCount"
+                        android:textSize="@dimen/count_text_size" />
+
+                    <TextView
+                        android:id="@+id/text_answers"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:text="answers"
+                        android:textColor="@color/colorCountText" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="60dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical">
+
+
+                    <TextView
+                        android:id="@+id/text_question_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:text="42"
+                        android:textColor="@color/colorCount"
+                        android:textSize="@dimen/count_text_size" />
+
+                    <TextView
+                        android:id="@+id/text_questions"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:text="questions"
+                        android:textColor="@color/colorCountText" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="60dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/text_view_counts"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:text="1350494"
+                        android:textColor="@color/colorCount"
+                        android:textSize="@dimen/count_text_size" />
+
+                    <TextView
+                        android:id="@+id/text_counts"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:text="total views"
+                        android:textColor="@color/colorCountText" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginBottom="5dp"
+                android:background="@color/colorViewForLine" />
+
+
+            <TextView
+                android:id="@+id/text_location"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/user_profile_text_margin"
+                android:layout_marginLeft="@dimen/user_profile_text_margin"
+                android:layout_marginTop="@dimen/user_profile_text_margin"
+                android:drawableLeft="@drawable/bullet_dot"
+                android:drawablePadding="8dp"
+                android:text="User Location"
+                android:textColor="@color/colorAboutUser" />
+
+            <TextView
+                android:id="@+id/text_website_url"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:layout_marginLeft="10dp"
+                android:autoLink="web"
+                android:drawableLeft="@drawable/bullet_dot"
+                android:drawablePadding="8dp"
+                android:linksClickable="true"
+                android:text="UserWebSite"
+                android:textColorLink="@color/colorUrlText" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

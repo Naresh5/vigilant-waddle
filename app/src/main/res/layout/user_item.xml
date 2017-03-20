@@ -4,7 +4,8 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:paddingTop="10dp"
-    android:paddingLeft="15dp">
+    android:paddingLeft="15dp"
+    android:background="@color/colorActivityToolBar">
 
     <ImageView
         android:id="@+id/item_image_user"
