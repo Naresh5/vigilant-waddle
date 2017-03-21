@@ -19,4 +19,8 @@
     <string name="title_use_detail_activity">User Detail</string>
     <string name="progress_title">Please Wait...</string>
 
+    <string name="menu_open_in_browser_title">Open In Browser</string>
+    <string name="menu_copy_to_clipboard">Copy to ClipBoard</string>
+    <string name="menu_share">Share </string>
+
 </resources>

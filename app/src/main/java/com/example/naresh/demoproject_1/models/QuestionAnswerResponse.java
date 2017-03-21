@@ -1,5 +1,7 @@
 package com.example.naresh.demoproject_1.models;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.ArrayList;
 
 /**
@@ -10,6 +12,7 @@ public class QuestionAnswerResponse {
 
     private ArrayList<QuestionItem> items;
 
+    @SerializedName("has_more")
     private boolean hasMore;
 
 

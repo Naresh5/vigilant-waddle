@@ -8,6 +8,9 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
@@ -28,6 +31,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
+
+import static android.R.attr.id;
 
 
 public class ProfileFragment extends Fragment {
@@ -103,23 +108,17 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
                 int lastInScreen = firstVisibleItem + visibleItemCount;
+                if (hasMoreData) {
 
-                String last = String.valueOf(lastInScreen);
-                String first = String.valueOf(firstVisibleItem);
-                String visible = String.valueOf(visibleItemCount);
-                Log.e(TAG, "pro fragment FIRST VISIBLE ITEM   :" + last);
-                Log.e(TAG, "pro fragment VISIBLE ITEM  Count  :" + first);
-                Log.e(TAG, "pro fragment Total ITEM  Count  :" + visible);
-
-                if ((lastInScreen == totalItemCount) && (totalItemCount - 1 != 0)) {
-                    if (!isLoading) {
-                        Log.e("ERR -:", "Scrolling List view");
-
-                        mQuestionPageCount++;
-                        new getQuestionAnswerDetailFromJson().execute();
-
-
+                    if ((lastInScreen == totalItemCount) && (totalItemCount - 1 != 0)) {
+                        if (!isLoading) {
+                            Log.e("ERR -:", "Scrolling List view");
+                            mQuestionPageCount++;
+                            new getQuestionAnswerDetailFromJson().execute();
+                        }
                     }
+                } else {
+                    hideProgressBar();
                 }
             }
         });
@@ -128,9 +127,9 @@ public class ProfileFragment extends Fragment {
 
         questionAdapter = new QuestionAdapter(getActivity());
         mListViewProfileFragment.setAdapter(questionAdapter);
-
         return rootView;
     }
+
 
     private class getQuestionAnswerDetailFromJson extends AsyncTask<Void, Void, String> {
         @Override
@@ -197,7 +196,8 @@ public class ProfileFragment extends Fragment {
                 Gson gson = new Gson();
                 QuestionAnswerResponse userResponse = gson.fromJson(data, QuestionAnswerResponse.class);
 
-                 hasMoreData = userResponse.isHasMore();
+                hasMoreData = userResponse.isHasMore();
+                Log.e(TAG, "Has More : " + hasMoreData);
 
                 questionAdapter.addItems(userResponse.getItems());
 

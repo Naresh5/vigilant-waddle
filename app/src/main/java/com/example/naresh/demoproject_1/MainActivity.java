@@ -21,8 +21,6 @@ import android.widget.Toast;
 
 import com.example.naresh.demoproject_1.adapters.UserAdapter;
 import com.example.naresh.demoproject_1.dialog.FilterDialogFragment;
-import com.example.naresh.demoproject_1.fragments.ActivityFragment;
-import com.example.naresh.demoproject_1.fragments.ProfileFragment;
 import com.example.naresh.demoproject_1.models.User;
 import com.example.naresh.demoproject_1.models.UserResponse;
 import com.example.naresh.demoproject_1.utils.Constants;
@@ -43,6 +41,7 @@ public class MainActivity extends AppCompatActivity implements FilterDialogFragm
     private UserAdapter adapter;
     private boolean isSearch = false;
     private boolean isLoading = false;
+    private boolean hasMoreData = true;
     private int pageCount = 0;
     private String orderValue = "asc", sortValue = "reputation", fromDateValue, toDateValue;
 
@@ -77,21 +76,25 @@ public class MainActivity extends AppCompatActivity implements FilterDialogFragm
 
             @Override
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-                int lastInScreen = firstVisibleItem + visibleItemCount;
-                String last = String.valueOf(lastInScreen);
-                String first = String.valueOf(firstVisibleItem);
-                String visible = String.valueOf(visibleItemCount);
-                Log.e("FIRST VISIBLE ITEM   :", last);
-                Log.e("VISIBLE ITEM  Count  :", first);
-                Log.e("Total ITEM  Count  :", visible);
 
-                if ((lastInScreen == totalItemCount) && (totalItemCount - 1 != 0) && !isSearch) {
-                    if (!isLoading) {
-                        Log.e("ERR -:", "Scrolling List view");
-                        pageCount++;
-                        new LoadJsonData(Constants.ORDER_ASC, Constants.SORT_BY_REPUTATION, null, null).execute();
+                    int lastInScreen = firstVisibleItem + visibleItemCount;
+                    String last = String.valueOf(lastInScreen);
+                    String first = String.valueOf(firstVisibleItem);
+                    String visible = String.valueOf(visibleItemCount);
+                    Log.e("FIRST VISIBLE ITEM   :", last);
+                    Log.e("VISIBLE ITEM  Count  :", first);
+                    Log.e("Total ITEM  Count  :", visible);
+
+                    if ((lastInScreen == totalItemCount) && (totalItemCount - 1 != 0) && !isSearch) {
+                        if (!isLoading) {
+                            Log.e("ERR -:", "Scrolling List view");
+                            pageCount++;
+                            new LoadJsonData(Constants.ORDER_ASC, Constants.SORT_BY_REPUTATION, null, null).execute();
+                        }
                     }
-                }
+
+
+
             }
         });
 
@@ -108,7 +111,7 @@ public class MainActivity extends AppCompatActivity implements FilterDialogFragm
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menusearch, menu);
+        getMenuInflater().inflate(R.menu.menu_search, menu);
 
         SearchManager searchManager =
                 (SearchManager) getSystemService(Context.SEARCH_SERVICE);
@@ -182,6 +185,7 @@ public class MainActivity extends AppCompatActivity implements FilterDialogFragm
             this.fromDate = fromDate;
             this.toDate = toDate;
         }
+
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -225,6 +229,9 @@ public class MainActivity extends AppCompatActivity implements FilterDialogFragm
             if (jsonStr != null) {
                 Gson gson = new Gson();
                 UserResponse userResponse = gson.fromJson(jsonStr, UserResponse.class);
+
+                hasMoreData = userResponse.isHasMore();
+                Log.e(TAG, "HAS MORE "+hasMoreData);
                 return userResponse.getItems();
             } else {
                 return null;
@@ -237,9 +244,12 @@ public class MainActivity extends AppCompatActivity implements FilterDialogFragm
             hideProgressBar();
             if (userList != null) {
                 adapter.addItems(userList);
+            } else {
+                Toast.makeText(context, "Couldn't Load Json Data", Toast.LENGTH_SHORT).show();
             }
         }
     }
+
     private void hideProgressBar() {
         if (pageCount == 1) {
             mProgressBar.setVisibility(View.GONE);

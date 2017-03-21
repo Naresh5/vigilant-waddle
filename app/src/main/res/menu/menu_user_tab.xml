@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/open_in_browser"
+        android:title="@string/menu_open_in_browser_title"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/copy_to_clipboard"
+        android:title="@string/menu_copy_to_clipboard"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/share"
+        android:title="@string/menu_share"
+        app:showAsAction="never"/>
+
+</menu>
