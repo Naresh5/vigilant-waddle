@@ -2,6 +2,7 @@ package com.example.naresh.demoproject_1.adapters;
 
 import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.naresh.demoproject_1.R;
+import com.example.naresh.demoproject_1.fragments.ProfileFragment;
 import com.example.naresh.demoproject_1.models.QuestionItem;
 import com.example.naresh.demoproject_1.models.User;
 import com.example.naresh.demoproject_1.utils.Constants;
@@ -23,6 +25,7 @@ import java.util.List;
  */
 
 public class QuestionAdapter extends BaseAdapter {
+    private String TAG = "Question Adapter";
     private Context context;
     private List<QuestionItem> questionItems;
 
@@ -72,6 +75,7 @@ public class QuestionAdapter extends BaseAdapter {
             viewHolder.textPostTitle = (TextView) convertView.findViewById(R.id.text_post_title);
             viewHolder.textPostType = (TextView) convertView.findViewById(R.id.text_post_type);
             viewHolder.textPostDetail = (TextView) convertView.findViewById(R.id.text_post_body);
+            viewHolder.textDetailNotFound = (TextView)convertView.findViewById(R.id.text_detail_not_available);
             convertView.setTag(viewHolder);
 
         } else {
@@ -79,23 +83,21 @@ public class QuestionAdapter extends BaseAdapter {
         }
         QuestionItem questionItem = getItem(position);
 
-        viewHolder.textPostTitle.setText(questionItem.getTitle());
         String mPostType = questionItem.getPostType();
-
-        if (mPostType.equalsIgnoreCase(Constants.POST_TYPE_ANSWER))
-        {
-            viewHolder.textPostType.setText("Answer");
-            viewHolder.imagePostType.setImageResource(R.drawable.ic_answer_profile_fragment);
-        }
-        else if (mPostType.equalsIgnoreCase(Constants.POST_TYPE_QUESTION))
-        {
-            viewHolder.textPostType.setText("Question");
-            // holder.textPostType.setText(R.string.post_type_question_text);
-            viewHolder.imagePostType.setImageResource(R.drawable.ic_question_profile_fragment);
-        }
-
+        String postTitle = questionItem.getTitle();
         String postBody = questionItem.getBody();
-        viewHolder.textPostDetail.setText(Utility.convertTextToHTML(postBody));
+
+            if (mPostType.equalsIgnoreCase(Constants.POST_TYPE_ANSWER)) {
+                viewHolder.textPostType.setText("Answer");
+                viewHolder.imagePostType.setImageResource(R.drawable.ic_answer_profile_fragment);
+            } else if (mPostType.equalsIgnoreCase(Constants.POST_TYPE_QUESTION)) {
+                viewHolder.textPostType.setText("Question");
+                // holder.textPostType.setText(R.string.post_type_question_text);
+                viewHolder.imagePostType.setImageResource(R.drawable.ic_question_profile_fragment);
+            }
+            viewHolder.textPostTitle.setText(Utility.convertTextToHTML(postTitle));
+            viewHolder.textPostDetail.setText(Utility.convertTextToHTML(postBody));
+
 
         return convertView;
     }
@@ -103,6 +105,6 @@ public class QuestionAdapter extends BaseAdapter {
     private class ViewHolder {
 
         ImageView imagePostType;
-        TextView textPostType, textPostTitle, textPostDetail;
+        TextView textPostType, textPostTitle, textPostDetail,textDetailNotFound;
     }
 }

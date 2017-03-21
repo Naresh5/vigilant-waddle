@@ -175,7 +175,6 @@ public class ActivityFragment extends Fragment {
         String websiteURL = user.getWebsiteUrl();
 
         //For About Me
-
         if (aboutMe != null && !aboutMe.isEmpty()) {
            // Spanned htmlAsSpanned = Html.fromHtml(aboutMe);
             mTextAboutUser.setText(Utility.convertTextToHTML(aboutMe));
@@ -220,7 +219,6 @@ public class ActivityFragment extends Fragment {
         {
             mTextWebSiteURL.setVisibility(View.GONE);
         }
-
     }
 }
 

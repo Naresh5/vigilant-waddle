@@ -53,7 +53,6 @@ public class MainActivity extends AppCompatActivity implements FilterDialogFragm
         mListView = (ListView) findViewById(R.id.list_view);
 
         mProgressBar = (ProgressBar) findViewById(R.id.progress_bar);
-
         footerView = ((LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE))
                 .inflate(R.layout.listview_footer, null, false);
         mListView.addFooterView(footerView);
@@ -215,6 +214,7 @@ public class MainActivity extends AppCompatActivity implements FilterDialogFragm
                 Uri uri = uriBuilder.build();
                 jsonStr = sh.makeServiceCall(uri.toString());
                 Log.e(TAG, " JsonRes for DFragment" + jsonStr);
+                Log.e(TAG, "::::--Main activity FULL  URL :::-- " + uri);
 
             } catch (MalformedURLException e) {
                 e.printStackTrace();
@@ -230,7 +230,6 @@ public class MainActivity extends AppCompatActivity implements FilterDialogFragm
                 return null;
             }
         }
-
         @Override
         protected void onPostExecute(List<User> userList) {
             super.onPostExecute(userList);
@@ -241,7 +240,6 @@ public class MainActivity extends AppCompatActivity implements FilterDialogFragm
             }
         }
     }
-
     private void hideProgressBar() {
         if (pageCount == 1) {
             mProgressBar.setVisibility(View.GONE);

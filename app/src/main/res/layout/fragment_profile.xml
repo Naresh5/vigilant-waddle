@@ -4,6 +4,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.naresh.demoproject_1.MainActivity">
+    <TextView
+        android:id="@+id/text_detail_not_available"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="No Detail Found for this Detail"
+        android:textSize="20sp"
+        android:layout_above="@+id/progressbar_profile_fragment"
+        android:layout_centerInParent="true"
+        android:visibility="gone"/>
+
     <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
