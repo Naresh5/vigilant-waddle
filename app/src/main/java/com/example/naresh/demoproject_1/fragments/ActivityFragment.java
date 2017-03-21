@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -143,6 +144,7 @@ public class ActivityFragment extends Fragment {
             }
         }
     }
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -175,50 +177,56 @@ public class ActivityFragment extends Fragment {
         String websiteURL = user.getWebsiteUrl();
 
         //For About Me
-        if (aboutMe != null && !aboutMe.isEmpty()) {
-           // Spanned htmlAsSpanned = Html.fromHtml(aboutMe);
+       /* if (aboutMe != null && !aboutMe.isEmpty()) {
+            // Spanned htmlAsSpanned = Html.fromHtml(aboutMe);
+            mTextAboutUser.setText(Utility.convertTextToHTML(aboutMe));
+            mTextAboutUser.setMovementMethod(LinkMovementMethod.getInstance());
+        } else if (aboutMe == null || aboutMe.equals(null)) {
+            mTextAboutUser.setText(aboutMeException);
+        } else if (aboutMe.isEmpty()) {
+            mTextAboutUser.setText(aboutMeException);
+        }*/
+
+        if (TextUtils.isEmpty(aboutMe) ) {
+            mTextAboutUser.setText(aboutMeException);
+        } else {
             mTextAboutUser.setText(Utility.convertTextToHTML(aboutMe));
             mTextAboutUser.setMovementMethod(LinkMovementMethod.getInstance());
         }
-        else if (aboutMe == null || aboutMe.equals(null))
-        {
-            mTextAboutUser.setText(aboutMeException);
-        }
-        else if (aboutMe.isEmpty()){
-            mTextAboutUser.setText(aboutMeException);
-        }
+
         mTextAnswerCount.setText(answers);
         mTextQuestionCount.setText(questions);
         mTextViewCount.setText(views);
 
         //For Location
-
-        if (location != null && !location.isEmpty() ) {
+        if (TextUtils.isEmpty(location) ){
+            mTextUserLocation.setVisibility(View.GONE);
+        }else {
             mTextUserLocation.setText(Utility.convertTextToHTML(location));
             mTextUserLocation.setMovementMethod(LinkMovementMethod.getInstance());
         }
-        else if (location == null || location.equals(null))
-        {
-            mTextUserLocation.setVisibility(View.GONE);
-        }
-        else if (location.isEmpty()){
-            mTextUserLocation.setVisibility(View.GONE);
-        }
 
-        // For WebSite URL
-
-        if (websiteURL != null && !websiteURL.isEmpty())
-        {
+        if (TextUtils.isEmpty(websiteURL) ){
+            mTextWebSiteURL.setVisibility(View.GONE);
+        }else {
             mTextWebSiteURL.setText(websiteURL);
         }
-        else if (websiteURL == null || websiteURL.equals(null))
-        {
+       /* if (location != null && !location.isEmpty()) {
+            mTextUserLocation.setText(Utility.convertTextToHTML(location));
+            mTextUserLocation.setMovementMethod(LinkMovementMethod.getInstance());
+        } else if (location == null || location.equals(null)) {
+            mTextUserLocation.setVisibility(View.GONE);
+        } else if (location.isEmpty()) {
+            mTextUserLocation.setVisibility(View.GONE);
+        }*/
+        // For WebSite URL
+       /* if (websiteURL != null && !websiteURL.isEmpty()) {
+            mTextWebSiteURL.setText(websiteURL);
+        } else if (websiteURL == null || websiteURL.equals(null)) {
             mTextWebSiteURL.setVisibility(View.GONE);
-        }
-        else if (websiteURL.isEmpty())
-        {
+        } else if (websiteURL.isEmpty()) {
             mTextWebSiteURL.setVisibility(View.GONE);
-        }
+        }*/
     }
 }
 

@@ -10,8 +10,17 @@ public class QuestionAnswerResponse {
 
     private ArrayList<QuestionItem> items;
 
+    private boolean hasMore;
+
+
     public ArrayList<QuestionItem> getItems() {
         return items;
     }
+
+    public boolean isHasMore() {
+        return hasMore;
+    }
+
+
 
 }
