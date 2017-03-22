@@ -76,7 +76,6 @@ public class ProfileFragment extends Fragment {
         mProgressBar = (ProgressBar) rootView.findViewById(R.id.progressbar_profile_fragment);
         mTextPleaseWait = (TextView) rootView.findViewById(R.id.text_loading);
         mTextDetailNotFound = (TextView) rootView.findViewById(R.id.text_detail_not_available);
-
         mFooterView = inflater.inflate(R.layout.listview_footer, null, false);
         mListViewProfileFragment.addFooterView(mFooterView);
         mFooterView.setVisibility(View.INVISIBLE);
@@ -84,13 +83,11 @@ public class ProfileFragment extends Fragment {
         Bundle bundle = getArguments();
         userId = bundle.getInt("user_id");
 
-
         // new getQuestionAnswerDetailFromJson().execute();
 
         mListViewProfileFragment.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
                 QuestionItem item = questionAdapter.getItem(position);
                 String openLink = item.getLink();
                 Intent intent = new Intent(Intent.ACTION_VIEW)
@@ -109,7 +106,6 @@ public class ProfileFragment extends Fragment {
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
                 int lastInScreen = firstVisibleItem + visibleItemCount;
                 if (hasMoreData) {
-
                     if ((lastInScreen == totalItemCount) && (totalItemCount - 1 != 0)) {
                         if (!isLoading) {
                             Log.e("ERR -:", "Scrolling List view");
@@ -124,7 +120,6 @@ public class ProfileFragment extends Fragment {
         });
 
         //SETTING ADAPTER ...
-
         questionAdapter = new QuestionAdapter(getActivity());
         mListViewProfileFragment.setAdapter(questionAdapter);
         return rootView;
@@ -155,7 +150,6 @@ public class ProfileFragment extends Fragment {
                         .appendQueryParameter("sort", Constants.POST_SORT_ACTIVITY)
                         .appendQueryParameter("site", Constants.SITE)
                         .appendQueryParameter("filter", Constants.VALUE_POST_TYPE_FILTER);
-
 
                 String questionListUrl = uriBuilder.build().toString();
                 Log.e(TAG, "::::--FULL  URL :::-- " + uriBuilder);
@@ -210,22 +204,20 @@ public class ProfileFragment extends Fragment {
             }
         }
     }
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
 
     }
-
     @Override
     public void onDetach() {
         super.onDetach();
 
     }
-
     private void hideProgressBar() {
         if (mQuestionPageCount == 1) {
             mProgressBar.setVisibility(View.GONE);
+            mTextPleaseWait.setVisibility(View.GONE);
         } else {
             mFooterView.setVisibility(View.GONE);
         }
@@ -234,20 +226,17 @@ public class ProfileFragment extends Fragment {
     private void showProgressBar() {
         if (mQuestionPageCount == 1) {
             mProgressBar.setVisibility(View.VISIBLE);
+            mTextPleaseWait.setVisibility(View.VISIBLE);
             mFooterView.setVisibility(View.GONE);
         } else {
             mProgressBar.setVisibility(View.GONE);
+            mTextPleaseWait.setVisibility(View.GONE);
             mFooterView.setVisibility(View.VISIBLE);
         }
     }
 
 }
 
-/*
-
-
-
- */
 /*
 private class getQuestionAnswerDetailFromJson extends AsyncTask<Void, Void, String> {
         @Override
@@ -256,7 +245,6 @@ private class getQuestionAnswerDetailFromJson extends AsyncTask<Void, Void, Stri
             isLoading = true;
            // showProgressBar();
         }
-
         @Override
         protected String doInBackground(Void... params) {
             String response = null;
@@ -272,7 +260,6 @@ private class getQuestionAnswerDetailFromJson extends AsyncTask<Void, Void, Stri
                         .appendQueryParameter("site", Constants.SITE)
                         .appendQueryParameter("filter", Constants.VALUE_POST_TYPE_FILTER);
 
-
                 String questionListUrl = uriBuilder.build().toString();
 
                 URL url = new URL(questionListUrl);
@@ -287,7 +274,6 @@ private class getQuestionAnswerDetailFromJson extends AsyncTask<Void, Void, Stri
                 response = stringBuffer.toString();
 
             } catch (Exception ex) {
-
                 if (bufferedReader != null) {
                     try {
                         bufferedReader.close();
@@ -299,7 +285,6 @@ private class getQuestionAnswerDetailFromJson extends AsyncTask<Void, Void, Stri
             }
             return response;
         }
-
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
@@ -311,8 +296,5 @@ private class getQuestionAnswerDetailFromJson extends AsyncTask<Void, Void, Stri
             }
             else {
                 Log.d(TAG,"Failed to Load JSON response");
-            }
-        }
-    }
-
- */
+            } }  }
+*/

@@ -6,12 +6,14 @@
     tools:context="com.example.naresh.demoproject_1.MainActivity">
     <TextView
         android:id="@+id/text_detail_not_available"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="User has not Ask or answered any Question yet..."
+        android:paddingLeft="@dimen/padding_left_text_detail_not_available"
+        android:text="@string/string_detail_not_found"
         android:textSize="20sp"
         android:visibility="gone"
-        android:layout_centerHorizontal="true" />
+        android:textStyle="bold"
+        android:layout_centerVertical="true" />
 
     <ListView
         android:layout_width="match_parent"

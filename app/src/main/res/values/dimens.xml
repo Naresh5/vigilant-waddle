@@ -20,6 +20,7 @@
     <dimen name="user_profile_text_margin">10dp</dimen>
     <dimen name="count_text_size">20sp</dimen>
     <dimen name="black_dot_size">10dp</dimen>
+    <dimen name="padding_left_text_detail_not_available">40dp</dimen>
 
 
 </resources>

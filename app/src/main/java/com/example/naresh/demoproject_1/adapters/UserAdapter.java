@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.example.naresh.demoproject_1.R;
 import com.example.naresh.demoproject_1.models.BadgeCounts;
 import com.example.naresh.demoproject_1.models.User;
+import com.example.naresh.demoproject_1.utils.Utility;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -70,7 +71,6 @@ public class UserAdapter extends BaseAdapter implements Filterable {
         TextView userName, userReputation, userBadgeGold, userBadgeSilver, userBadgeBronze;
     }
 
-
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
@@ -95,11 +95,11 @@ public class UserAdapter extends BaseAdapter implements Filterable {
 
         Picasso.with(context).load(currentItem.getProfileImage()).into(viewHolder.userImage);
 
-        viewHolder.userName.setText(currentItem.getDisplayName());
+        viewHolder.userName.setText(Utility.convertTextToHTML(currentItem.getDisplayName()));
         viewHolder.userReputation.setText(currentItem.getReputation());
-        viewHolder.userBadgeGold.setText(Integer.toString(badgeCount.getGold()));
-        viewHolder.userBadgeSilver.setText(Integer.toString(badgeCount.getSilver()));
-        viewHolder.userBadgeBronze.setText(Integer.toString(badgeCount.getBronze()));
+        viewHolder.userBadgeGold.setText(String.valueOf(badgeCount.getGold()));
+        viewHolder.userBadgeSilver.setText(String.valueOf((badgeCount.getSilver())));
+        viewHolder.userBadgeBronze.setText(String.valueOf((badgeCount.getBronze())));
 
         return convertView;
     }
@@ -108,7 +108,6 @@ public class UserAdapter extends BaseAdapter implements Filterable {
     public Filter getFilter() {
 
         if (valueFilter == null) {
-
             valueFilter = new ValueFilter();
         }
         return valueFilter;
@@ -145,7 +144,6 @@ public class UserAdapter extends BaseAdapter implements Filterable {
 
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results) {
-
             items = (ArrayList<User>) results.values;
             notifyDataSetChanged();
         }

@@ -77,22 +77,21 @@ public class MainActivity extends AppCompatActivity implements FilterDialogFragm
             @Override
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
 
-                    int lastInScreen = firstVisibleItem + visibleItemCount;
-                    String last = String.valueOf(lastInScreen);
-                    String first = String.valueOf(firstVisibleItem);
-                    String visible = String.valueOf(visibleItemCount);
-                    Log.e("FIRST VISIBLE ITEM   :", last);
-                    Log.e("VISIBLE ITEM  Count  :", first);
-                    Log.e("Total ITEM  Count  :", visible);
+                int lastInScreen = firstVisibleItem + visibleItemCount;
+                String last = String.valueOf(lastInScreen);
+                String first = String.valueOf(firstVisibleItem);
+                String visible = String.valueOf(visibleItemCount);
+                Log.e("FIRST VISIBLE ITEM   :", last);
+                Log.e("VISIBLE ITEM  Count  :", first);
+                Log.e("Total ITEM  Count  :", visible);
 
-                    if ((lastInScreen == totalItemCount) && (totalItemCount - 1 != 0) && !isSearch) {
-                        if (!isLoading) {
-                            Log.e("ERR -:", "Scrolling List view");
-                            pageCount++;
-                            new LoadJsonData(Constants.ORDER_ASC, Constants.SORT_BY_REPUTATION, null, null).execute();
-                        }
+                if ((lastInScreen == totalItemCount) && (totalItemCount - 1 != 0) && !isSearch) {
+                    if (!isLoading) {
+                        Log.e("ERR -:", "Scrolling List view");
+                        pageCount++;
+                        new LoadJsonData(Constants.ORDER_ASC, Constants.SORT_BY_REPUTATION, null, null).execute();
                     }
-
+                }
 
 
             }
@@ -231,12 +230,13 @@ public class MainActivity extends AppCompatActivity implements FilterDialogFragm
                 UserResponse userResponse = gson.fromJson(jsonStr, UserResponse.class);
 
                 hasMoreData = userResponse.isHasMore();
-                Log.e(TAG, "HAS MORE "+hasMoreData);
+                Log.e(TAG, "HAS MORE " + hasMoreData);
                 return userResponse.getItems();
             } else {
                 return null;
             }
         }
+
         @Override
         protected void onPostExecute(List<User> userList) {
             super.onPostExecute(userList);

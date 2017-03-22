@@ -28,7 +28,7 @@ import java.util.List;
 
 
 public class ActivityFragment extends Fragment {
-    private String TAG = "ActivityFragment";
+    private String TAG = ActivityFragment.class.getSimpleName();
     private View rootView;
     private ProgressBar mProgressBar;
     private TextView mTextLoading, mTextAboutUser, mTextAnswerCount, mTextQuestionCount, mTextViewCount;
@@ -72,7 +72,6 @@ public class ActivityFragment extends Fragment {
 
         Bundle bundle = getArguments();
         userId = bundle.getInt("user_id");
-        // String userID = String.valueOf(UID);
 
         new getUserDetailFromJson().execute();
 
@@ -86,7 +85,6 @@ public class ActivityFragment extends Fragment {
         protected void onPreExecute() {
             super.onPreExecute();
             showProgressBar();
-            //  mLinerLayout.setVisibility(View.VISIBLE);
         }
 
         @Override
@@ -102,7 +100,6 @@ public class ActivityFragment extends Fragment {
                         .appendQueryParameter("sort", Constants.SORT_BY_REPUTATION)
                         .appendQueryParameter("site", Constants.SITE)
                         .appendQueryParameter("filter", Constants.VALUE_USER_ACTIVITY_FILTER);
-
                 //  https://api.stackexchange.com/2.2/users/
                 //226565?order=desc&sort=reputation&site=stackoverflow
 
@@ -132,19 +129,14 @@ public class ActivityFragment extends Fragment {
             hideProgressBar();
             mLinerLayout.setVisibility(View.VISIBLE);
             if (userList != null && userList.size() > 0) {
-
                 User user = userList.get(0);
-
                 setUserDetail(user);
-
-                //    mTextAboutUser.setMovementMethod(LinkMovementMethod.getInstance());
 
             } else {
                 Log.e(TAG, "Couldn't Fetch Data .....");
             }
         }
     }
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -169,23 +161,12 @@ public class ActivityFragment extends Fragment {
         String aboutMeException = "User Detail Not Available. . .";
 
         String aboutMe = user.getAboutMe();
-
         String answers = String.valueOf(user.getAnswerCount());
         String questions = String.valueOf(user.getQuestionCount());
         String views = String.valueOf(user.getViewCount());
         String location = user.getLocation();
         String websiteURL = user.getWebsiteUrl();
 
-        //For About Me
-       /* if (aboutMe != null && !aboutMe.isEmpty()) {
-            // Spanned htmlAsSpanned = Html.fromHtml(aboutMe);
-            mTextAboutUser.setText(Utility.convertTextToHTML(aboutMe));
-            mTextAboutUser.setMovementMethod(LinkMovementMethod.getInstance());
-        } else if (aboutMe == null || aboutMe.equals(null)) {
-            mTextAboutUser.setText(aboutMeException);
-        } else if (aboutMe.isEmpty()) {
-            mTextAboutUser.setText(aboutMeException);
-        }*/
 
         if (TextUtils.isEmpty(aboutMe) ) {
             mTextAboutUser.setText(aboutMeException);
@@ -211,22 +192,6 @@ public class ActivityFragment extends Fragment {
         }else {
             mTextWebSiteURL.setText(websiteURL);
         }
-       /* if (location != null && !location.isEmpty()) {
-            mTextUserLocation.setText(Utility.convertTextToHTML(location));
-            mTextUserLocation.setMovementMethod(LinkMovementMethod.getInstance());
-        } else if (location == null || location.equals(null)) {
-            mTextUserLocation.setVisibility(View.GONE);
-        } else if (location.isEmpty()) {
-            mTextUserLocation.setVisibility(View.GONE);
-        }*/
-        // For WebSite URL
-       /* if (websiteURL != null && !websiteURL.isEmpty()) {
-            mTextWebSiteURL.setText(websiteURL);
-        } else if (websiteURL == null || websiteURL.equals(null)) {
-            mTextWebSiteURL.setVisibility(View.GONE);
-        } else if (websiteURL.isEmpty()) {
-            mTextWebSiteURL.setVisibility(View.GONE);
-        }*/
-    }
+      }
 }
 

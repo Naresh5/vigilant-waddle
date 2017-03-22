@@ -29,7 +29,6 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
         return fragments.get(position);
     }
 
-
     @Override
     public int getCount() {
         return fragments.size();
@@ -39,6 +38,4 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
     public CharSequence getPageTitle(int position) {
         return tabTitles.get(position);
     }
-
-
 }

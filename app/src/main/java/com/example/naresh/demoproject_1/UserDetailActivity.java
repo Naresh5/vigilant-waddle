@@ -1,6 +1,5 @@
 package com.example.naresh.demoproject_1;
 
-import android.app.SearchManager;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
@@ -10,10 +9,9 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -24,9 +22,9 @@ import com.example.naresh.demoproject_1.fragments.ActivityFragment;
 import com.example.naresh.demoproject_1.fragments.ProfileFragment;
 import com.example.naresh.demoproject_1.models.BadgeCounts;
 import com.example.naresh.demoproject_1.models.User;
+import com.example.naresh.demoproject_1.utils.Utility;
 import com.squareup.picasso.Picasso;
 
-import static android.R.attr.id;
 import static com.example.naresh.demoproject_1.R.id.toolbar;
 
 public class UserDetailActivity extends AppCompatActivity {
@@ -41,7 +39,7 @@ public class UserDetailActivity extends AppCompatActivity {
     private TextView textUserName, textUserReputation, textSilverBadge, textBronzeBadge, textGoldBadge;
     private ImageView imageUser;
     private User user;
-    private String link = "http://stackoverflow.com/questions/19253786/how-to-copy-text-to-clip-board-in-android";
+    private String profileLink;
 
 
     public static Intent startIntent(Context context, User user) {
@@ -58,13 +56,15 @@ public class UserDetailActivity extends AppCompatActivity {
         Intent i = getIntent();
         user = i.getParcelableExtra(EXTRA_USER);
 
+        profileLink = user.getProfileLink();
+        Log.e(TAG, " UserDetail Link pro " + profileLink);
+
         imageUser = (ImageView) findViewById(R.id.item_image_user);
         textUserName = (TextView) findViewById(R.id.item_user_name);
         textUserReputation = (TextView) findViewById(R.id.item_user_reputation);
         textGoldBadge = (TextView) findViewById(R.id.item_user_gold);
         textSilverBadge = (TextView) findViewById(R.id.item_user_silver);
         textBronzeBadge = (TextView) findViewById(R.id.item_user_bronze);
-
 
         mToolBar = (Toolbar) findViewById(toolbar);
         mViewPager = (ViewPager) findViewById(R.id.view_pager);
@@ -74,16 +74,13 @@ public class UserDetailActivity extends AppCompatActivity {
         setSupportActionBar(mToolBar);
 
         viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
-
         viewPagerAdapter.addFragments(ActivityFragment.newInstance(user.getUserId()), "PROFILE");
-
         viewPagerAdapter.addFragments(ProfileFragment.newInstance(user.getUserId()), "ACTIVITY");
-
         mViewPager.setAdapter(viewPagerAdapter);
         mTabLayout.setupWithViewPager(mViewPager);
 
         BadgeCounts badgeCounts = user.getBadgeCounts();
-        textUserName.setText(user.getDisplayName());
+        textUserName.setText(Utility.convertTextToHTML(user.getDisplayName()));
         textUserReputation.setText(user.getReputation());
         textBronzeBadge.setText(String.valueOf(badgeCounts.getBronze()));
         textSilverBadge.setText(String.valueOf(badgeCounts.getSilver()));
@@ -99,74 +96,43 @@ public class UserDetailActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu_user_tab, menu);
         return true;
     }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-       // int id = item.getItemId();
+        // int id = item.getItemId();
 
         switch (item.getItemId()) {
             case android.R.id.home:
                 UserDetailActivity.this.finish();
                 break;
+
             case R.id.open_in_browser:
                 Intent intent = new Intent(Intent.ACTION_VIEW)
-                        .setData(Uri.parse(link));
+                        .setData(Uri.parse(profileLink));
                 startActivity(intent);
                 break;
+
             case R.id.copy_to_clipboard:
                 ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-                ClipData clip = ClipData.newPlainText("link",link);
+                ClipData clip = ClipData.newPlainText("link", profileLink);
                 clipboard.setPrimaryClip(clip);
-                ClipData abc = clipboard.getPrimaryClip();
-                ClipData.Item item1 = abc.getItemAt(0);
-                String text = item1.getText().toString();
-             //   Utils.showToast(getApplicationContext(),text);
+                ClipData clipData = clipboard.getPrimaryClip();
+                ClipData.Item data = clip.getItemAt(0);
+                String text = data.getText().toString();
+                if (text != null) {
+                    Toast.makeText(getApplicationContext(), "Copied to ClipBoard ", Toast.LENGTH_LONG).show();
+                }else {
+                    Toast.makeText(getApplicationContext(), "Failed to Copy on ClipBoard", Toast.LENGTH_LONG).show();
+                }
                 break;
-            case R.id.share:
-                Intent sendIntent = new Intent();
-                sendIntent.setAction(Intent.ACTION_SEND);
-                sendIntent.putExtra(Intent.EXTRA_TEXT, link);
-                sendIntent.setType("text/plain");
-                startActivity(Intent.createChooser(sendIntent,
-                        getResources().getString(R.string.menu_open_in_browser_title)));
-                break;
-        }
 
-        return super.onOptionsItemSelected(item);
-    }
-
-    /*
-       @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                UserTabActivity.this.finish();
-                break;
-            case R.id.open_in_browser:
-                Intent intent = new Intent(Intent.ACTION_VIEW)
-                        .setData(Uri.parse(link));
-                startActivity(intent);
-                break;
-            case R.id.copy_to_clipboard:
-                ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-                ClipData clip = ClipData.newPlainText(EXTRA_LINK, link);
-                clipboard.setPrimaryClip(clip);
-                ClipData abc = clipboard.getPrimaryClip();
-                ClipData.Item item1 = abc.getItemAt(0);
-                String text = item1.getText().toString();
-                Utils.showToast(getApplicationContext(),text);
-                break;
             case R.id.share:
-                Intent sendIntent = new Intent();
-                sendIntent.setAction(Intent.ACTION_SEND);
-                sendIntent.putExtra(Intent.EXTRA_TEXT, link);
-                sendIntent.setType("text/plain");
-                startActivity(Intent.createChooser(sendIntent,
-                        getResources().getString(R.string.share_dialog_title)));
+                Intent shareIntent = new Intent();
+                shareIntent.setAction(Intent.ACTION_SEND);
+                shareIntent.putExtra(Intent.EXTRA_TEXT, profileLink);
+                shareIntent.setType("text/plain");
+                startActivity(Intent.createChooser(shareIntent, getResources().getString(R.string.menu_open_in_browser_title)));
                 break;
         }
         return super.onOptionsItemSelected(item);
     }
-     */
-
 }

@@ -1,25 +1,28 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorActivityFragmentBackground"
-    android:orientation="vertical">
-
+    android:orientation="vertical"
+    android:layout_centerInParent="true">
 
     <ProgressBar
         android:id="@+id/progressbar_activity_fragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:visibility="gone" />
-
+        android:visibility="gone"
+        android:layout_centerInParent="true"/>
     <TextView
         android:id="@+id/text_loading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="Please Wait"
+        android:text="@string/progress_title"
         android:textSize="10sp"
-        android:visibility="gone" />
+        android:visibility="gone"
+        android:layout_centerInParent="true"
+        android:layout_below="@id/progressbar_activity_fragment"/>
+
 
     <ScrollView
         android:id="@+id/scrollView"
@@ -166,8 +169,9 @@
                 android:text="UserWebSite"
                 android:textColorLink="@color/colorUrlText" />
 
+
         </LinearLayout>
 
     </ScrollView>
 
-</LinearLayout>
+</RelativeLayout>

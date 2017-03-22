@@ -22,7 +22,6 @@ public class User implements Parcelable {
         this.badgeCounts = badgeCounts;
     }
 
-
     @SerializedName("profile_image")
     private String profileImage;
 
@@ -55,6 +54,16 @@ public class User implements Parcelable {
     @SerializedName("about_me")
     private String aboutMe;
 
+    @SerializedName("link")
+    private String profileLink;
+
+    public String getProfileLink() {
+        return profileLink;
+    }
+
+    public void setProfileLink(String profileLink) {
+        this.profileLink = profileLink;
+    }
 
     /*public User(Context context, List<User> userList) {
 
@@ -64,13 +73,11 @@ public class User implements Parcelable {
         return profileImage;
     }
 
-
     public String getDisplayName() {
         return displayName;
     }
 
     public String getReputation() {
-
         String repString;
         if (reputation < 1000) {
             repString = String.valueOf(reputation);
@@ -176,6 +183,7 @@ public class User implements Parcelable {
         dest.writeString(this.displayName);
         dest.writeLong(this.reputation);
         dest.writeInt(this.userId);
+        dest.writeString(this.profileLink);
         dest.writeParcelable(this.badgeCounts, flags);
     }
 
@@ -184,6 +192,7 @@ public class User implements Parcelable {
         this.displayName = in.readString();
         this.reputation = in.readLong();
         this.userId = in.readInt();
+        this.profileLink = in.readString();
         this.badgeCounts = in.readParcelable(BadgeCounts.class.getClassLoader());
     }
 

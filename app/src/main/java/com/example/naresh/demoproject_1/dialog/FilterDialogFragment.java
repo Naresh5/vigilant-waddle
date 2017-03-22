@@ -38,7 +38,6 @@ public class FilterDialogFragment extends DialogFragment {
 
     public OnInfoChangedListener listener;
 
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -91,7 +90,6 @@ public class FilterDialogFragment extends DialogFragment {
 
         fromDateListener = new DatePickerDialog.OnDateSetListener() {
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-
                 FromCalender.set(year, month, dayOfMonth);
                 updateFromDatePicker();
             }
@@ -99,7 +97,6 @@ public class FilterDialogFragment extends DialogFragment {
 
         toDateListener = new DatePickerDialog.OnDateSetListener() {
             public void onDateSet(DatePicker ToDatePicker, int year, int month, int dayOfMonth) {
-
                 ToCalender.set(year, month, dayOfMonth);
                 updateTODatePicker();
             }
@@ -120,7 +117,6 @@ public class FilterDialogFragment extends DialogFragment {
         btnToDatePicker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 int year = ToCalender.get(Calendar.YEAR);
                 int month = ToCalender.get(Calendar.MONTH);
                 int day = ToCalender.get(Calendar.DAY_OF_MONTH);
@@ -131,13 +127,11 @@ public class FilterDialogFragment extends DialogFragment {
 
             }
         });
-
         btnYes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String order = (String) spinnerOrder.getSelectedItem();
                 String sort = (String) spinnerSort.getSelectedItem();
-
                 String fromDate = null;
                 String toDate = null;
 
@@ -151,7 +145,6 @@ public class FilterDialogFragment extends DialogFragment {
                 dismiss();
             }
         });
-
         btnNo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -162,21 +155,17 @@ public class FilterDialogFragment extends DialogFragment {
         return rootView;
 
     }
-
     // Interfaces Declarations
 
     public interface OnInfoChangedListener {
 
         void onInfoChanged(String order, String sort, String FromDate, String ToDate);
-
     }
 
     String convertDateFormat(long timeInMilliSecond, String dateFormat) {
-
         Date date = new Date(timeInMilliSecond);
         SimpleDateFormat format = new SimpleDateFormat(dateFormat);
         return format.format(date);
-
     }
 
     private void updateFromDatePicker() {

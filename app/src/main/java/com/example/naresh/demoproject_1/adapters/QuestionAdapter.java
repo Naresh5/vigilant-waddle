@@ -25,6 +25,7 @@ import java.util.List;
  */
 
 public class QuestionAdapter extends BaseAdapter {
+
     private String TAG = "Question Adapter";
     private Context context;
     private List<QuestionItem> questionItems;
@@ -34,10 +35,8 @@ public class QuestionAdapter extends BaseAdapter {
         this.questionItems = new ArrayList<>();
     }
 
-
-
-    public void addItems(List<QuestionItem> arraylist) {
-        questionItems.addAll(arraylist);
+    public void addItems(List<QuestionItem> arrayList) {
+        questionItems.addAll(arrayList);
         notifyDataSetChanged();
     }
 
@@ -65,7 +64,7 @@ public class QuestionAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
 
         ViewHolder viewHolder;
-        LayoutInflater mInflater =(LayoutInflater)context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
+        LayoutInflater mInflater = (LayoutInflater) context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
 
         if (convertView == null) {
             convertView = mInflater.inflate(R.layout.list_qa_profile_fragment, null);
@@ -75,36 +74,31 @@ public class QuestionAdapter extends BaseAdapter {
             viewHolder.textPostTitle = (TextView) convertView.findViewById(R.id.text_post_title);
             viewHolder.textPostType = (TextView) convertView.findViewById(R.id.text_post_type);
             viewHolder.textPostDetail = (TextView) convertView.findViewById(R.id.text_post_body);
-            viewHolder.textDetailNotFound = (TextView)convertView.findViewById(R.id.text_detail_not_available);
+            viewHolder.textDetailNotFound = (TextView) convertView.findViewById(R.id.text_detail_not_available);
             convertView.setTag(viewHolder);
-
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
         QuestionItem questionItem = getItem(position);
-
         String mPostType = questionItem.getPostType();
         String postTitle = questionItem.getTitle();
         String postBody = questionItem.getBody();
 
-            if (mPostType.equalsIgnoreCase(Constants.POST_TYPE_ANSWER)) {
-                viewHolder.textPostType.setText("Answer");
-                viewHolder.imagePostType.setImageResource(R.drawable.ic_answer_profile_fragment);
-            } else if (mPostType.equalsIgnoreCase(Constants.POST_TYPE_QUESTION)) {
-                viewHolder.textPostType.setText("Question");
-                // holder.textPostType.setText(R.string.post_type_question_text);
-                viewHolder.imagePostType.setImageResource(R.drawable.ic_question_profile_fragment);
-            }
-            viewHolder.textPostTitle.setText(Utility.convertTextToHTML(postTitle));
-            viewHolder.textPostDetail.setText(Utility.convertTextToHTML(postBody));
-
+        if (mPostType.equalsIgnoreCase(Constants.POST_TYPE_ANSWER)) {
+            viewHolder.textPostType.setText("Answer");
+            viewHolder.imagePostType.setImageResource(R.drawable.ic_answer_profile_fragment);
+        } else if (mPostType.equalsIgnoreCase(Constants.POST_TYPE_QUESTION)) {
+            viewHolder.textPostType.setText("Question");
+            viewHolder.imagePostType.setImageResource(R.drawable.ic_question_profile_fragment);
+        }
+        viewHolder.textPostTitle.setText(Utility.convertTextToHTML(postTitle));
+        viewHolder.textPostDetail.setText(Utility.convertTextToHTML(postBody));
 
         return convertView;
     }
 
     private class ViewHolder {
-
         ImageView imagePostType;
-        TextView textPostType, textPostTitle, textPostDetail,textDetailNotFound;
+        TextView textPostType, textPostTitle, textPostDetail, textDetailNotFound;
     }
 }
