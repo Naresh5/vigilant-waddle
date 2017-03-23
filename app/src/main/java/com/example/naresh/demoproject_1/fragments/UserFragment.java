@@ -47,19 +47,11 @@ public class UserFragment extends Fragment implements FilterDialogFragment.OnInf
     private boolean isLoading = false;
     private boolean hasMoreData = true;
     private int pageCount = 0;
-    private String orderValue = "asc", sortValue = "reputation", fromDateValue, toDateValue;
+    public String orderValue = "asc", sortValue = "reputation", fromDateValue, toDateValue;
+
 
     public UserFragment() {
         // Required empty public constructor
-    }
-
-
-    public static UserFragment newInstance(String param1, String param2) {
-        UserFragment fragment = new UserFragment();
-        Bundle args = new Bundle();
-
-        fragment.setArguments(args);
-        return fragment;
     }
 
     @Override
@@ -167,15 +159,9 @@ public class UserFragment extends Fragment implements FilterDialogFragment.OnInf
 
         if (id == R.id.action_option) {
 
-            FilterDialogFragment filterDialogFragment = new FilterDialogFragment();
-            filterDialogFragment.setListener(this);
+            FilterDialogFragment filterDialogFragment =  FilterDialogFragment.newInstance(orderValue,sortValue,fromDateValue,toDateValue);
 
-            Bundle bundle = new Bundle();
-            bundle.putString("orderValue", orderValue);
-            bundle.putString("sortValue", sortValue);
-            bundle.putString("FromDateValue", fromDateValue);
-            bundle.putString("ToDateValue", toDateValue);
-            filterDialogFragment.setArguments(bundle);
+            filterDialogFragment.setListener(this);
 
             filterDialogFragment.show(getFragmentManager(), null);
 
@@ -183,6 +169,7 @@ public class UserFragment extends Fragment implements FilterDialogFragment.OnInf
         }
         return super.onOptionsItemSelected(item);
     }
+
 
     // Implementing method of Interface
 

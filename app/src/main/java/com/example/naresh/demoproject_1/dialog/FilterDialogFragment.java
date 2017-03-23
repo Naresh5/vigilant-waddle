@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,8 @@ import android.widget.DatePicker;
 import android.widget.Spinner;
 
 import com.example.naresh.demoproject_1.R;
+import com.example.naresh.demoproject_1.fragments.ActivityFragment;
+import com.example.naresh.demoproject_1.fragments.UserFragment;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -32,27 +35,30 @@ public class FilterDialogFragment extends DialogFragment {
     private Button btnFromDatePicker, btnToDatePicker, btnYes, btnNo;
     private String myDateFormat = "dd/MM/yyyy";
     private String toDateValue, fromDateValue;
-
     Calendar FromCalender = Calendar.getInstance();
     Calendar ToCalender = Calendar.getInstance();
+    private static final String ARG_ORDER_VAL = "orderValue", ARG_SORT_VAL = "sortValue";
+    private static final String ARG_FROM_DATE  ="FromDateValue", ARG_TO_DATE = "ToDateValue";
+
+    public OnInfoChangedListener listener;
 
     public void setListener(OnInfoChangedListener listener) {
         this.listener = listener;
     }
-
-    public OnInfoChangedListener listener;
-
-    /*@Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        try {
-            listener = (OnInfoChangedListener) context;
-        } catch (ClassCastException e) {
-            e.printStackTrace();
-        }
-    }
-*/
     DatePickerDialog.OnDateSetListener fromDateListener, toDateListener;
+
+
+    public static FilterDialogFragment newInstance(String orderVal, String sortVal, String fromDateVal, String toDateVal) {
+
+        FilterDialogFragment filterDialogFragment = new FilterDialogFragment();
+        Bundle bundle = new Bundle();
+            bundle.putString(ARG_ORDER_VAL, orderVal);
+            bundle.putString(ARG_SORT_VAL, sortVal);
+            bundle.putString(ARG_FROM_DATE, fromDateVal);
+            bundle.putString(ARG_TO_DATE, toDateVal);
+            filterDialogFragment.setArguments(bundle);
+            return filterDialogFragment;
+        }
 
     @Nullable
     @Override
@@ -69,11 +75,10 @@ public class FilterDialogFragment extends DialogFragment {
         btnNo = (Button) rootView.findViewById(R.id.btn_no);
 
         Bundle bundle = getArguments();
-
-        String orderVal = bundle.getString("orderValue");
-        String sortVal = bundle.getString("sortValue");
-        String fromDateVal = bundle.getString("FromDateValue");
-        String toDateVal = bundle.getString("ToDateValue");
+        String orderVal = bundle.getString(ARG_ORDER_VAL);
+        String sortVal = bundle.getString(ARG_SORT_VAL);
+        String fromDateVal = bundle.getString(ARG_FROM_DATE);
+        String toDateVal = bundle.getString(ARG_TO_DATE);
 
         Log.e(TAG, "Order Value" + orderVal);
         Log.e(TAG, "SortValue" + sortVal);
@@ -81,7 +86,7 @@ public class FilterDialogFragment extends DialogFragment {
         Log.e(TAG, "ToDate Value" + toDateVal);
 
         int orderPosition = getItemPosition(R.array.order_arrays, orderVal);
-        int sortPosition = getItemPosition(R.array.sort_arrays, sortVal);
+        int sortPosition = getItemPosition(R.array.sort_arrays,  sortVal);
 
         if (orderPosition != -1) {
             spinnerOrder.setSelection(orderPosition);
