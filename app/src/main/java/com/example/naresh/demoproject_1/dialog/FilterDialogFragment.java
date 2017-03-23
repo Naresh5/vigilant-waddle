@@ -26,6 +26,7 @@ import java.util.Locale;
  */
 
 public class FilterDialogFragment extends DialogFragment {
+
     private String TAG = FilterDialogFragment.class.getSimpleName();
     private View rootView;
     private Spinner spinnerOrder, spinnerSort;
@@ -36,9 +37,13 @@ public class FilterDialogFragment extends DialogFragment {
     Calendar FromCalender = Calendar.getInstance();
     Calendar ToCalender = Calendar.getInstance();
 
+    public void setListener(OnInfoChangedListener listener) {
+        this.listener = listener;
+    }
+
     public OnInfoChangedListener listener;
 
-    @Override
+    /*@Override
     public void onAttach(Context context) {
         super.onAttach(context);
         try {
@@ -47,7 +52,7 @@ public class FilterDialogFragment extends DialogFragment {
             e.printStackTrace();
         }
     }
-
+*/
     DatePickerDialog.OnDateSetListener fromDateListener, toDateListener;
 
     @Nullable
@@ -145,6 +150,7 @@ public class FilterDialogFragment extends DialogFragment {
                 dismiss();
             }
         });
+
         btnNo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

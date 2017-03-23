@@ -1,24 +1,28 @@
-package com.example.naresh.demoproject_1;
+package com.example.naresh.demoproject_1.fragments;
 
-import android.app.SearchManager;
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.app.Fragment;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.example.naresh.demoproject_1.NavigationDrawerActivity;
+import com.example.naresh.demoproject_1.R;
+import com.example.naresh.demoproject_1.UserDetailActivity;
 import com.example.naresh.demoproject_1.adapters.UserAdapter;
 import com.example.naresh.demoproject_1.dialog.FilterDialogFragment;
 import com.example.naresh.demoproject_1.models.User;
@@ -31,13 +35,13 @@ import com.google.gson.Gson;
 import java.net.MalformedURLException;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements FilterDialogFragment.OnInfoChangedListener {
 
-    private String TAG = MainActivity.class.getSimpleName();
+public class UserFragment extends Fragment  implements FilterDialogFragment.OnInfoChangedListener{
+    private View rootView;
+    private String TAG = UserFragment.class.getSimpleName();
     private ProgressBar mProgressBar;
     private ListView mListView;
     private View footerView;
-    private Context context = MainActivity.this;
     private UserAdapter adapter;
     private boolean isSearch = false;
     private boolean isLoading = false;
@@ -45,15 +49,36 @@ public class MainActivity extends AppCompatActivity implements FilterDialogFragm
     private int pageCount = 0;
     private String orderValue = "asc", sortValue = "reputation", fromDateValue, toDateValue;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        mListView = (ListView) findViewById(R.id.list_view);
+    public UserFragment() {
+        // Required empty public constructor
+    }
 
-        mProgressBar = (ProgressBar) findViewById(R.id.progress_bar);
-        footerView = ((LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE))
-                .inflate(R.layout.listview_footer, null, false);
+
+    public static UserFragment newInstance(String param1, String param2) {
+        UserFragment fragment = new UserFragment();
+        Bundle args = new Bundle();
+
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+
+
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        rootView = inflater.inflate(R.layout.fragment_user_fragment_navigation, container, false);
+        mListView = (ListView) rootView.findViewById(R.id.list_view_user_fragment_nav);
+        mProgressBar = (ProgressBar) rootView.findViewById(R.id.progress_bar_user_fragment_nav);
+
+
+        footerView = LayoutInflater.from(getActivity()).inflate(R.layout.listview_footer,null,false);
         mListView.addFooterView(footerView);
         footerView.setVisibility(View.INVISIBLE);
 
@@ -62,7 +87,7 @@ public class MainActivity extends AppCompatActivity implements FilterDialogFragm
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 User user = (User) adapter.getItem(position);
-                Intent intentUserDetailActivity = UserDetailActivity.startIntent(MainActivity.this, user);
+                Intent intentUserDetailActivity = UserDetailActivity.startIntent(getActivity(), user);
                 startActivity(intentUserDetailActivity);
 
             }
@@ -97,26 +122,36 @@ public class MainActivity extends AppCompatActivity implements FilterDialogFragm
             }
         });
 
-        adapter = new UserAdapter(MainActivity.this);
+        adapter = new UserAdapter(getActivity());
         mListView.setAdapter(adapter);
 
-        boolean isNetwork = Utility.networkIsAvailable(context);
+        boolean isNetwork = Utility.networkIsAvailable(getActivity());
         if (!isNetwork) {
-            Toast.makeText(context, "Failed to Connect with Internet", Toast.LENGTH_SHORT).show();
+           Toast.makeText(getActivity(), "Failed to Connect with Internet", Toast.LENGTH_SHORT).show();
         } else {
-            Toast.makeText(context, "Network Available. . .!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "Network Available. . .!", Toast.LENGTH_SHORT).show();
         }
+
+        return rootView;
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_search, menu);
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
 
-        SearchManager searchManager =
+        inflater.inflate(R.menu.menu_search, menu);
+
+       /* SearchManager searchManager =
                 (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+
         SearchView searchView =
                 (SearchView) menu.findItem(R.id.action_search).getActionView();
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+*/
+        MenuItem item = menu.findItem(R.id.action_search);
+        SearchView searchView = new SearchView(((NavigationDrawerActivity) getActivity()).getSupportActionBar().getThemedContext());
+        MenuItemCompat.setShowAsAction(item, MenuItemCompat.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW | MenuItemCompat.SHOW_AS_ACTION_IF_ROOM);
+        MenuItemCompat.setActionView(item, searchView);
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
 
@@ -133,7 +168,7 @@ public class MainActivity extends AppCompatActivity implements FilterDialogFragm
                 return false;
             }
         });
-        return true;
+        return ;
     }
 
     @Override
@@ -142,17 +177,17 @@ public class MainActivity extends AppCompatActivity implements FilterDialogFragm
 
         if (id == R.id.action_option) {
 
-            FilterDialogFragment FilterDialogFragment = new FilterDialogFragment();
+            FilterDialogFragment filterDialogFragment = new FilterDialogFragment();
+            filterDialogFragment.setListener(this);
 
             Bundle bundle = new Bundle();
-
             bundle.putString("orderValue", orderValue);
             bundle.putString("sortValue", sortValue);
             bundle.putString("FromDateValue", fromDateValue);
             bundle.putString("ToDateValue", toDateValue);
-            FilterDialogFragment.setArguments(bundle);
+            filterDialogFragment.setArguments(bundle);
 
-            FilterDialogFragment.show(getSupportFragmentManager(), null);
+            filterDialogFragment.show(getFragmentManager(), null);
 
             return true;
         }
@@ -170,7 +205,7 @@ public class MainActivity extends AppCompatActivity implements FilterDialogFragm
         this.toDateValue = ToDate;
 
         adapter.clearAdapter();
-        new LoadJsonData(order, sort, FromDate, ToDate).execute();
+        new  LoadJsonData(order, sort, FromDate, ToDate).execute();
     }
 
     public class LoadJsonData extends AsyncTask<Object, Object, List<User>> {
@@ -245,7 +280,7 @@ public class MainActivity extends AppCompatActivity implements FilterDialogFragm
             if (userList != null) {
                 adapter.addItems(userList);
             } else {
-                Toast.makeText(context, "Couldn't Load Json Data", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Couldn't Load Json Data", Toast.LENGTH_SHORT).show();
             }
         }
     }

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_user"
+            android:icon="@drawable/ic_group_black_24dp"
+            android:title="Users" />
+        <item
+            android:id="@+id/nav_question"
+            android:icon="@drawable/ic_question"
+            android:title="Questions" />
+        <item
+            android:id="@+id/nav_tag"
+            android:icon="@drawable/ic_local_offer_black_24dp"
+            android:title="Tags" />
+    </group>
+</menu>

@@ -23,4 +23,9 @@
     <string name="menu_copy_to_clipboard">Copy to ClipBoard</string>
     <string name="menu_share">Share </string>
     <string name="string_detail_not_found">User has not Asked or answered any Question yet…</string>
+
+    // NAVIGATION DRAWER ----->
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
+
 </resources>
