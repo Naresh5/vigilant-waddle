@@ -22,7 +22,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/userName"
-            android:text="Question_Type"
+            android:text="@string/question_type"
             android:textStyle="bold"
             android:includeFontPadding="false"
             android:textSize="18sp" />
@@ -31,7 +31,7 @@
             android:id="@+id/text_post_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Question_title"
+            android:text="@string/question_title"
             android:textStyle="bold"
             android:textSize="@dimen/badge_text_size" />
 
@@ -41,7 +41,7 @@
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:maxLines="4"
-            android:text="Question_Body"
+            android:text="@string/question_body"
            android:textSize="@dimen/badge_text_size" />
 
     </LinearLayout>

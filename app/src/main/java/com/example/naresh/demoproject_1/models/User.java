@@ -14,7 +14,6 @@ public class User implements Parcelable {
     public User(){
 
     }
-
     public User(String displayName, String profileImage, int reputation, BadgeCounts badgeCounts) {
         this.displayName = displayName;
         this.profileImage = profileImage;

@@ -37,7 +37,7 @@
             android:id="@+id/tab_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/tablayout_border_line"
+            android:background="@drawable/tab_layout_border_line"
             app:tabGravity="fill"
             app:tabIndicatorColor="@color/colorSelectedTabBorder"
             app:tabMode="fixed" />

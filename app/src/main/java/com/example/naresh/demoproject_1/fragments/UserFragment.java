@@ -36,7 +36,7 @@ import java.net.MalformedURLException;
 import java.util.List;
 
 
-public class UserFragment extends Fragment  implements FilterDialogFragment.OnInfoChangedListener{
+public class UserFragment extends Fragment implements FilterDialogFragment.OnInfoChangedListener {
     private View rootView;
     private String TAG = UserFragment.class.getSimpleName();
     private ProgressBar mProgressBar;
@@ -73,12 +73,12 @@ public class UserFragment extends Fragment  implements FilterDialogFragment.OnIn
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        rootView = inflater.inflate(R.layout.fragment_user_fragment_navigation, container, false);
+        rootView = inflater.inflate(R.layout.user_fragment_navigation, container, false);
         mListView = (ListView) rootView.findViewById(R.id.list_view_user_fragment_nav);
         mProgressBar = (ProgressBar) rootView.findViewById(R.id.progress_bar_user_fragment_nav);
 
 
-        footerView = LayoutInflater.from(getActivity()).inflate(R.layout.listview_footer,null,false);
+        footerView = LayoutInflater.from(getActivity()).inflate(R.layout.listview_footer, null, false);
         mListView.addFooterView(footerView);
         footerView.setVisibility(View.INVISIBLE);
 
@@ -117,8 +117,6 @@ public class UserFragment extends Fragment  implements FilterDialogFragment.OnIn
                         new LoadJsonData(Constants.ORDER_ASC, Constants.SORT_BY_REPUTATION, null, null).execute();
                     }
                 }
-
-
             }
         });
 
@@ -127,11 +125,10 @@ public class UserFragment extends Fragment  implements FilterDialogFragment.OnIn
 
         boolean isNetwork = Utility.networkIsAvailable(getActivity());
         if (!isNetwork) {
-           Toast.makeText(getActivity(), "Failed to Connect with Internet", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "Failed to Connect with Internet", Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(getActivity(), "Network Available. . .!", Toast.LENGTH_SHORT).show();
         }
-
         return rootView;
     }
 
@@ -141,13 +138,6 @@ public class UserFragment extends Fragment  implements FilterDialogFragment.OnIn
 
         inflater.inflate(R.menu.menu_search, menu);
 
-       /* SearchManager searchManager =
-                (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-
-        SearchView searchView =
-                (SearchView) menu.findItem(R.id.action_search).getActionView();
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-*/
         MenuItem item = menu.findItem(R.id.action_search);
         SearchView searchView = new SearchView(((NavigationDrawerActivity) getActivity()).getSupportActionBar().getThemedContext());
         MenuItemCompat.setShowAsAction(item, MenuItemCompat.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW | MenuItemCompat.SHOW_AS_ACTION_IF_ROOM);
@@ -168,7 +158,7 @@ public class UserFragment extends Fragment  implements FilterDialogFragment.OnIn
                 return false;
             }
         });
-        return ;
+        return;
     }
 
     @Override
@@ -205,7 +195,7 @@ public class UserFragment extends Fragment  implements FilterDialogFragment.OnIn
         this.toDateValue = ToDate;
 
         adapter.clearAdapter();
-        new  LoadJsonData(order, sort, FromDate, ToDate).execute();
+        new LoadJsonData(order, sort, FromDate, ToDate).execute();
     }
 
     public class LoadJsonData extends AsyncTask<Object, Object, List<User>> {

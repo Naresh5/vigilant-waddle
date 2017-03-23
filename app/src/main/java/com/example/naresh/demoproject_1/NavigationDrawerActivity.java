@@ -33,11 +33,10 @@ public class NavigationDrawerActivity extends AppCompatActivity {
         nvDrawer = (NavigationView) findViewById(R.id.nvView);
 
         setupDrawerContent(nvDrawer);
-
         drawerToggle = setupDrawerToggle();
+
         // Tie DrawerLayout events to the ActionBarToggle
         mDrawer.addDrawerListener(drawerToggle);
-
     }
 
     @Override
@@ -61,6 +60,7 @@ public class NavigationDrawerActivity extends AppCompatActivity {
 
     public void selectDrawerItem(MenuItem menuItem) {
         // Create a new fragment and specify the fragment to show based on nav item clicked
+
         Fragment fragment = null;
         Class fragmentClass;
         switch (menuItem.getItemId()) {
@@ -76,7 +76,6 @@ public class NavigationDrawerActivity extends AppCompatActivity {
             default:
                 fragmentClass = UserFragment.class;
         }
-
         try {
             fragment = (Fragment) fragmentClass.newInstance();
         } catch (Exception e) {
@@ -84,13 +83,17 @@ public class NavigationDrawerActivity extends AppCompatActivity {
         }
 
         // Insert the fragment by replacing any existing fragment
+
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
 
         // Highlight the selected item has been done by NavigationView
+
         menuItem.setChecked(true);
+
         // Set action bar title
         setTitle(menuItem.getTitle());
+
         // Close the navigation drawer
         mDrawer.closeDrawers();
     }
@@ -104,6 +107,7 @@ public class NavigationDrawerActivity extends AppCompatActivity {
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
+
         // Sync the toggle state after onRestoreInstanceState has occurred.
         drawerToggle.syncState();
     }
@@ -111,6 +115,7 @@ public class NavigationDrawerActivity extends AppCompatActivity {
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
+
         // Pass any configuration change to the drawer toggles
         drawerToggle.onConfigurationChanged(newConfig);
     }

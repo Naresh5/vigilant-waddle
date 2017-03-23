@@ -22,6 +22,10 @@
     <dimen name="count_text_size">20sp</dimen>
     <dimen name="black_dot_size">10dp</dimen>
     <dimen name="padding_left_text_detail_not_available">40dp</dimen>
+    <dimen name="user_item_padding_top">10dp</dimen>
+    <dimen name="user_item_padding_left">15dp</dimen>
+    <dimen name="user_item_image_width">50dp</dimen>
+    <dimen name="item_list_margin_right">12dp</dimen>
 
 
 </resources>

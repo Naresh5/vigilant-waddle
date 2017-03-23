@@ -100,12 +100,13 @@ public class ActivityFragment extends Fragment {
                         .appendQueryParameter("sort", Constants.SORT_BY_REPUTATION)
                         .appendQueryParameter("site", Constants.SITE)
                         .appendQueryParameter("filter", Constants.VALUE_USER_ACTIVITY_FILTER);
+
                 //  https://api.stackexchange.com/2.2/users/
                 //226565?order=desc&sort=reputation&site=stackoverflow
 
                 Uri uri = uriBuilder.build();
                 jsonStr = sh.makeServiceCall(uri.toString());
-                Log.e(TAG, " JsonRes for DFragment" + jsonStr);
+                Log.e(TAG, " Json Response for activity fragment" + jsonStr);
 
             } catch (MalformedURLException e) {
                 e.printStackTrace();
@@ -158,7 +159,7 @@ public class ActivityFragment extends Fragment {
     }
 
     public void setUserDetail(User user) {
-        String aboutMeException = "User Detail Not Available. . .";
+        String aboutMeException = getString(R.string.user_detail_exception_activity_fragment);
 
         String aboutMe = user.getAboutMe();
         String answers = String.valueOf(user.getAnswerCount());

@@ -71,7 +71,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
-                        android:text="33607"
+                        android:text="@string/answer_count_demo"
                         android:textColor="@color/colorCount"
                         android:textSize="@dimen/count_text_size" />
 
@@ -80,7 +80,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
-                        android:text="answers"
+                        android:text="@string/answers_count_text"
                         android:textColor="@color/colorCountText" />
                 </LinearLayout>
 
@@ -97,7 +97,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
-                        android:text="42"
+                        android:text="@string/question_count_demo"
                         android:textColor="@color/colorCount"
                         android:textSize="@dimen/count_text_size" />
 
@@ -106,7 +106,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
-                        android:text="questions"
+                        android:text="@string/questions_count_text"
                         android:textColor="@color/colorCountText" />
                 </LinearLayout>
 
@@ -122,7 +122,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
-                        android:text="1350494"
+                        android:text="@string/view_count_demo"
                         android:textColor="@color/colorCount"
                         android:textSize="@dimen/count_text_size" />
 
@@ -131,7 +131,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
-                        android:text="total views"
+                        android:text="@string/total_views_text"
                         android:textColor="@color/colorCountText" />
                 </LinearLayout>
 

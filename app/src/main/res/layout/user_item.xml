@@ -3,16 +3,16 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:paddingTop="10dp"
-    android:paddingLeft="15dp"
+    android:paddingTop="@dimen/user_item_padding_top"
+    android:paddingLeft="@dimen/user_item_padding_left"
     android:background="@color/colorActivityToolBar">
 
     <ImageView
         android:id="@+id/item_image_user"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="@dimen/user_item_image_width"
+        android:layout_height="@dimen/user_item_image_width"
         android:scaleType="fitXY"
-        android:src="@drawable/ic_userdemo" />
+        android:src="@drawable/ic_user_demo" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -25,7 +25,7 @@
             android:id="@+id/item_user_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Jon Skeet"
+            android:text="@string/user_item_demo_user"
             android:textColor="@color/colorUserNameText"
             android:textSize="17sp"
             android:textStyle="bold" />
@@ -41,7 +41,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="15dp"
-                android:text="933k"
+                android:text="@string/user_itm_demo_reputation"
                 android:textColor="@color/colorUserNameText"
                 android:textSize="@dimen/badge_text_size"
                 android:textStyle="bold" />
@@ -53,8 +53,8 @@
                 android:drawableLeft="@drawable/badge_gold"
                 android:drawablePadding="@dimen/badge_drawable_padding"
                 android:gravity="center"
-                android:text="7671"
-                android:layout_marginRight="12dp"
+                android:text="@string/user_itm_demo_gold_badge"
+                android:layout_marginRight="@dimen/item_list_margin_right"
                 android:textColor="@color/colorItem_Badge_Text"
                 android:textSize="@dimen/item_badge_text_size" />
 
@@ -65,8 +65,8 @@
                 android:drawableLeft="@drawable/badge_silver"
                 android:drawablePadding="@dimen/badge_drawable_padding"
                 android:gravity="center"
-                android:text="6819"
-                android:layout_marginRight="12dp"
+                android:text="@string/user_itm_demo_silver_badge"
+                android:layout_marginRight="@dimen/item_list_margin_right"
                 android:textColor="@color/colorItem_Badge_Text"
                 android:textSize="@dimen/item_badge_text_size" />
 
@@ -77,8 +77,8 @@
                 android:drawableLeft="@drawable/badge_bronze"
                 android:drawablePadding="@dimen/badge_drawable_padding"
                 android:gravity="center"
-                android:text="527"
-                android:layout_marginRight="12dp"
+                android:text="@string/user_itm_demo_bronze_badge"
+                android:layout_marginRight="@dimen/item_list_margin_right"
                 android:textColor="@color/colorItem_Badge_Text"
                 android:textSize="@dimen/item_badge_text_size" />
         </LinearLayout>

@@ -4,14 +4,14 @@
         <item
             android:id="@+id/nav_user"
             android:icon="@drawable/ic_group_black_24dp"
-            android:title="Users" />
+            android:title="@string/menu_users_title" />
         <item
             android:id="@+id/nav_question"
             android:icon="@drawable/ic_question"
-            android:title="Questions" />
+            android:title="@string/menu_questions_title" />
         <item
             android:id="@+id/nav_tag"
             android:icon="@drawable/ic_local_offer_black_24dp"
-            android:title="Tags" />
+            android:title="@string/menu_tags_title" />
     </group>
 </menu>

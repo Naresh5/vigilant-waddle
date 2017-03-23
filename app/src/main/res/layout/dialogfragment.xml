@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:padding="@dimen/dialog_fragment_padding"
-            android:text="Order" />
+            android:text="@string/order_dialog_fragment" />
 
         <Spinner
             android:id="@+id/spinner_order"
@@ -44,7 +44,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:padding="@dimen/dialog_fragment_padding"
-            android:text="Sort" />
+            android:text="@string/sort_dialog_fragment" />
 
         <Spinner
             android:id="@+id/spinner_sort"
@@ -71,7 +71,7 @@
             android:layout_alignParentTop="false"
             android:layout_weight="1"
             android:padding="@dimen/dialog_fragment_padding"
-            android:text="From Date" />
+            android:text="@string/from_date_dialog_fragment" />
 
         <Button
             android:id="@+id/btn_from_date_picker"
@@ -79,7 +79,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:padding="@dimen/dialog_fragment_padding"
-            android:text="Pick From Here" />
+            android:text="@string/pick_from_here_dialog_fragment" />
     </LinearLayout>
 
     <LinearLayout
@@ -98,7 +98,7 @@
             android:layout_alignParentTop="false"
             android:layout_weight="1"
             android:padding="@dimen/dialog_fragment_padding"
-            android:text="To Date" />
+            android:text="@string/to_date_dialog_fragment" />
 
         <Button
             android:id="@+id/btn_to_date_picker"
@@ -106,7 +106,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:padding="@dimen/dialog_fragment_padding"
-            android:text="Pick From Here" />
+            android:text="@string/btn_pick_from_here_dialog_fragment" />
 
     </LinearLayout>
 
@@ -125,7 +125,7 @@
             android:layout_alignParentTop="false"
             android:layout_weight="1"
             android:padding="@dimen/dialog_fragment_padding"
-            android:text="Yes" />
+            android:text="@string/btn_yes_dialog_fragment" />
 
         <Button
             android:id="@+id/btn_no"
@@ -133,7 +133,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:padding="@dimen/dialog_fragment_padding"
-            android:text="No" />
+            android:text="@string/btn_no_dialog_fragment" />
 
     </LinearLayout>
 

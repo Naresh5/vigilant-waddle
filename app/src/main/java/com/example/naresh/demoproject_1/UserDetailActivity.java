@@ -57,7 +57,7 @@ public class UserDetailActivity extends AppCompatActivity {
         user = i.getParcelableExtra(EXTRA_USER);
 
         profileLink = user.getProfileLink();
-        Log.e(TAG, " UserDetail Link pro " + profileLink);
+        Log.e(TAG, " UserDetail  profileLink " + profileLink);
 
         imageUser = (ImageView) findViewById(R.id.item_image_user);
         textUserName = (TextView) findViewById(R.id.item_user_name);
@@ -74,8 +74,8 @@ public class UserDetailActivity extends AppCompatActivity {
         setSupportActionBar(mToolBar);
 
         viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
-        viewPagerAdapter.addFragments(ActivityFragment.newInstance(user.getUserId()), "PROFILE");
-        viewPagerAdapter.addFragments(ProfileFragment.newInstance(user.getUserId()), "ACTIVITY");
+        viewPagerAdapter.addFragments(ActivityFragment.newInstance(user.getUserId()), getString(R.string.profile_fragmet_title));
+        viewPagerAdapter.addFragments(ProfileFragment.newInstance(user.getUserId()), getString(R.string.activity_fragment_title));
         mViewPager.setAdapter(viewPagerAdapter);
         mTabLayout.setupWithViewPager(mViewPager);
 
@@ -87,7 +87,7 @@ public class UserDetailActivity extends AppCompatActivity {
         textGoldBadge.setText(String.valueOf(badgeCounts.getGold()));
         Picasso.with(UserDetailActivity.this)
                 .load(user.getProfileImage())
-                .placeholder(R.drawable.ic_userdemo)
+                .placeholder(R.drawable.ic_user_demo)
                 .into(imageUser);
     }
 
@@ -96,9 +96,9 @@ public class UserDetailActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu_user_tab, menu);
         return true;
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // int id = item.getItemId();
 
         switch (item.getItemId()) {
             case android.R.id.home:
@@ -120,7 +120,7 @@ public class UserDetailActivity extends AppCompatActivity {
                 String text = data.getText().toString();
                 if (text != null) {
                     Toast.makeText(getApplicationContext(), "Copied to ClipBoard ", Toast.LENGTH_LONG).show();
-                }else {
+                } else {
                     Toast.makeText(getApplicationContext(), "Failed to Copy on ClipBoard", Toast.LENGTH_LONG).show();
                 }
                 break;

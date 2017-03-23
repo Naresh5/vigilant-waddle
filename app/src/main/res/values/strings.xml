@@ -23,9 +23,47 @@
     <string name="menu_copy_to_clipboard">Copy to ClipBoard</string>
     <string name="menu_share">Share </string>
     <string name="string_detail_not_found">User has not Asked or answered any Question yet…</string>
+    <string name="post_question_type">Question</string>
+    <string name="post_answer_type">Answer</string>
 
     // NAVIGATION DRAWER ----->
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
+    <string name="menu_users_title">Users</string>
+    <string name="menu_questions_title">Questions</string>
+    <string name="menu_tags_title">Tags</string>
+    <string name="menu_search">Search</string>
+    <string name="menu_option" />
+    <string name="answer_count_demo">33607</string>
+    <string name="answers_count_text">answers</string>
+    <string name="question_count_demo">42</string>
+    <string name="questions_count_text">questions</string>
+    <string name="view_count_demo">1350494</string>
+    <string name="total_views_text">total views</string>
+    <string name="question_type">Question_Type</string>
+    <string name="question_title">Question_title</string>
+    <string name="question_body">Question_Body</string>
+    <string name="list_raw_user_name">User_Name</string>
+    <string name="reputation_demo">93.9k</string>
+    <string name="badge_gold_demo">20</string>
+    <string name="badge_silver_demo">33</string>
+    <string name="badge_bronze_demo">32</string>
+    <string name="order_dialog_fragment">Order</string>
+    <string name="sort_dialog_fragment">Sort</string>
+    <string name="from_date_dialog_fragment">From Date</string>
+    <string name="pick_from_here_dialog_fragment">Pick From Here</string>
+    <string name="to_date_dialog_fragment">To Date</string>
+    <string name="btn_pick_from_here_dialog_fragment">Pick From Here</string>
+    <string name="btn_yes_dialog_fragment">Yes</string>
+    <string name="btn_no_dialog_fragment">No</string>
+    <string name="nav_header_text">Guest User</string>
+    <string name="user_item_demo_user">Jon Skeet</string>
+    <string name="user_itm_demo_reputation">933k</string>
+    <string name="user_itm_demo_gold_badge">7671</string>
+    <string name="user_itm_demo_silver_badge">6819</string>
+    <string name="user_itm_demo_bronze_badge">527</string>
+    <string name="user_detail_exception_activity_fragment">User Detail Not Available. . .</string>
+    <string name="profile_fragmet_title">PROFILE</string>
+    <string name="activity_fragment_title">ACTIVITY</string>
 
 </resources>

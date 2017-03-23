@@ -20,7 +20,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_toRightOf="@id/user_image"
-        android:text="User_Name"
+        android:text="@string/list_raw_user_name"
         android:textColor="@color/userName"
         android:textSize="15dp"
         android:textStyle="bold" />
@@ -36,7 +36,7 @@
             android:id="@+id/user_reputation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="93.9k"
+            android:text="@string/reputation_demo"
             android:textColor="@color/reputation"
             android:textSize="12sp"
             android:textStyle="bold" />
@@ -48,7 +48,7 @@
             android:drawableLeft="@drawable/badge_gold"
             android:drawablePadding="@dimen/badge_drawable_padding"
             android:paddingLeft="@dimen/badge_padding_left"
-            android:text="20"
+            android:text="@string/badge_gold_demo"
             android:textSize="@dimen/badge_text_size" />
 
         <TextView
@@ -58,7 +58,7 @@
             android:drawableLeft="@drawable/badge_silver"
             android:drawablePadding="@dimen/badge_drawable_padding"
             android:paddingLeft="@dimen/badge_padding_left"
-            android:text="33"
+            android:text="@string/badge_silver_demo"
             android:textSize="@dimen/badge_text_size" />
 
         <TextView
@@ -68,7 +68,7 @@
             android:drawableLeft="@drawable/badge_bronze"
             android:drawablePadding="@dimen/badge_drawable_padding"
             android:paddingLeft="@dimen/badge_drawable_padding"
-            android:text="32"
+            android:text="@string/badge_bronze_demo"
             android:textSize="@dimen/badge_text_size" />
 
     </LinearLayout>

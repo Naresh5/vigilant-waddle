@@ -101,14 +101,13 @@ public class ProfileFragment extends Fragment {
             public void onScrollStateChanged(AbsListView view, int scrollState) {
 
             }
-
             @Override
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
                 int lastInScreen = firstVisibleItem + visibleItemCount;
                 if (hasMoreData) {
                     if ((lastInScreen == totalItemCount) && (totalItemCount - 1 != 0)) {
                         if (!isLoading) {
-                            Log.e("ERR -:", "Scrolling List view");
+                            Log.e("ERROR -:", "Scrolling List view");
                             mQuestionPageCount++;
                             new getQuestionAnswerDetailFromJson().execute();
                         }
@@ -152,7 +151,7 @@ public class ProfileFragment extends Fragment {
                         .appendQueryParameter("filter", Constants.VALUE_POST_TYPE_FILTER);
 
                 String questionListUrl = uriBuilder.build().toString();
-                Log.e(TAG, "::::--FULL  URL :::-- " + uriBuilder);
+                Log.e(TAG, ":--FULL  URL :-- " + uriBuilder);
 
                 URL url = new URL(questionListUrl);
                 urlConn = url.openConnection();
@@ -236,65 +235,3 @@ public class ProfileFragment extends Fragment {
     }
 
 }
-
-/*
-private class getQuestionAnswerDetailFromJson extends AsyncTask<Void, Void, String> {
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            isLoading = true;
-           // showProgressBar();
-        }
-        @Override
-        protected String doInBackground(Void... params) {
-            String response = null;
-            URLConnection urlConn = null;
-            BufferedReader bufferedReader = null;
-            try {
-                Uri.Builder uriBuilder = Uri.parse(Constants.BASE_URL).buildUpon()
-                        .appendPath("2.2")
-                        .appendPath("posts")
-                        .appendPath(String.valueOf(userId))
-                        .appendQueryParameter("order", Constants.ORDER_DESC)
-                        .appendQueryParameter("sort", Constants.POST_SORT_ACTIVITY)
-                        .appendQueryParameter("site", Constants.SITE)
-                        .appendQueryParameter("filter", Constants.VALUE_POST_TYPE_FILTER);
-
-                String questionListUrl = uriBuilder.build().toString();
-
-                URL url = new URL(questionListUrl);
-                urlConn = url.openConnection();
-                bufferedReader = new BufferedReader(new InputStreamReader(urlConn.getInputStream()));
-
-                StringBuffer stringBuffer = new StringBuffer();
-                String line;
-                while ((line = bufferedReader.readLine()) != null) {
-                    stringBuffer.append(line);
-                }
-                response = stringBuffer.toString();
-
-            } catch (Exception ex) {
-                if (bufferedReader != null) {
-                    try {
-                        bufferedReader.close();
-                    } catch (IOException e) {
-
-                        e.printStackTrace();
-                    }
-                }
-            }
-            return response;
-        }
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-            isLoading = false;
-            if (s != null) {
-                Gson gson = new Gson();
-                    QuestionAnswerResponse userResponse = gson.fromJson(s, QuestionAnswerResponse.class);
-                     questionAdapter.addItems(userResponse.getItems());
-            }
-            else {
-                Log.d(TAG,"Failed to Load JSON response");
-            } }  }
-*/

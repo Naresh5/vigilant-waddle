@@ -1,7 +1,6 @@
 package com.example.naresh.demoproject_1.dialog;
 
 import android.app.DatePickerDialog;
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
@@ -59,7 +58,7 @@ public class FilterDialogFragment extends DialogFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        rootView = inflater.inflate(R.layout.mydialogfragment, container, false);
+        rootView = inflater.inflate(R.layout.dialogfragment, container, false);
         getDialog().requestWindowFeature(Window.FEATURE_NO_TITLE);
 
         spinnerOrder = (Spinner) rootView.findViewById(R.id.spinner_order);
