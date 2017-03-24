@@ -5,7 +5,8 @@ package com.example.naresh.demoproject_1.utils;
  */
 
 public class Constants {
-    //public static final String USER_ID
+
+    public static final String BASE_URL_RETROFIT = "https://api.stackexchange.com/2.2/";
     public static final String BASE_URL = " https://api.stackexchange.com/";
     public static final String PAGE_SIZE = "20";
     public static final String ORDER_ASC = "asc";

@@ -12,7 +12,6 @@ import com.google.gson.annotations.SerializedName;
 public class User implements Parcelable {
 
     public User(){
-
     }
     public User(String displayName, String profileImage, int reputation, BadgeCounts badgeCounts) {
         this.displayName = displayName;
@@ -20,6 +19,7 @@ public class User implements Parcelable {
         this.reputation = reputation;
         this.badgeCounts = badgeCounts;
     }
+
 
     @SerializedName("profile_image")
     private String profileImage;

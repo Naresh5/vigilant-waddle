@@ -36,6 +36,7 @@ public class UserAdapter extends BaseAdapter implements Filterable {
         this.context = context;
         this.items = new ArrayList<>();
         this.myStringFilterList = new ArrayList<>();
+
     }
 
     public void addItems(List<User> arrayList) {

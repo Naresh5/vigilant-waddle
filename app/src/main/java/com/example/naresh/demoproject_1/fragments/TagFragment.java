@@ -4,11 +4,24 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.util.SortedList;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.naresh.demoproject_1.R;
+import com.example.naresh.demoproject_1.models.ListResponse;
+import com.example.naresh.demoproject_1.models.User;
+import com.example.naresh.demoproject_1.retrofit.ApiClient;
+import com.example.naresh.demoproject_1.retrofit.ApiInterface;
+import com.example.naresh.demoproject_1.utils.Constants;
+
+import java.util.List;
+
+import retrofit2.Call;
+
+import static android.content.ContentValues.TAG;
 
 
 public class TagFragment extends Fragment {
@@ -41,7 +54,6 @@ public class TagFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-
     }
 
     @Override
