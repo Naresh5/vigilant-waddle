@@ -4,7 +4,6 @@ import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
-import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,8 +14,6 @@ import android.widget.DatePicker;
 import android.widget.Spinner;
 
 import com.example.naresh.demoproject_1.R;
-import com.example.naresh.demoproject_1.fragments.ActivityFragment;
-import com.example.naresh.demoproject_1.fragments.UserFragment;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -86,7 +83,7 @@ public class FilterDialogFragment extends DialogFragment {
         Log.e(TAG, "ToDate Value" + toDateVal);
 
         int orderPosition = getItemPosition(R.array.order_arrays, orderVal);
-        int sortPosition = getItemPosition(R.array.sort_arrays,  sortVal);
+        int sortPosition = getItemPosition(R.array.sort_arrays_user_fragment,  sortVal);
 
         if (orderPosition != -1) {
             spinnerOrder.setSelection(orderPosition);
