@@ -55,7 +55,7 @@
                 android:gravity="center"
                 android:text="@string/user_itm_demo_gold_badge"
                 android:layout_marginRight="@dimen/item_list_margin_right"
-                android:textColor="@color/colorItem_Badge_Text"
+                android:textColor="@color/colorItemBadgeText"
                 android:textSize="@dimen/item_badge_text_size" />
 
             <TextView
@@ -67,7 +67,7 @@
                 android:gravity="center"
                 android:text="@string/user_itm_demo_silver_badge"
                 android:layout_marginRight="@dimen/item_list_margin_right"
-                android:textColor="@color/colorItem_Badge_Text"
+                android:textColor="@color/colorItemBadgeText"
                 android:textSize="@dimen/item_badge_text_size" />
 
             <TextView
@@ -79,7 +79,7 @@
                 android:gravity="center"
                 android:text="@string/user_itm_demo_bronze_badge"
                 android:layout_marginRight="@dimen/item_list_margin_right"
-                android:textColor="@color/colorItem_Badge_Text"
+                android:textColor="@color/colorItemBadgeText"
                 android:textSize="@dimen/item_badge_text_size" />
         </LinearLayout>
     </LinearLayout>

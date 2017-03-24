@@ -52,7 +52,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:padding="@dimen/dialog_fragment_padding"
-            android:entries="@array/sort_arrays" />
+            android:entries="@array/sort_arrays_user_fragment" />
     </LinearLayout>
 
 

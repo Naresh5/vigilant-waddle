@@ -6,12 +6,24 @@
         <item>desc</item>
     </string-array>
 
-    <string-array name="sort_arrays">
+    // Spinner Value for User Fragment
+
+    <string-array name="sort_arrays_user_fragment">
         <item>reputation</item>
         <item>creation</item>
         <item>name</item>
         <item>modified</item>
+    </string-array>
 
+    // Spinner Value for User Fragment
+
+    <string-array name="sort_arrays_question_fragment">
+        <item>activity</item>
+        <item>votes</item>
+        <item>creation</item>
+        <item>hot</item>
+        <item>week</item>
+        <item>month</item>
     </string-array>
 
     <!-- TODO: Remove or change this placeholder text -->
@@ -63,7 +75,15 @@
     <string name="user_itm_demo_silver_badge">6819</string>
     <string name="user_itm_demo_bronze_badge">527</string>
     <string name="user_detail_exception_activity_fragment">User Detail Not Available. . .</string>
-    <string name="profile_fragmet_title">PROFILE</string>
+    <string name="profile_fragment_title">PROFILE</string>
     <string name="activity_fragment_title">ACTIVITY</string>
+    // Question Drawer Strings
+
+    <string name="question_drawer_username_demo_name">GManNickG</string>
+    <string name="question_drawer_creation_date">22 Mar at 6.35</string>
+    <string name="question_drawer_tags">java,c++,performance,optimization,beanch-prediation</string>
+    <string name="question_drawer_question_title">Question Title</string>
+    <string name="question_drawer_reputation_demo">17.4k</string>
+
 
 </resources>

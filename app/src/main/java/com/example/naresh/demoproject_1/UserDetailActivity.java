@@ -74,7 +74,7 @@ public class UserDetailActivity extends AppCompatActivity {
         setSupportActionBar(mToolBar);
 
         viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
-        viewPagerAdapter.addFragments(ActivityFragment.newInstance(user.getUserId()), getString(R.string.profile_fragmet_title));
+        viewPagerAdapter.addFragments(ActivityFragment.newInstance(user.getUserId()), getString(R.string.profile_fragment_title));
         viewPagerAdapter.addFragments(ProfileFragment.newInstance(user.getUserId()), getString(R.string.activity_fragment_title));
         mViewPager.setAdapter(viewPagerAdapter);
         mTabLayout.setupWithViewPager(mViewPager);

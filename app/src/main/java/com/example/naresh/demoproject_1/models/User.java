@@ -20,7 +20,6 @@ public class User implements Parcelable {
         this.badgeCounts = badgeCounts;
     }
 
-
     @SerializedName("profile_image")
     private String profileImage;
 

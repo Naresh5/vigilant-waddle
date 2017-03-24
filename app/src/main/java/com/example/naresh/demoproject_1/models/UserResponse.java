@@ -7,7 +7,6 @@ import java.util.ArrayList;
 /**
  * Created by naresh on 1/3/17.
  */
-
 public class UserResponse {
 
     private ArrayList<User> items;

@@ -49,6 +49,10 @@ public class UserFragment extends Fragment implements FilterDialogFragment.OnInf
     private int pageCount = 0;
     public String orderValue = "asc", sortValue = "reputation", fromDateValue, toDateValue;
 
+    private String filterUserOrder = null;
+    private String filterUserSort =null;
+    private String filterUserTodate = null;
+    private String filterUserFromdate = null;
 
     public UserFragment() {
         // Required empty public constructor
@@ -58,8 +62,6 @@ public class UserFragment extends Fragment implements FilterDialogFragment.OnInf
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-
-
     }
 
     @Override
@@ -111,7 +113,6 @@ public class UserFragment extends Fragment implements FilterDialogFragment.OnInf
                 }
             }
         });
-
         adapter = new UserAdapter(getActivity());
         mListView.setAdapter(adapter);
 
@@ -159,17 +160,37 @@ public class UserFragment extends Fragment implements FilterDialogFragment.OnInf
 
         if (id == R.id.action_option) {
 
-            FilterDialogFragment filterDialogFragment =  FilterDialogFragment.newInstance(orderValue,sortValue,fromDateValue,toDateValue);
-
+            FilterDialogFragment filterDialogFragment =
+                    FilterDialogFragment.newInstance(orderValue,sortValue,fromDateValue,toDateValue);
             filterDialogFragment.setListener(this);
-
             filterDialogFragment.show(getFragmentManager(), null);
 
+        /*    FilterDialogFragment filterDialog = FilterDialogFragment.newInstance(
+                    getResources().getString(R.string.sort_dialog_fragment),
+                    filterUserOrder,
+                    filterUserSort,
+                    filterUserFromdate,
+                    filterUserTodate);
+            filterDialog.setListener(this);
+
+            filterDialog.show(getActivity().getSupportFragmentManager(),
+                    getResources().getString(R.string.sort_dialog_fragment));
+            */
             return true;
         }
         return super.onOptionsItemSelected(item);
     }
-
+/*
+ FilterDialog filterDialog = FilterDialog.newInstance(
+                getResources().getString(R.string.open_dialog_from_question_drawer),
+                filterQuestionOrder,
+                filterQuestionSort,
+                filterQuestionTodate,
+                filterQuestionFromdate);
+        filterDialog.setCallbackOnResult(this);
+        filterDialog.show(getActivity().getSupportFragmentManager(),
+                getResources().getString(R.string.dialog_tag));
+ */
 
     // Implementing method of Interface
 

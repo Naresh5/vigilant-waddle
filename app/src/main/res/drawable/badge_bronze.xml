@@ -3,7 +3,7 @@
     android:shape="oval">
 
     <solid
-        android:color="@color/badge_bronze"></solid>
+        android:color="@color/badgeBronze"></solid>
 
     <size android:height="@dimen/badge_size"
         android:width="@dimen/badge_size"></size>
