@@ -49,12 +49,12 @@ public class UserFragment extends Fragment implements FilterDialogFragment.OnInf
     private int pageCount = 0;
     public String orderValue = "asc", sortValue = "reputation", fromDateValue, toDateValue;
 
-    private String[] filterSortOrder = null;
+  /*  private String[] filterSortOrder = null;
     private String filterUserOrder = null;
     private String filterUserSort = null;
     private String filterUserTodate ;
     private String filterUserFromdate;
-
+*/
     public UserFragment() {
         // Required empty public constructor
     }

@@ -16,11 +16,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.naresh.demoproject_1.NavigationDrawerActivity;
 import com.example.naresh.demoproject_1.R;
@@ -31,7 +29,6 @@ import com.example.naresh.demoproject_1.models.QuestionDetailItem;
 import com.example.naresh.demoproject_1.retrofit.ApiClient;
 import com.example.naresh.demoproject_1.retrofit.ApiInterface;
 import com.example.naresh.demoproject_1.utils.Constants;
-import com.example.naresh.demoproject_1.utils.Utility;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -54,16 +51,16 @@ public class QuestionFragment extends Fragment implements FilterDialogFragment.O
     private String titleName = null;
 
     private static final String TAG = "QuestionDrawerFragment";
+    //   public String orderValue = "asc", sortValue = "reputation", fromDateValue, toDateValue;
 
     private String filterQuestionOrder = Constants.ORDER_DESC;
     private String filterQuestionSort =  Constants.SORT_BY_VOTES;
-
     private String filterQuestionTodate = null;
     private String filterQuestionFromdate = null;
 
-    private String order = Constants.ORDER_DESC;
+   /* private String order = Constants.ORDER_DESC;
     private String sort = Constants.SORT_BY_VOTES;
-    private String site = Constants.SITE;
+  */  private String site = Constants.SITE;
 
     public QuestionFragment() {
 
@@ -82,7 +79,6 @@ public class QuestionFragment extends Fragment implements FilterDialogFragment.O
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
         if (getArguments() != null) {
-
         }
     }
 
@@ -166,27 +162,34 @@ public class QuestionFragment extends Fragment implements FilterDialogFragment.O
     @Override
     public void onInfoChanged(String order, String sort, String FromDate, String ToDate) {
 
+        mQuestionPageCount = 1;
+        questionDetailAdapter.removeItems();
+
         this.filterQuestionOrder = order;
         this.filterQuestionSort = sort;
         this.filterQuestionFromdate = FromDate;
         this.filterQuestionTodate = ToDate;
 
-        questionDetailAdapter.removeItems();
         getJsonQuestionListResponse();
+
     }
 
     private void getJsonQuestionListResponse() {
         isQuestionLoading = true;
         showProgressBar();
-        Call<ListResponse<QuestionDetailItem>> call = null;
+        Call<ListResponse<QuestionDetailItem>> call;
         ApiInterface apiService =
                 ApiClient.getClient().create(ApiInterface.class);
-       call = apiService.getUserDetail
+        call = apiService.getUserDetail
                 (mQuestionPageCount,
-                        order,
-                        sort,
+                        filterQuestionOrder,
+                        filterQuestionSort,
+                        filterQuestionFromdate,
+                        filterQuestionTodate,
                         site);
-        Log.e(TAG,"::: Retrofit URL ::: "+ call);
+
+
+        Log.e(TAG, "::: Retrofit URL ::: " + call);
         call.enqueue(new Callback<ListResponse<QuestionDetailItem>>() {
             @Override
             public void onResponse(Call<ListResponse<QuestionDetailItem>> call,
@@ -202,6 +205,7 @@ public class QuestionFragment extends Fragment implements FilterDialogFragment.O
                     Log.e(TAG, "Retrofit Response" + response.body());
                 }
             }
+
             @Override
             public void onFailure(Call<ListResponse<QuestionDetailItem>> call, Throwable t) {
                 hideProgressBar();

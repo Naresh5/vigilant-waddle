@@ -1,14 +1,6 @@
 <resources>
     <string name="app_name">DemoProject-1</string>
 
-<!--
-    <string-array name="order_arrays">
-        <item>asc</item>
-        <item>desc</item>
-    </string-array>
--->
-
-
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_use_detail_activity">User Detail</string>
@@ -100,9 +92,9 @@
         <item>votes</item>
         <item>activity</item>
         <item>hot</item>
-        <item>creation</item>
         <item>week</item>
         <item>month</item>
+        <item>Creation</item>
     </string-array>
 
     <string-array name="navigation_drawer_items_array">

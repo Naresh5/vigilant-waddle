@@ -80,9 +80,6 @@ public class FilterDialogFragment extends DialogFragment {
         void onInfoChanged(String order, String sort, String FromDate, String ToDate);
     }
 
-    public void setOnInfoChangedListener(OnInfoChangedListener listener) {
-        this.listener = listener;
-    }
 
     @Nullable
     @Override
@@ -99,21 +96,21 @@ public class FilterDialogFragment extends DialogFragment {
         btnNo = (Button) rootView.findViewById(R.id.btn_no);
 
         Bundle bundle = getArguments();
-        // bundle.putStringArray(ARG_SORT_ARRAY, sortUserArray);
+
         sortUserArray = bundle.getStringArray(ARG_SORT_ARRAY);
         selectedOrderData = bundle.getString(ARG_ORDER);
         selectedSortData = bundle.getString(ARG_SORT);
         selectedFromDate = bundle.getString(ARG_FROMDATE);
         selectedToDate = bundle.getString(ARG_TODATE);
 
-
-        Log.e(TAG, "Filter Bundle : Order Value" + selectedOrderData);
+   /*   Log.e(TAG, "Filter Bundle : Order Value" + selectedOrderData);
         Log.e(TAG, "Filter Bundle : SortValue" + selectedSortData);
         Log.e(TAG, "Filter Bundle : FromDate Value" + selectedFromDate);
         Log.e(TAG, "Filter Bundle : ToDate Value" + selectedToDate);
 
+  */
         int orderPosition = getItemPosition(R.array.spinnerUserOrder, selectedOrderData);
-        int sortPosition = getItemPosition(R.array.spinnerQuestionSort, selectedSortData);
+        int sortPosition = getItemPosition(R.array.spinnerUserSort, selectedSortData);
 
 
        ArrayAdapter<CharSequence> adapterSpinnerOrder = ArrayAdapter.createFromResource(

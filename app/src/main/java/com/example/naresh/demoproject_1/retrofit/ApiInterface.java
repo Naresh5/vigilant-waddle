@@ -18,6 +18,8 @@ public interface ApiInterface {
     Call<ListResponse<QuestionDetailItem>> getUserDetail(@Query("page") int page,
                                                          @Query("order") String order,
                                                          @Query("sort") String sort,
+                                                         @Query("fromdate") String fromDate,
+                                                         @Query("todate") String toDate,
                                                          @Query("site") String site);
 //https://api.stackexchange.com/2.2/users/
 //https://api.stackexchange.com/2.2/questions?page=2&order=desc&sort=activity&site=stackoverflow
