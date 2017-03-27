@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -180,12 +181,12 @@ public class QuestionFragment extends Fragment implements FilterDialogFragment.O
         ApiInterface apiService =
                 ApiClient.getClient().create(ApiInterface.class);
 
-        call = apiService.getUserDetail
+       call = apiService.getUserDetail
                 (mQuestionPageCount,
                         order,
                         sort,
                         site);
-
+        Log.e(TAG,"::: Retrofit URL ::: "+ call);
         call.enqueue(new Callback<ListResponse<QuestionDetailItem>>() {
             @Override
             public void onResponse(Call<ListResponse<QuestionDetailItem>> call,
