@@ -56,12 +56,13 @@ public class QuestionFragment extends Fragment implements FilterDialogFragment.O
     private static final String TAG = "QuestionDrawerFragment";
 
     private String filterQuestionOrder = Constants.ORDER_DESC;
-    private String filterQuestionSort = Constants.SORT_BY_VOTES;
+    private String filterQuestionSort =  Constants.SORT_BY_VOTES;
+
     private String filterQuestionTodate = null;
     private String filterQuestionFromdate = null;
 
     private String order = Constants.ORDER_DESC;
-    private String sort = Constants.SORT_BY_ACTIVITY;
+    private String sort = Constants.SORT_BY_VOTES;
     private String site = Constants.SITE;
 
     public QuestionFragment() {
@@ -180,7 +181,6 @@ public class QuestionFragment extends Fragment implements FilterDialogFragment.O
         Call<ListResponse<QuestionDetailItem>> call = null;
         ApiInterface apiService =
                 ApiClient.getClient().create(ApiInterface.class);
-
        call = apiService.getUserDetail
                 (mQuestionPageCount,
                         order,
@@ -202,7 +202,6 @@ public class QuestionFragment extends Fragment implements FilterDialogFragment.O
                     Log.e(TAG, "Retrofit Response" + response.body());
                 }
             }
-
             @Override
             public void onFailure(Call<ListResponse<QuestionDetailItem>> call, Throwable t) {
                 hideProgressBar();

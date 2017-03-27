@@ -99,8 +99,8 @@
     <string-array name="spinnerQuestionSort">
         <item>votes</item>
         <item>activity</item>
-        <item>creation</item>
         <item>hot</item>
+        <item>creation</item>
         <item>week</item>
         <item>month</item>
     </string-array>

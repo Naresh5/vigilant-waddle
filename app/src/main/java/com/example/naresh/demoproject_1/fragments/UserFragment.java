@@ -49,7 +49,6 @@ public class UserFragment extends Fragment implements FilterDialogFragment.OnInf
     private int pageCount = 0;
     public String orderValue = "asc", sortValue = "reputation", fromDateValue, toDateValue;
 
-
     private String[] filterSortOrder = null;
     private String filterUserOrder = null;
     private String filterUserSort = null;
@@ -150,7 +149,6 @@ public class UserFragment extends Fragment implements FilterDialogFragment.OnInf
                 return false;
             }
         });
-        return;
     }
 
     @Override
@@ -296,8 +294,8 @@ public class UserFragment extends Fragment implements FilterDialogFragment.OnInf
 
         FilterDialogFragment filterDialog = FilterDialogFragment.newInstance(
                 array,
-                filterUserOrder, filterUserSort,
-                filterUserFromdate, filterUserTodate);
+                orderValue, sortValue,
+                fromDateValue, toDateValue);
         filterDialog.setListener(this);
         filterDialog.show(getActivity().getSupportFragmentManager(),
                 getResources().getString(R.string.dialog_tag));

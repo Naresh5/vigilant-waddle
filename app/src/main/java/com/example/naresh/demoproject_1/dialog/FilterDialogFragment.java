@@ -47,7 +47,6 @@ public class FilterDialogFragment extends DialogFragment {
     private String selectedOrderData, selectedSortData;
     private String selectedToDate = "";
     private String selectedFromDate = "";
-    public String selectedDrawerName = "";
     private String[] orderUserArray, sortUserArray;
 
 
@@ -108,13 +107,13 @@ public class FilterDialogFragment extends DialogFragment {
         selectedToDate = bundle.getString(ARG_TODATE);
 
 
-        Log.e(TAG, "Order Value" + selectedOrderData);
-        Log.e(TAG, "SortValue" + selectedSortData);
-        Log.e(TAG, "FromDate Value" + selectedFromDate);
-        Log.e(TAG, "ToDate Value" + selectedToDate);
+        Log.e(TAG, "Filter Bundle : Order Value" + selectedOrderData);
+        Log.e(TAG, "Filter Bundle : SortValue" + selectedSortData);
+        Log.e(TAG, "Filter Bundle : FromDate Value" + selectedFromDate);
+        Log.e(TAG, "Filter Bundle : ToDate Value" + selectedToDate);
 
         int orderPosition = getItemPosition(R.array.spinnerUserOrder, selectedOrderData);
-        int sortPosition = getItemPosition(R.array.spinnerUserSort, selectedSortData);
+        int sortPosition = getItemPosition(R.array.spinnerQuestionSort, selectedSortData);
 
 
        ArrayAdapter<CharSequence> adapterSpinnerOrder = ArrayAdapter.createFromResource(
@@ -150,6 +149,7 @@ public class FilterDialogFragment extends DialogFragment {
         if (sortPosition != -1) {
             spinnerSort.setSelection(sortPosition);
         }
+
         btnFromDatePicker.setText(selectedFromDate);
         btnToDatePicker.setText(selectedToDate);
 
@@ -170,7 +170,6 @@ public class FilterDialogFragment extends DialogFragment {
         btnFromDatePicker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 int year = FromCalender.get(Calendar.YEAR);
                 int month = FromCalender.get(Calendar.MONTH);
                 int day = FromCalender.get(Calendar.DAY_OF_MONTH);
