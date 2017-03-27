@@ -41,8 +41,11 @@
     <string name="pick_from_here_dialog_fragment">Pick From Here</string>
     <string name="to_date_dialog_fragment">To Date</string>
     <string name="btn_pick_from_here_dialog_fragment">Pick From Here</string>
+
     <string name="btn_yes_dialog_fragment">Yes</string>
     <string name="btn_no_dialog_fragment">No</string>
+    <string name="btn_reset_dialog_fragment">Reset</string>
+
     <string name="nav_header_text">Guest User</string>
     <string name="user_item_demo_user">Jon Skeet</string>
     <string name="user_itm_demo_reputation">933k</string>

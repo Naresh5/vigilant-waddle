@@ -3,7 +3,7 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:minWidth="320dp"
-    android:minHeight="280dp">
+    android:minHeight="180dp">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -54,7 +54,7 @@
             android:padding="@dimen/dialog_fragment_padding"
             android:entries="@array/spinnerUserSort" />
     </LinearLayout>
-                        //spinnerQuestionSort
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -110,31 +110,41 @@
 
     </LinearLayout>
 
-    <LinearLayout
+
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingTop="@dimen/dialog_fragment_layout_padding_top"
-        android:paddingLeft="@dimen/dialog_fragment_layout_padding_left"
-        android:paddingRight="@dimen/dialog_fragment_layout_padding_left">
+        android:layout_height="50dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp">
+
+        <Button
+            android:id="@+id/btn_reset"
+            android:layout_width="60dp"
+            android:layout_height="35dp"
+            android:gravity="center"
+            android:layout_alignParentLeft="true"
+            android:background="?selectableItemBackground"
+            android:text="@string/btn_reset_dialog_fragment"
+            android:textColor="@color/colorAccent" />
 
         <Button
             android:id="@+id/btn_yes"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="false"
-            android:layout_weight="1"
-            android:padding="@dimen/dialog_fragment_padding"
-            android:text="@string/btn_yes_dialog_fragment" />
+            android:layout_width="60dp"
+            android:layout_height="35dp"
+            android:gravity="center"
+            android:layout_alignParentRight="true"
+            android:background="?selectableItemBackground"
+            android:text="@string/btn_yes_dialog_fragment"
+            android:textColor="@color/colorAccent" />
 
         <Button
             android:id="@+id/btn_no"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:padding="@dimen/dialog_fragment_padding"
-            android:text="@string/btn_no_dialog_fragment" />
-
-    </LinearLayout>
+            android:layout_width="60dp"
+            android:layout_height="35dp"
+            android:layout_toLeftOf="@+id/btn_yes"
+            android:background="?selectableItemBackground"
+            android:text="@string/btn_no_dialog_fragment"
+            android:textColor="@color/colorAccent" />
+    </RelativeLayout>
 
 </LinearLayout>
