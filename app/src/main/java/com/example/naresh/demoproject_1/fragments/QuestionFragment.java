@@ -1,6 +1,8 @@
 package com.example.naresh.demoproject_1.fragments;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.MenuItemCompat;
@@ -13,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -27,13 +30,14 @@ import com.example.naresh.demoproject_1.models.QuestionDetailItem;
 import com.example.naresh.demoproject_1.retrofit.ApiClient;
 import com.example.naresh.demoproject_1.retrofit.ApiInterface;
 import com.example.naresh.demoproject_1.utils.Constants;
+import com.example.naresh.demoproject_1.utils.Utility;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class QuestionFragment extends Fragment {
+public class QuestionFragment extends Fragment implements FilterDialogFragment.OnInfoChangedListener {
 
     private TextView textLoading;
     private ProgressBar progressBar;
@@ -42,11 +46,18 @@ public class QuestionFragment extends Fragment {
     private View footerView;
     private int mQuestionPageCount = 1;
     private boolean isQuestionLoading = false;
-    private static final String TAG = "QuestionDrawerFragment";
+
     private boolean hasMore = true;
     public static final String ARG_TAG = "tagName";
     private String tagName = null;
     private String titleName = null;
+
+    private static final String TAG = "QuestionDrawerFragment";
+
+    private String filterQuestionOrder = Constants.ORDER_DESC;
+    private String filterQuestionSort = Constants.SORT_BY_VOTES;
+    private String filterQuestionTodate = null;
+    private String filterQuestionFromdate = null;
 
     private String order = Constants.ORDER_DESC;
     private String sort = Constants.SORT_BY_ACTIVITY;
@@ -116,6 +127,16 @@ public class QuestionFragment extends Fragment {
             }
         });
 
+        listQuestionDetail.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                QuestionDetailItem questionDetail = questionDetailAdapter.getItem(position);
+                String openLink = questionDetail.getLink();
+                Intent intent = new Intent(Intent.ACTION_VIEW)
+                        .setData(Uri.parse(openLink));
+                startActivity(intent);
+            }
+        });
         return rootView;
     }
 
@@ -129,21 +150,28 @@ public class QuestionFragment extends Fragment {
         SearchView searchView = new SearchView(((NavigationDrawerActivity) getActivity()).getSupportActionBar().getThemedContext());
         MenuItemCompat.setShowAsAction(item, MenuItemCompat.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW | MenuItemCompat.SHOW_AS_ACTION_ALWAYS);
         MenuItemCompat.setActionView(item, searchView);
-
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-
         if (id == R.id.action_option) {
-
-            Toast.makeText(getActivity(), "Option Menu", Toast.LENGTH_SHORT).show();
-            return true;
+            showFilterDialog();
         }
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onInfoChanged(String order, String sort, String FromDate, String ToDate) {
+
+        this.filterQuestionOrder = order;
+        this.filterQuestionSort = sort;
+        this.filterQuestionFromdate = FromDate;
+        this.filterQuestionTodate = ToDate;
+
+        questionDetailAdapter.removeItems();
+        getJsonQuestionListResponse();
+    }
 
     private void getJsonQuestionListResponse() {
         isQuestionLoading = true;
@@ -199,5 +227,18 @@ public class QuestionFragment extends Fragment {
         } else {
             footerView.setVisibility(View.VISIBLE);
         }
+    }
+
+    public void showFilterDialog() {
+        String[] array = getResources().getStringArray(R.array.spinnerQuestionSort);
+        FilterDialogFragment filterDialog = FilterDialogFragment.newInstance(
+                array,
+                filterQuestionOrder,
+                filterQuestionSort,
+                filterQuestionTodate,
+                filterQuestionFromdate);
+        filterDialog.setListener(this);
+        filterDialog.show(getActivity().getSupportFragmentManager(),
+                getResources().getString(R.string.dialog_tag));
     }
 }

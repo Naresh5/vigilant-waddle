@@ -12,12 +12,11 @@ import com.example.naresh.demoproject_1.utils.Constants;
 
 import java.util.Timer;
 
-*/
-/**
+*
  * Created by naresh on 24/3/17.
- *//*
 
-public class Questionfragment extends Fragment implements FilterDialog.OnResult {
+
+public class Questionfragment extends Fragment implements FilterDialog.OnInfoChangedListener {
     private TextView textLoading;
     private ProgressBar progressBar;
     private ListView listQuestionDetail;
@@ -107,10 +106,9 @@ public class Questionfragment extends Fragment implements FilterDialog.OnResult 
         return view;
     }
 
-    */
-/**
+*
      * last search time in milliseconds
-     *//*
+
 
     private long lastTime;
 
@@ -254,4 +252,5 @@ public class Questionfragment extends Fragment implements FilterDialog.OnResult 
         filterDialog.show(getActivity().getSupportFragmentManager(),
                 getResources().getString(R.string.dialog_tag));
     }
-}*/
+}
+*/

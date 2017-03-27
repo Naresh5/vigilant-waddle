@@ -16,12 +16,14 @@ public class Constants {
     public static final String SORT_BY_NAME = "name";
     public static final String SORT_BY_MODIFIED = "modified";
     public static final String SORT_BY_ACTIVITY = "activity";
+    public static final String SORT_BY_VOTES = "votes";
+    public static final String SORT_BY_HOT = "hot";
+    public static final String SORT_BY_WEEK = "week";
+    public static final String SORT_BY_MONTH = "month";
+
     public static final String SITE = "stackoverflow";
 
     public static final String PARAMS_FILTER = "filter";
-    public static final String VALUE_DESC = "desc";
-    public static final String VALUE_ACTIVITY = "activity";
-    public static final String VALUE_REPUTATION = "reputation";
 
     public static final String DATE_FORMAT = "yyyy-MM-dd";
     public static final String DATE_FORMAT_QUESTION_CREATION = "dd MMM 'at' hh:mm";

@@ -49,10 +49,12 @@ public class UserFragment extends Fragment implements FilterDialogFragment.OnInf
     private int pageCount = 0;
     public String orderValue = "asc", sortValue = "reputation", fromDateValue, toDateValue;
 
+
+    private String[] filterSortOrder = null;
     private String filterUserOrder = null;
-    private String filterUserSort =null;
-    private String filterUserTodate = null;
-    private String filterUserFromdate = null;
+    private String filterUserSort = null;
+    private String filterUserTodate ;
+    private String filterUserFromdate;
 
     public UserFragment() {
         // Required empty public constructor
@@ -70,8 +72,6 @@ public class UserFragment extends Fragment implements FilterDialogFragment.OnInf
         rootView = inflater.inflate(R.layout.user_fragment_navigation, container, false);
         mListView = (ListView) rootView.findViewById(R.id.list_view_user_fragment_nav);
         mProgressBar = (ProgressBar) rootView.findViewById(R.id.progress_bar_user_fragment_nav);
-
-
         footerView = LayoutInflater.from(getActivity()).inflate(R.layout.listview_footer, null, false);
         mListView.addFooterView(footerView);
         footerView.setVisibility(View.INVISIBLE);
@@ -86,7 +86,6 @@ public class UserFragment extends Fragment implements FilterDialogFragment.OnInf
 
             }
         });
-
         mListView.setOnScrollListener(new AbsListView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(AbsListView view, int scrollState) {
@@ -160,22 +159,13 @@ public class UserFragment extends Fragment implements FilterDialogFragment.OnInf
 
         if (id == R.id.action_option) {
 
-            FilterDialogFragment filterDialogFragment =
+          /*  FilterDialogFragment filterDialogFragment =
                     FilterDialogFragment.newInstance(orderValue,sortValue,fromDateValue,toDateValue);
             filterDialogFragment.setListener(this);
             filterDialogFragment.show(getFragmentManager(), null);
+*/
+            showDialogFragment();
 
-        /*    FilterDialogFragment filterDialog = FilterDialogFragment.newInstance(
-                    getResources().getString(R.string.sort_dialog_fragment),
-                    filterUserOrder,
-                    filterUserSort,
-                    filterUserFromdate,
-                    filterUserTodate);
-            filterDialog.setListener(this);
-
-            filterDialog.show(getActivity().getSupportFragmentManager(),
-                    getResources().getString(R.string.sort_dialog_fragment));
-            */
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -299,5 +289,17 @@ public class UserFragment extends Fragment implements FilterDialogFragment.OnInf
             mProgressBar.setVisibility(View.GONE);
             footerView.setVisibility(View.VISIBLE);
         }
+    }
+
+    public void showDialogFragment() {
+        String[] array = getResources().getStringArray(R.array.spinnerUserSort);
+
+        FilterDialogFragment filterDialog = FilterDialogFragment.newInstance(
+                array,
+                filterUserOrder, filterUserSort,
+                filterUserFromdate, filterUserTodate);
+        filterDialog.setListener(this);
+        filterDialog.show(getActivity().getSupportFragmentManager(),
+                getResources().getString(R.string.dialog_tag));
     }
 }

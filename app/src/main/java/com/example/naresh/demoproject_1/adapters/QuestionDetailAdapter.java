@@ -39,6 +39,7 @@ public class QuestionDetailAdapter extends BaseAdapter {
         notifyDataSetChanged();
     }
 
+
     public void removeItems() {
         questionDetailItemItems.clear();
     }

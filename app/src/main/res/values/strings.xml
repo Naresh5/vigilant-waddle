@@ -1,30 +1,13 @@
 <resources>
     <string name="app_name">DemoProject-1</string>
 
+<!--
     <string-array name="order_arrays">
         <item>asc</item>
         <item>desc</item>
     </string-array>
+-->
 
-    // Spinner Value for User Fragment
-
-    <string-array name="sort_arrays_user_fragment">
-        <item>reputation</item>
-        <item>creation</item>
-        <item>name</item>
-        <item>modified</item>
-    </string-array>
-
-    // Spinner Value for User Fragment
-
-    <string-array name="sort_arrays_question_fragment">
-        <item>activity</item>
-        <item>votes</item>
-        <item>creation</item>
-        <item>hot</item>
-        <item>week</item>
-        <item>month</item>
-    </string-array>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
@@ -85,5 +68,62 @@
     <string name="question_drawer_question_title">Question Title</string>
     <string name="question_drawer_reputation_demo">17.4k</string>
 
+    <string name="dialog_tag">dialog</string>
+    <string name="text_to_date_error">To date must be greater than from date.</string>
 
+    <string name="tab_title_activity">Activity</string>
+    <string name="tab_title_profile">Profile</string>
+
+    <string name="nav_user_detail_title">Users</string>
+    <string name="nav_question_detail_title">Questions</string>
+    <string name="nav_home_title">Home</string>
+    <string name="nav_tag_title">Tags</string>
+
+    <string name="orderPrompt">Choose an order</string>
+    <string name="sortPrompt">Sort by</string>
+
+
+    <string-array name="spinnerUserOrder">
+        <item>desc</item>
+        <item>asc</item>
+    </string-array>
+
+
+    <string-array name="spinnerUserSort">
+        <item>reputation</item>
+        <item>creation</item>
+        <item>modified</item>
+        <item>name</item>
+    </string-array>
+
+    <string-array name="spinnerQuestionSort">
+        <item>votes</item>
+        <item>activity</item>
+        <item>creation</item>
+        <item>hot</item>
+        <item>week</item>
+        <item>month</item>
+    </string-array>
+
+    <string-array name="navigation_drawer_items_array">
+        <item>Users</item>
+        <item>Questions</item>
+        <item>Tags</item>
+    </string-array>
+
+    <string-array name="tag_spinner_array">
+        <item>Popular</item>
+        <item>Name</item>
+        <item>Activity</item>
+    </string-array>
+
+    <string name="navigation_drawer_open">open</string>
+    <string name="navigation_drawer_close">close</string>
+    <string name="search_tag_edit_text_hint">Search Tags</string>
+
+    <string name="open_dialog_from_question_drawer">questionDrawer</string>
+    <string name="open_dialog_from_user_drawer">userDrawer</string>
+    <string name="text_no_detail_found">No Detail Found</string>
 </resources>
+
+
