@@ -190,9 +190,8 @@ public class QuestionFragment extends Fragment implements FilterDialogFragment.O
                         filterQuestionFromdate,
                         filterQuestionTodate,
                         site);
-
-
         Log.e(TAG, "::: Retrofit URL ::: " + call);
+
         call.enqueue(new Callback<ListResponse<QuestionDetailItem>>() {
             @Override
             public void onResponse(Call<ListResponse<QuestionDetailItem>> call,
