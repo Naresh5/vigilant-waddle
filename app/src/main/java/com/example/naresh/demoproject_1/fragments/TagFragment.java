@@ -35,6 +35,7 @@ import com.example.naresh.demoproject_1.models.User;
 import com.example.naresh.demoproject_1.retrofit.ApiClient;
 import com.example.naresh.demoproject_1.retrofit.ApiInterface;
 import com.example.naresh.demoproject_1.utils.Constants;
+import com.example.naresh.demoproject_1.utils.Utility;
 
 import java.util.List;
 
@@ -82,6 +83,8 @@ public class TagFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        Utility.hideSoftKeyboard(getActivity());
+
         final View rootView = inflater.inflate(R.layout.tag_fragment_navigation, container, false);
         spinnerTagSearch = (Spinner) rootView.findViewById(R.id.spinner_for_tag_search);
         editTagSearch = (EditText) rootView.findViewById(R.id.edit_tag_search);

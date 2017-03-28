@@ -24,6 +24,7 @@ import com.example.naresh.demoproject_1.adapters.QuestionAdapter;
 import com.example.naresh.demoproject_1.models.QuestionAnswerResponse;
 import com.example.naresh.demoproject_1.models.QuestionItem;
 import com.example.naresh.demoproject_1.utils.Constants;
+import com.example.naresh.demoproject_1.utils.Utility;
 import com.google.gson.Gson;
 
 import java.io.BufferedReader;
@@ -71,6 +72,9 @@ public class ProfileFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+
+
         rootView = inflater.inflate(R.layout.fragment_profile, container, false);
         mListViewProfileFragment = (ListView) rootView.findViewById(R.id.list_question_profile_fragment);
         mProgressBar = (ProgressBar) rootView.findViewById(R.id.progressbar_profile_fragment);

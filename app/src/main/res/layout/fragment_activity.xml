@@ -3,7 +3,8 @@
     android:layout_height="match_parent"
     android:background="@color/colorActivityFragmentBackground"
     android:orientation="vertical"
-    android:layout_centerInParent="true">
+    android:layout_centerInParent="true"
+    android:id="@+id/parent">
 
     <ProgressBar
         android:id="@+id/progressbar_activity_fragment"

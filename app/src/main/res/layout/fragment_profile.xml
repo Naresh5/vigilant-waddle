@@ -3,7 +3,8 @@
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.naresh.demoproject_1.NavigationDrawerActivity">
+    tools:context="com.example.naresh.demoproject_1.NavigationDrawerActivity"
+    >
     <TextView
         android:id="@+id/text_detail_not_available"
         android:layout_width="match_parent"

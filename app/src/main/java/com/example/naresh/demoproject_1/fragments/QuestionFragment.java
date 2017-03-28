@@ -29,6 +29,7 @@ import com.example.naresh.demoproject_1.models.QuestionDetailItem;
 import com.example.naresh.demoproject_1.retrofit.ApiClient;
 import com.example.naresh.demoproject_1.retrofit.ApiInterface;
 import com.example.naresh.demoproject_1.utils.Constants;
+import com.example.naresh.demoproject_1.utils.Utility;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -85,6 +86,8 @@ public class QuestionFragment extends Fragment implements FilterDialogFragment.O
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+
 
         View rootView = inflater.inflate(R.layout.question_fragment_navigation, container, false);
         textLoading = (TextView) rootView.findViewById(R.id.text_loading);

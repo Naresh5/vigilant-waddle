@@ -25,7 +25,10 @@
         <activity
             android:name=".UserDetailActivity"
             android:label="@string/title_use_detail_activity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:configChanges="orientation|keyboardHidden|screenSize">
+
+        </activity>
 
     </application>
 

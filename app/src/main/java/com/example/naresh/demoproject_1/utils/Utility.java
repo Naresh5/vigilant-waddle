@@ -1,5 +1,6 @@
 package com.example.naresh.demoproject_1.utils;
 
+import android.app.Activity;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -7,6 +8,11 @@ import android.os.Build;
 import android.text.Html;
 import android.text.Spanned;
 import android.text.format.DateUtils;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -109,4 +115,13 @@ public class Utility {
         }
         return repString;
     }
+
+    public static void hideSoftKeyboard(Activity activity) {
+        InputMethodManager inputMethodManager =
+                (InputMethodManager) activity.getSystemService(
+                        Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(
+                activity.getCurrentFocus().getWindowToken(), 0);
+    }
+
 }
