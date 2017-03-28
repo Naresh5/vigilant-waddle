@@ -251,13 +251,12 @@ public class UserFragment extends Fragment implements FilterDialogFragment.OnInf
                 UserResponse userResponse = gson.fromJson(jsonStr, UserResponse.class);
 
                 hasMoreData = userResponse.isHasMore();
-                Log.e(TAG, "HAS MORE " + hasMoreData);
+                Log.e(TAG, "UserFragment HAS MORE " + hasMoreData);
                 return userResponse.getItems();
             } else {
                 return null;
             }
         }
-
         @Override
         protected void onPostExecute(List<User> userList) {
             super.onPostExecute(userList);

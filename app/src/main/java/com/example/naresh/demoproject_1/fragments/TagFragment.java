@@ -1,15 +1,19 @@
 package com.example.naresh.demoproject_1.fragments;
 
+import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.support.v4.app.Fragment;
 import android.support.v7.util.SortedList;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -19,6 +23,7 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.naresh.demoproject_1.NavigationDrawerActivity;
 import com.example.naresh.demoproject_1.R;
@@ -55,7 +60,6 @@ public class TagFragment extends Fragment {
     private boolean isTagLoading = false;
     private String[] tagArray;
 
-    private String inname = null;
     private boolean hasMoreTag = true;
 
 
@@ -102,6 +106,22 @@ public class TagFragment extends Fragment {
 
         getJsonTagResponse();
 
+        spinnerTagSearch.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                tagSortBy = tagArray[position];
+                mTagPageCount = 1;
+                tagAdapter.removeItems();
+                getJsonTagResponse();
+            }
+
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
         listTag.setOnScrollListener(new AbsListView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(AbsListView view, int scrollState) {
@@ -123,12 +143,10 @@ public class TagFragment extends Fragment {
         listTag.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+                Toast.makeText(getActivity(), "Hello...Shanti Rakho...\n Aa haju baki 6e...", Toast.LENGTH_SHORT).show();
             }
         });
-
         return rootView;
-
     }
 
     private void getJsonTagResponse() {
@@ -141,7 +159,7 @@ public class TagFragment extends Fragment {
                 Constants.ORDER_ASC,
                 tagSortBy,
                 Constants.SITE);
-
+        Log.d(TAG, "getJsonTagResponse: " + call);
         call.enqueue(new Callback<ListResponse<TagItem>>() {
             @Override
             public void onResponse(Call<ListResponse<TagItem>> call,
@@ -150,8 +168,10 @@ public class TagFragment extends Fragment {
                 isTagLoading = false;
                 if (response.body() != null) {
                     hasMoreTag = response.body().isHasMore();
+                    Log.e(TAG, "Has More ?: " + hasMoreTag);
+
                     tagAdapter.addItems(response.body().getItems());
-                    Log.e(TAG, "Tag Response : "+response.body());
+                    Log.e(TAG, "Tag Response : " + response.body());
                 }
             }
 
