@@ -30,7 +30,7 @@ public class FilterDialogFragment extends DialogFragment {
 
     private String TAG = FilterDialogFragment.class.getSimpleName();
     private View rootView;
-    private Button btnFromDatePicker, btnToDatePicker, btnYes, btnNo;
+    private Button btnFromDatePicker, btnToDatePicker, btnYes, btnNo, btnReset;
     private Spinner spinnerOrder, spinnerSort;
     private String myDateFormat = "dd/MM/yyyy";
     private String toDateValue, fromDateValue;
@@ -94,7 +94,7 @@ public class FilterDialogFragment extends DialogFragment {
         btnToDatePicker = (Button) rootView.findViewById(R.id.btn_to_date_picker);
         btnYes = (Button) rootView.findViewById(R.id.btn_yes);
         btnNo = (Button) rootView.findViewById(R.id.btn_no);
-
+        btnReset = (Button)rootView.findViewById(R.id.btn_reset);
         Bundle bundle = getArguments();
 
         sortUserArray = bundle.getStringArray(ARG_SORT_ARRAY);
@@ -117,7 +117,6 @@ public class FilterDialogFragment extends DialogFragment {
                 getActivity(), R.array.spinnerUserOrder, android.R.layout.simple_spinner_item);
         adapterSpinnerOrder.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerOrder.setAdapter(adapterSpinnerOrder);
-
 
 
         ArrayAdapter<CharSequence> adapterSpinnerSort = new ArrayAdapter<CharSequence>(getActivity(),
@@ -213,6 +212,24 @@ public class FilterDialogFragment extends DialogFragment {
                 dismiss();
             }
         });
+
+        btnReset.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectedToDate = "";
+                selectedFromDate = "";
+               selectedOrderData = orderUserArray[0];
+                selectedSortData = sortUserArray[0];
+
+                listener.onInfoChanged(
+                        selectedOrderData,
+                        selectedSortData,
+                        selectedToDate,
+                        selectedFromDate);
+                getDialog().cancel();
+            }
+        });
+
         return rootView;
     }
 
