@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -26,6 +27,9 @@ public class NavigationDrawerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_navigation_drawer);
 
+        replaceFragment(new UserFragment());
+//        nvDrawer.getMenu().getItem(0).setChecked(true);
+
         toolbar = (Toolbar) findViewById(R.id.toolbar_for_navigation);
         setSupportActionBar(toolbar);
 
@@ -37,6 +41,14 @@ public class NavigationDrawerActivity extends AppCompatActivity {
 
         // Tie DrawerLayout events to the ActionBarToggle
         mDrawer.addDrawerListener(drawerToggle);
+    }
+
+
+    public void replaceFragment(Fragment fragment) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.flContent, fragment);
+        fragmentTransaction.commit();
     }
 
     @Override
@@ -84,8 +96,7 @@ public class NavigationDrawerActivity extends AppCompatActivity {
 
         // Insert the fragment by replacing any existing fragment
 
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
+        replaceFragment(fragment);
 
         // Highlight the selected item has been done by NavigationView
 

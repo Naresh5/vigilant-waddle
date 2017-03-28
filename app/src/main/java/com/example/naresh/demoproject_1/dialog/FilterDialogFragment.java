@@ -43,6 +43,7 @@ public class FilterDialogFragment extends DialogFragment {
     public static final String ARG_FROMDATE = "fromdate";
     public static final String ARG_DRAWER_NAME = "drawerName";
     public static final String ARG_SORT_ARRAY = "sortUserArray";
+    public static final String ARG_ORDER_ARRAY = "orderUserArray";
 
     private String selectedOrderData, selectedSortData;
     private String selectedToDate = "";
@@ -66,6 +67,7 @@ public class FilterDialogFragment extends DialogFragment {
                                                    String fromdate) {
         FilterDialogFragment filterDialogFragment = new FilterDialogFragment();
         Bundle bundle = new Bundle();
+
         bundle.putStringArray(ARG_SORT_ARRAY, sortUserArray);
         bundle.putString(ARG_ORDER, order);
         bundle.putString(ARG_SORT, sort);
@@ -94,9 +96,10 @@ public class FilterDialogFragment extends DialogFragment {
         btnToDatePicker = (Button) rootView.findViewById(R.id.btn_to_date_picker);
         btnYes = (Button) rootView.findViewById(R.id.btn_yes);
         btnNo = (Button) rootView.findViewById(R.id.btn_no);
-        btnReset = (Button)rootView.findViewById(R.id.btn_reset);
+        btnReset = (Button) rootView.findViewById(R.id.btn_reset);
         Bundle bundle = getArguments();
 
+        orderUserArray = bundle.getStringArray(ARG_ORDER_ARRAY);
         sortUserArray = bundle.getStringArray(ARG_SORT_ARRAY);
         selectedOrderData = bundle.getString(ARG_ORDER);
         selectedSortData = bundle.getString(ARG_SORT);
@@ -113,10 +116,18 @@ public class FilterDialogFragment extends DialogFragment {
         int sortPosition = getItemPosition(R.array.spinnerUserSort, selectedSortData);
 
 
-       ArrayAdapter<CharSequence> adapterSpinnerOrder = ArrayAdapter.createFromResource(
+
+      /*  ArrayAdapter<CharSequence> adapterSpinnerOrder = new ArrayAdapter<CharSequence>(getActivity(),
+                android.R.layout.simple_spinner_item, orderUserArray);
+        adapterSpinnerOrder.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerOrder.setAdapter(adapterSpinnerOrder);
+*/
+        ArrayAdapter<CharSequence> adapterSpinnerOrder = ArrayAdapter.createFromResource(
                 getActivity(), R.array.spinnerUserOrder, android.R.layout.simple_spinner_item);
         adapterSpinnerOrder.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerOrder.setAdapter(adapterSpinnerOrder);
+
+        orderUserArray = getResources().getStringArray(R.array.spinnerUserOrder);
 
 
         ArrayAdapter<CharSequence> adapterSpinnerSort = new ArrayAdapter<CharSequence>(getActivity(),
@@ -124,15 +135,29 @@ public class FilterDialogFragment extends DialogFragment {
         adapterSpinnerSort.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerSort.setAdapter(adapterSpinnerSort);
 
+        spinnerOrder.setSelection(((ArrayAdapter<String>) spinnerOrder.getAdapter())
+                .getPosition(selectedOrderData));
 
         spinnerSort.setSelection(((ArrayAdapter<String>) spinnerSort.getAdapter())
                 .getPosition(selectedSortData));
+
+        spinnerSort.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                selectedSortData = sortUserArray[position];
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
 
         spinnerOrder.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 selectedSortData = sortUserArray[position];
             }
+
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
@@ -218,7 +243,7 @@ public class FilterDialogFragment extends DialogFragment {
             public void onClick(View v) {
                 selectedToDate = "";
                 selectedFromDate = "";
-               selectedOrderData = orderUserArray[0];
+                selectedOrderData = orderUserArray[0];
                 selectedSortData = sortUserArray[0];
 
                 listener.onInfoChanged(
