@@ -96,4 +96,17 @@ public class Utility {
             return (formatter.format(calendar.getTime()));
         }
     }
+    public static String getReputation(long reputation) {
+        String repString;
+        String rep = String.valueOf(reputation);
+
+        if (reputation < 1000) {
+            repString = rep;
+        } else if (reputation < 10000) {
+            repString = rep.charAt(0) + "," + rep.substring(1);
+        } else {
+            repString = (Math.round((reputation / 1000f) * 10) / 10f) + "k";
+        }
+        return repString;
+    }
 }
