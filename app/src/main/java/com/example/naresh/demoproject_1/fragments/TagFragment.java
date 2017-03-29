@@ -158,15 +158,14 @@ public class TagFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                Log.d(TAG, "onTextChanged() called with: s = [" + s + "], start = [" + start + "], before = [" + before + "], count = [" + count + "]");
-                String text = editTagSearch.getText().toString();
-// if(!text.isEmpty())
-                if(s.length() != 0 )
-                {
-                    Log.d(TAG, "onTextChanged: "+s);
+                Log.e(TAG, "onTextChanged() called with: s = [" + s + "], start = [" + start + "], before = [" + before + "], count = [" + count + "]");
+                //String text = editTagSearch.getText().toString();
+
+                if (s.length() != 0) {
+                    Log.e(TAG, "onTextChanged: " + s);
+                    Log.e(TAG, "onTextChanged: " + s.length());
                     imageCancel.setVisibility(View.VISIBLE);
-                }
-                else {
+                } else {
                     imageCancel.setVisibility(View.GONE);
                     Utility.hideSoftKeyboard(getActivity());
                 }
@@ -231,7 +230,7 @@ public class TagFragment extends Fragment {
             public void onFailure(Call<ListResponse<TagItem>> call, Throwable t) {
                 // Log error here since request failed
                 Log.e(TAG, t.toString());
-                Toast.makeText(getActivity(),"Couldn't Load Json Data",Toast.LENGTH_SHORT);
+                Toast.makeText(getActivity(), "Couldn't Load Json Data", Toast.LENGTH_SHORT);
             }
         });
     }
