@@ -32,6 +32,17 @@
                 android:imeOptions="actionSearch"
                 android:background="@null" />
 
+            <ImageButton
+                android:id="@+id/image_cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_marginRight="10dp"
+                android:layout_alignParentRight="true"
+                android:visibility="gone"
+                android:background="@drawable/ic_cancel_black_24dp" />
+
+
         </RelativeLayout>
 
         <Spinner

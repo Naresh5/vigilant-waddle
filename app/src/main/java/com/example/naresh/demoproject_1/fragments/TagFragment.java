@@ -1,23 +1,16 @@
 package com.example.naresh.demoproject_1.fragments;
 
-import android.app.Service;
 import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.SystemClock;
 import android.support.v4.app.Fragment;
-import android.support.v7.util.SortedList;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -29,25 +22,18 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.naresh.demoproject_1.NavigationDrawerActivity;
 import com.example.naresh.demoproject_1.R;
 import com.example.naresh.demoproject_1.adapters.TagAdapter;
 import com.example.naresh.demoproject_1.models.ListResponse;
-import com.example.naresh.demoproject_1.models.QuestionDetailItem;
 import com.example.naresh.demoproject_1.models.TagItem;
-import com.example.naresh.demoproject_1.models.User;
 import com.example.naresh.demoproject_1.retrofit.ApiClient;
 import com.example.naresh.demoproject_1.retrofit.ApiInterface;
 import com.example.naresh.demoproject_1.utils.Constants;
 import com.example.naresh.demoproject_1.utils.Utility;
 
-import java.util.List;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
-import static android.content.ContentValues.TAG;
 
 
 public class TagFragment extends Fragment {
@@ -55,8 +41,8 @@ public class TagFragment extends Fragment {
     private EditText editTagSearch;
     private ListView listTag;
     private TextView textLoading;
-
     private ProgressBar progressBar;
+    private ImageButton imageCancel;
     private View footerView;
     private TagAdapter tagAdapter;
     private int mTagPageCount = 1;
@@ -65,12 +51,12 @@ public class TagFragment extends Fragment {
     private String inname = null;
     private boolean isTagLoading = false;
     private String[] tagArray;
-
     private boolean hasMoreTag = true;
 
     public TagFragment() {
 
     }
+
     public static TagFragment newInstance() {
         TagFragment tagFragment = new TagFragment();
         return tagFragment;
@@ -86,7 +72,7 @@ public class TagFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        Utility.hideSoftKeyboard(getActivity());
+        //Utility.hideSoftKeyboard(getActivity());
 
         final View rootView = inflater.inflate(R.layout.tag_fragment_navigation, container, false);
         spinnerTagSearch = (Spinner) rootView.findViewById(R.id.spinner_for_tag_search);
@@ -94,6 +80,7 @@ public class TagFragment extends Fragment {
         listTag = (ListView) rootView.findViewById(R.id.list_tag);
         textLoading = (TextView) rootView.findViewById(R.id.text_loading);
         progressBar = (ProgressBar) rootView.findViewById(R.id.progressbar);
+        imageCancel = (ImageButton) rootView.findViewById(R.id.image_cancel);
 
         footerView = ((LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE))
                 .inflate(R.layout.listview_footer, null, false);
@@ -120,6 +107,7 @@ public class TagFragment extends Fragment {
                 tagAdapter.removeItems();
                 getJsonTagResponse();
             }
+
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
@@ -145,7 +133,47 @@ public class TagFragment extends Fragment {
             }
         });
 
-        editTagSearch.setOnEditorActionListener(new TextView.OnEditorActionListener(){
+        imageCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                editTagSearch.getText().clear();
+                mTagPageCount = 1;
+                inname = null;
+                tagAdapter.removeItems();
+                Utility.hideSoftKeyboard(getActivity());
+                getJsonTagResponse();
+
+            }
+        });
+
+        editTagSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void afterTextChanged(Editable arg0) {
+
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                Log.d(TAG, "onTextChanged() called with: s = [" + s + "], start = [" + start + "], before = [" + before + "], count = [" + count + "]");
+                String text = editTagSearch.getText().toString();
+// if(!text.isEmpty())
+                if(s.length() != 0 )
+                {
+                    Log.d(TAG, "onTextChanged: "+s);
+                    imageCancel.setVisibility(View.VISIBLE);
+                }
+                else {
+                    imageCancel.setVisibility(View.GONE);
+                    Utility.hideSoftKeyboard(getActivity());
+                }
+            }
+        });
+
+        editTagSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
 
@@ -171,8 +199,7 @@ public class TagFragment extends Fragment {
         return rootView;
     }
 
-    private void getJsonTagResponse()
-    {
+    private void getJsonTagResponse() {
         isTagLoading = true;
         showProgressBar();
         ApiInterface apiService =
@@ -204,6 +231,7 @@ public class TagFragment extends Fragment {
             public void onFailure(Call<ListResponse<TagItem>> call, Throwable t) {
                 // Log error here since request failed
                 Log.e(TAG, t.toString());
+                Toast.makeText(getActivity(),"Couldn't Load Json Data",Toast.LENGTH_SHORT);
             }
         });
     }
