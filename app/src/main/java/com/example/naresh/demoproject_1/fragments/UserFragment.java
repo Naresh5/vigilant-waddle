@@ -49,12 +49,12 @@ public class UserFragment extends Fragment implements FilterDialogFragment.OnInf
     private int pageCount = 0;
     public String orderValue = "asc", sortValue = "reputation", fromDateValue, toDateValue;
 
-  /*  private String[] filterSortOrder = null;
-    private String filterUserOrder = null;
-    private String filterUserSort = null;
-    private String filterUserTodate ;
-    private String filterUserFromdate;
-*/
+    /*  private String[] filterSortOrder = null;
+      private String filterUserOrder = null;
+      private String filterUserSort = null;
+      private String filterUserTodate ;
+      private String filterUserFromdate;
+  */
     public UserFragment() {
         // Required empty public constructor
     }
@@ -102,7 +102,10 @@ public class UserFragment extends Fragment implements FilterDialogFragment.OnInf
                 Log.e("VISIBLE ITEM  Count  :", first);
                 Log.e("Total ITEM  Count  :", visible);
 
-                if ((lastInScreen == totalItemCount) && (totalItemCount - 1 != 0) && !isSearch) {
+                if ((lastInScreen == totalItemCount)
+                        && (totalItemCount - 1 != 0)
+                        && !isSearch)
+                {
                     if (!isLoading) {
                         Log.e("ERR -:", "Scrolling List view");
                         pageCount++;
@@ -257,6 +260,7 @@ public class UserFragment extends Fragment implements FilterDialogFragment.OnInf
                 return null;
             }
         }
+
         @Override
         protected void onPostExecute(List<User> userList) {
             super.onPostExecute(userList);

@@ -9,24 +9,24 @@ import java.util.ArrayList;
  */
 public class ListResponse<T> {
 
-        private ArrayList<T> items;
+    private ArrayList<T> items;
 
-        @SerializedName("has_more")
-        private boolean hasMore;
+    @SerializedName("has_more")
+    private boolean hasMore;
 
-        public void setItems(ArrayList<T> items) {
-            this.items = items;
-        }
-
-        public ArrayList<T> getItems() {
-            return items;
-        }
-
-        public boolean isHasMore() {
-            return hasMore;
-        }
-
-        public void setHasMore(boolean hasMore) {
-            this.hasMore = hasMore;
-        }
+    public void setItems(ArrayList<T> items) {
+        this.items = items;
     }
+
+    public ArrayList<T> getItems() {
+        return items;
+    }
+
+    public boolean isHasMore() {
+        return hasMore;
+    }
+
+    public void setHasMore(boolean hasMore) {
+        this.hasMore = hasMore;
+    }
+}

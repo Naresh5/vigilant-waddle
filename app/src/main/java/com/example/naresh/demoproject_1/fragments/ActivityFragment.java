@@ -138,6 +138,7 @@ public class ActivityFragment extends Fragment {
             }
         }
     }
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -169,7 +170,7 @@ public class ActivityFragment extends Fragment {
         String websiteURL = user.getWebsiteUrl();
 
 
-        if (TextUtils.isEmpty(aboutMe) ) {
+        if (TextUtils.isEmpty(aboutMe)) {
             mTextAboutUser.setText(aboutMeException);
         } else {
             mTextAboutUser.setText(Utility.convertTextToHTML(aboutMe));
@@ -181,18 +182,18 @@ public class ActivityFragment extends Fragment {
         mTextViewCount.setText(views);
 
         //For Location
-        if (TextUtils.isEmpty(location) ){
+        if (TextUtils.isEmpty(location)) {
             mTextUserLocation.setVisibility(View.GONE);
-        }else {
+        } else {
             mTextUserLocation.setText(Utility.convertTextToHTML(location));
             mTextUserLocation.setMovementMethod(LinkMovementMethod.getInstance());
         }
 
-        if (TextUtils.isEmpty(websiteURL) ){
+        if (TextUtils.isEmpty(websiteURL)) {
             mTextWebSiteURL.setVisibility(View.GONE);
-        }else {
+        } else {
             mTextWebSiteURL.setText(websiteURL);
         }
-      }
+    }
 }
 

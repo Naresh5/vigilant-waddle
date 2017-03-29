@@ -18,20 +18,19 @@
             android:layout_height="match_parent"
             android:layout_weight="1">
 
+
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/edit_tag_search"
                 android:layout_gravity="center"
-                android:background="@null"
                 android:paddingLeft="8dp"
                 android:layout_centerVertical="true"
                 android:paddingRight="8dp"
-                android:textCursorDrawable="@null"
-                android:imeOptions="actionSearch"
                 android:hint="@string/search_tag_edit_text_hint"
-                android:inputType="text" />
-
+                android:inputType="text"
+                android:imeOptions="actionSearch"
+                android:background="@null" />
 
         </RelativeLayout>
 
@@ -41,6 +40,7 @@
             android:id="@+id/spinner_for_tag_search"
             android:layout_gravity="center"/>
     </LinearLayout>
+
     <ProgressBar
         android:id="@+id/progressbar"
         android:layout_width="wrap_content"

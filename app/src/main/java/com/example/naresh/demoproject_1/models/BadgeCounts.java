@@ -7,7 +7,7 @@ import android.os.Parcelable;
  * Created by naresh on 28/2/17.
  */
 
-public class BadgeCounts implements Parcelable{
+public class BadgeCounts implements Parcelable {
 
     private int bronze;
     private int silver;

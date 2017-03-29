@@ -8,11 +8,15 @@ import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.v4.app.Fragment;
 import android.support.v7.util.SortedList;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
@@ -58,16 +62,15 @@ public class TagFragment extends Fragment {
     private int mTagPageCount = 1;
     private static final String TAG = "Tag Detail";
     private String tagSortBy = "popular";
+    private String inname = null;
     private boolean isTagLoading = false;
     private String[] tagArray;
 
     private boolean hasMoreTag = true;
 
-
     public TagFragment() {
 
     }
-
     public static TagFragment newInstance() {
         TagFragment tagFragment = new TagFragment();
         return tagFragment;
@@ -117,8 +120,6 @@ public class TagFragment extends Fragment {
                 tagAdapter.removeItems();
                 getJsonTagResponse();
             }
-
-
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
@@ -143,16 +144,36 @@ public class TagFragment extends Fragment {
                 }
             }
         });
+
+        editTagSearch.setOnEditorActionListener(new TextView.OnEditorActionListener(){
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    mTagPageCount = 1;
+                    inname = editTagSearch.getText().toString().toLowerCase();
+                    inname = inname.replace(" ", "");
+
+                    tagAdapter.removeItems();
+                    Utility.hideSoftKeyboard(getActivity());
+                    getJsonTagResponse();
+                    return true;
+                }
+                return false;
+            }
+        });
+
         listTag.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(getActivity(), "Hello...Shanti Rakho...\n Aa haju baki 6e...", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "...", Toast.LENGTH_SHORT).show();
             }
         });
         return rootView;
     }
 
-    private void getJsonTagResponse() {
+    private void getJsonTagResponse()
+    {
         isTagLoading = true;
         showProgressBar();
         ApiInterface apiService =
@@ -161,8 +182,10 @@ public class TagFragment extends Fragment {
         Call<ListResponse<TagItem>> call = apiService.getTagList(mTagPageCount,
                 Constants.ORDER_ASC,
                 tagSortBy,
+                inname,
                 Constants.SITE);
         Log.d(TAG, "getJsonTagResponse: " + call);
+
         call.enqueue(new Callback<ListResponse<TagItem>>() {
             @Override
             public void onResponse(Call<ListResponse<TagItem>> call,

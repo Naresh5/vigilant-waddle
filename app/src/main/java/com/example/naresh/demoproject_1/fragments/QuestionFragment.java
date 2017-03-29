@@ -23,13 +23,13 @@ import android.widget.TextView;
 import com.example.naresh.demoproject_1.NavigationDrawerActivity;
 import com.example.naresh.demoproject_1.R;
 import com.example.naresh.demoproject_1.adapters.QuestionDetailAdapter;
+import com.example.naresh.demoproject_1.adapters.UserAdapter;
 import com.example.naresh.demoproject_1.dialog.FilterDialogFragment;
 import com.example.naresh.demoproject_1.models.ListResponse;
 import com.example.naresh.demoproject_1.models.QuestionDetailItem;
 import com.example.naresh.demoproject_1.retrofit.ApiClient;
 import com.example.naresh.demoproject_1.retrofit.ApiInterface;
 import com.example.naresh.demoproject_1.utils.Constants;
-import com.example.naresh.demoproject_1.utils.Utility;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -46,6 +46,8 @@ public class QuestionFragment extends Fragment implements FilterDialogFragment.O
     private int mQuestionPageCount = 1;
     private boolean isQuestionLoading = false;
 
+    private boolean isSearch = false;
+
     private boolean hasMore = true;
     public static final String ARG_TAG = "tagName";
     private String tagName = null;
@@ -55,13 +57,13 @@ public class QuestionFragment extends Fragment implements FilterDialogFragment.O
     //   public String orderValue = "asc", sortValue = "reputation", fromDateValue, toDateValue;
 
     private String filterQuestionOrder = Constants.ORDER_DESC;
-    private String filterQuestionSort =  Constants.SORT_BY_VOTES;
+    private String filterQuestionSort = Constants.SORT_BY_VOTES;
     private String filterQuestionTodate = null;
     private String filterQuestionFromdate = null;
 
-   /* private String order = Constants.ORDER_DESC;
-    private String sort = Constants.SORT_BY_VOTES;
-  */  private String site = Constants.SITE;
+    /* private String order = Constants.ORDER_DESC;
+     private String sort = Constants.SORT_BY_VOTES;
+   */  private String site = Constants.SITE;
 
     public QuestionFragment() {
 
@@ -86,7 +88,6 @@ public class QuestionFragment extends Fragment implements FilterDialogFragment.O
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
 
 
         View rootView = inflater.inflate(R.layout.question_fragment_navigation, container, false);
@@ -151,6 +152,21 @@ public class QuestionFragment extends Fragment implements FilterDialogFragment.O
         SearchView searchView = new SearchView(((NavigationDrawerActivity) getActivity()).getSupportActionBar().getThemedContext());
         MenuItemCompat.setShowAsAction(item, MenuItemCompat.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW | MenuItemCompat.SHOW_AS_ACTION_ALWAYS);
         MenuItemCompat.setActionView(item, searchView);
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                isSearch = !newText.isEmpty();
+                return false;
+            }
+        });
+
     }
 
     @Override

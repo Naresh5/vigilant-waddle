@@ -94,7 +94,7 @@ public class UserAdapter extends BaseAdapter implements Filterable {
         User currentItem = (User) getItem(position);
         BadgeCounts badgeCount = currentItem.getBadgeCounts();
 
-      //  String reputation =currentItem.getReputation();
+        //  String reputation =currentItem.getReputation();
 
         Picasso.with(context).load(currentItem.getProfileImage()).into(viewHolder.userImage);
 

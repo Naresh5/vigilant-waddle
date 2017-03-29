@@ -8,9 +8,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
@@ -24,7 +21,6 @@ import com.example.naresh.demoproject_1.adapters.QuestionAdapter;
 import com.example.naresh.demoproject_1.models.QuestionAnswerResponse;
 import com.example.naresh.demoproject_1.models.QuestionItem;
 import com.example.naresh.demoproject_1.utils.Constants;
-import com.example.naresh.demoproject_1.utils.Utility;
 import com.google.gson.Gson;
 
 import java.io.BufferedReader;
@@ -32,8 +28,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
-
-import static android.R.attr.id;
 
 
 public class ProfileFragment extends Fragment {
@@ -74,7 +68,6 @@ public class ProfileFragment extends Fragment {
                              Bundle savedInstanceState) {
 
 
-
         rootView = inflater.inflate(R.layout.fragment_profile, container, false);
         mListViewProfileFragment = (ListView) rootView.findViewById(R.id.list_question_profile_fragment);
         mProgressBar = (ProgressBar) rootView.findViewById(R.id.progressbar_profile_fragment);
@@ -105,6 +98,7 @@ public class ProfileFragment extends Fragment {
             public void onScrollStateChanged(AbsListView view, int scrollState) {
 
             }
+
             @Override
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
                 int lastInScreen = firstVisibleItem + visibleItemCount;
@@ -207,16 +201,19 @@ public class ProfileFragment extends Fragment {
             }
         }
     }
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
 
     }
+
     @Override
     public void onDetach() {
         super.onDetach();
 
     }
+
     private void hideProgressBar() {
         if (mQuestionPageCount == 1) {
             mProgressBar.setVisibility(View.GONE);

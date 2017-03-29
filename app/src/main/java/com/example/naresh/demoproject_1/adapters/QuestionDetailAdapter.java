@@ -7,6 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -14,6 +16,7 @@ import android.widget.TextView;
 import com.example.naresh.demoproject_1.R;
 import com.example.naresh.demoproject_1.models.OwnerItem;
 import com.example.naresh.demoproject_1.models.QuestionDetailItem;
+import com.example.naresh.demoproject_1.models.User;
 import com.example.naresh.demoproject_1.utils.Constants;
 import com.example.naresh.demoproject_1.utils.Utility;
 
@@ -25,23 +28,28 @@ import java.util.List;
  */
 
 
-public class QuestionDetailAdapter extends BaseAdapter {
+public class QuestionDetailAdapter extends BaseAdapter{
     private Context context;
     private List<QuestionDetailItem> questionDetailItemItems;
+
+    private List<QuestionDetailItem> items;
 
     public QuestionDetailAdapter(Context context) {
         this.context = context;
         this.questionDetailItemItems = new ArrayList<>();
+
     }
 
     public void addItems(List<QuestionDetailItem> items) {
         questionDetailItemItems.addAll(items);
+
         notifyDataSetChanged();
     }
 
 
     public void removeItems() {
         questionDetailItemItems.clear();
+        notifyDataSetChanged();
     }
 
     @Override
@@ -101,18 +109,23 @@ public class QuestionDetailAdapter extends BaseAdapter {
         holder.textUserName.setText(ownerItem.getDisplayName());
 
         long queCreationDate = (long) (questionDetailItem.getQuestionCreationDate());
-        String questionCreation = Utility.getDate(queCreationDate,Constants.DATE_FORMAT_QUESTION_CREATION);
+        String questionCreation = Utility.getDate(queCreationDate, Constants.DATE_FORMAT_QUESTION_CREATION);
         holder.textQuestionCreationDate.setText(questionCreation);
         holder.textTotalAnswer.setText(String.valueOf(questionDetailItem.getAnswerCount()));
         String score = Utility.getQuestionScore(questionDetailItem.getScore());
         holder.textScore.setText(score);
         return convertView;
     }
+
+
+
     private class ViewHolder {
         ImageView imageScore, imageAnswer;
         TextView textScore, textTotalAnswer, textQuestionTitle, textTag,
                 textQuestionCreationDate, textUserName;
         LinearLayout linearLayoutScore;
     }
+
+
 }
 
