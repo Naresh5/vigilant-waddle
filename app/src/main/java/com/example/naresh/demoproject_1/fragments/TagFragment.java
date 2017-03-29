@@ -152,8 +152,7 @@ public class TagFragment extends Fragment {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                     mTagPageCount = 1;
                     inname = editTagSearch.getText().toString().toLowerCase();
-                    inname = inname.replace(" ", "");
-
+                    inname = inname.trim();
                     tagAdapter.removeItems();
                     Utility.hideSoftKeyboard(getActivity());
                     getJsonTagResponse();
