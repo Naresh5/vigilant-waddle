@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.SearchView;
@@ -49,12 +51,11 @@ public class UserFragment extends Fragment implements FilterDialogFragment.OnInf
     private int pageCount = 0;
     public String orderValue = "asc", sortValue = "reputation", fromDateValue, toDateValue;
 
-    /*  private String[] filterSortOrder = null;
-      private String filterUserOrder = null;
-      private String filterUserSort = null;
-      private String filterUserTodate ;
-      private String filterUserFromdate;
-  */
+    Handler handler = new Handler();
+    private Runnable workRunnable;
+    private final long DELAY = 900;
+
+
     public UserFragment() {
         // Required empty public constructor
     }
@@ -104,12 +105,11 @@ public class UserFragment extends Fragment implements FilterDialogFragment.OnInf
 
                 if ((lastInScreen == totalItemCount)
                         && (totalItemCount - 1 != 0)
-                        && !isSearch)
-                {
+                        && !isSearch) {
                     if (!isLoading) {
                         Log.e("ERR -:", "Scrolling List view");
                         pageCount++;
-                        new LoadJsonData(Constants.ORDER_ASC, Constants.SORT_BY_REPUTATION, null, null).execute();
+                        new LoadJsonData(Constants.ORDER_ASC, Constants.SORT_BY_REPUTATION, null, null, null).execute();
                     }
                 }
             }
@@ -137,6 +137,16 @@ public class UserFragment extends Fragment implements FilterDialogFragment.OnInf
         MenuItemCompat.setShowAsAction(item, MenuItemCompat.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW | MenuItemCompat.SHOW_AS_ACTION_IF_ROOM);
         MenuItemCompat.setActionView(item, searchView);
 
+        searchView.setOnCloseListener(new SearchView.OnCloseListener() {
+            @Override
+            public boolean onClose() {
+                pageCount = 1;
+                adapter.clearAdapter();
+                new LoadJsonData(Constants.ORDER_ASC, Constants.SORT_BY_REPUTATION, null, null, null).execute();
+
+                return false;
+            }
+        });
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
 
             @Override
@@ -145,10 +155,23 @@ public class UserFragment extends Fragment implements FilterDialogFragment.OnInf
             }
 
             @Override
-            public boolean onQueryTextChange(String newText) {
-                isSearch = !newText.isEmpty();
-                adapter.getFilter().filter(newText);
+            public boolean onQueryTextChange(final String newText) {
+                //   isSearch = !newText.isEmpty();
+                //   adapter.getFilter().filter(newText);
 
+                handler.removeCallbacksAndMessages(workRunnable);
+                workRunnable = new Runnable() {
+                    @Override
+                    public void run() {
+                        pageCount = 1;
+                        adapter.clearAdapter();
+
+                        new LoadJsonData(Constants.ORDER_ASC,
+                                Constants.SORT_BY_REPUTATION,
+                                null, null, newText).execute();
+                    }
+                };
+                handler.postDelayed(workRunnable, DELAY);
                 return false;
             }
         });
@@ -159,29 +182,11 @@ public class UserFragment extends Fragment implements FilterDialogFragment.OnInf
         int id = item.getItemId();
 
         if (id == R.id.action_option) {
-
-          /*  FilterDialogFragment filterDialogFragment =
-                    FilterDialogFragment.newInstance(orderValue,sortValue,fromDateValue,toDateValue);
-            filterDialogFragment.setListener(this);
-            filterDialogFragment.show(getFragmentManager(), null);
-*/
             showDialogFragment();
-
             return true;
         }
         return super.onOptionsItemSelected(item);
     }
-/*
- FilterDialog filterDialog = FilterDialog.newInstance(
-                getResources().getString(R.string.open_dialog_from_question_drawer),
-                filterQuestionOrder,
-                filterQuestionSort,
-                filterQuestionTodate,
-                filterQuestionFromdate);
-        filterDialog.setCallbackOnResult(this);
-        filterDialog.show(getActivity().getSupportFragmentManager(),
-                getResources().getString(R.string.dialog_tag));
- */
 
     // Implementing method of Interface
 
@@ -194,19 +199,20 @@ public class UserFragment extends Fragment implements FilterDialogFragment.OnInf
         this.toDateValue = ToDate;
 
         adapter.clearAdapter();
-        new LoadJsonData(order, sort, FromDate, ToDate).execute();
+        new LoadJsonData(order, sort, FromDate, ToDate, null).execute();
     }
 
     public class LoadJsonData extends AsyncTask<Object, Object, List<User>> {
 
-        String order, sort, fromDate, toDate;
+        String order, sort, fromDate, toDate, inname;
 
-        public LoadJsonData(String order, String sort, String fromDate, String toDate) {
+        public LoadJsonData(String order, String sort, String fromDate, String toDate, String inname) {
             Log.d(TAG, "LoadJsonData: ");
             this.order = order;
             this.sort = sort;
             this.fromDate = fromDate;
             this.toDate = toDate;
+            this.inname = inname;
         }
 
         @Override
@@ -237,11 +243,16 @@ public class UserFragment extends Fragment implements FilterDialogFragment.OnInf
                 if (toDate != null) {
                     uriBuilder.appendQueryParameter("todate", toDate);
                 }
-
+                if (inname != null) {
+                    uriBuilder.appendQueryParameter("inname", inname);
+                }
+//https://api.stackexchange.com/2.2/users?order=desc&sort=reputation&inname=jon&site=stackoverflow
                 Uri uri = uriBuilder.build();
+//                Log.e(TAG, "doInBackground: " + uri.toString());
+                Log.e(TAG, "doInBackground: " + inname);
                 jsonStr = sh.makeServiceCall(uri.toString());
-                Log.e(TAG, " JsonRes for DFragment" + jsonStr);
-                Log.e(TAG, "::::--Main activity FULL  URL :::-- " + uri);
+//                Log.e(TAG, " JsonRes for DFragment" + jsonStr);
+//                Log.e(TAG, "::::--Main activity FULL  URL :::-- " + uri);
 
             } catch (MalformedURLException e) {
                 e.printStackTrace();
@@ -269,7 +280,8 @@ public class UserFragment extends Fragment implements FilterDialogFragment.OnInf
             if (userList != null) {
                 adapter.addItems(userList);
             } else {
-                Toast.makeText(getActivity(), "Couldn't Load Json Data", Toast.LENGTH_SHORT).show();
+                if (getActivity() != null)
+                    Toast.makeText(getActivity(), "Couldn't Load Json Data", Toast.LENGTH_SHORT).show();
             }
         }
     }

@@ -54,7 +54,7 @@ public class QuestionFragment extends Fragment implements FilterDialogFragment.O
 
     private boolean hasMore = true;
     public static final String ARG_TAG = "tagName";
-    // private String tagName = null;
+
     private String titleName;
 
     private static final String TAG = "QuestionDrawerFragment";
@@ -152,7 +152,6 @@ public class QuestionFragment extends Fragment implements FilterDialogFragment.O
         super.onCreateOptionsMenu(menu, inflater);
 
         inflater.inflate(R.menu.menu_search, menu);
-
         MenuItem item = menu.findItem(R.id.action_search);
         SearchView searchView = new SearchView(((NavigationDrawerActivity) getActivity()).getSupportActionBar().getThemedContext());
         MenuItemCompat.setShowAsAction(item, MenuItemCompat.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW | MenuItemCompat.SHOW_AS_ACTION_ALWAYS);

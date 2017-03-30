@@ -3,6 +3,7 @@ package com.example.naresh.demoproject_1.retrofit;
 import com.example.naresh.demoproject_1.models.ListResponse;
 import com.example.naresh.demoproject_1.models.QuestionDetailItem;
 import com.example.naresh.demoproject_1.models.TagItem;
+import com.example.naresh.demoproject_1.models.User;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -21,15 +22,16 @@ public interface ApiInterface {
                                                             @Query("sort") String sort,
                                                             @Query("fromdate") String fromDate,
                                                             @Query("todate") String toDate,
-                                                            @Query("site") String site);
+                                                            @Query("site") String site);*/
        @GET("users")
-       Call<ListResponse<UserItem>> getUserList(@Query("page") int page,
-                                             @Query("fromdate") String fromdate,
-                                             @Query("todate") String todate,
-                                             @Query("order") String order,
-                                             @Query("sort") String sort,
-                                             @Query("inname") String inname,
-                                             @Query("site") String site);   */
+       Call<ListResponse<User>> getUserList(@Query("page") int page,
+                                            @Query("fromdate") String fromdate,
+                                            @Query("todate") String todate,
+                                            @Query("order") String order,
+                                            @Query("sort") String sort,
+                                            @Query("inname") String inname,
+                                            @Query("site") String site);
+
     @GET("questions")
     Call<ListResponse<QuestionDetailItem>> getQuestionsList(@Query("page") int page,
                                                             @Query("order") String order,
