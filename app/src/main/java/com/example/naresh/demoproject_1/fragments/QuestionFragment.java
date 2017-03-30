@@ -193,7 +193,7 @@ public class QuestionFragment extends Fragment implements FilterDialogFragment.O
 
     }
 
-    private void getJsonQuestionListResponse() {
+    private void getJsonQuestionListResponse(String titleName) {
         isQuestionLoading = true;
         showProgressBar();
         Call<ListResponse<QuestionDetailItem>> call;
@@ -207,7 +207,45 @@ public class QuestionFragment extends Fragment implements FilterDialogFragment.O
                         filterQuestionTodate,
                         site);
         Log.e(TAG, "::: Retrofit URL ::: " + call);
+/*
+         if (titleName == null) {
+            call = apiService.getQuestionList(
+                    mQuestionPageCount,
+                    filterQuestionFromdate,
+                    filterQuestionTodate,
+                    filterQuestionOrder,
+                    filterQuestionSort,
+                    tagName,
+                    Constants.VALUE_STACKOVER_FLOW);
+        } else {
+            call = apiService.getSearchQuestionList(mQuestionPageCount,
+                    filterQuestionFromdate,
+                    filterQuestionTodate,
+                    filterQuestionOrder,
+                    filterQuestionSort,
+                    titleName,
+                    Constants.VALUE_STACKOVER_FLOW);
 
+        }
+        call.enqueue(new Callback<ListResponse<QuestionDetailItem>>() {
+            @Override
+            public void onResponse(Call<ListResponse<QuestionDetailItem>> call,
+                                   Response<ListResponse<QuestionDetailItem>> response) {
+                isQuestionLoading = false;
+                hideProgressBar();
+                if (response.body() != null) {
+                    hasMore = response.body().isHasMore();
+                    questionDetailAdapter.addItems(response.body().getItems());
+                }
+            }
+            @Override
+            public void onFailure(Call<ListResponse<QuestionDetailItem>> call, Throwable t) {
+                // Log error here since request failed
+                Log.e(TAG, t.toString());
+            }
+        });
+    }
+ */
         call.enqueue(new Callback<ListResponse<QuestionDetailItem>>() {
             @Override
             public void onResponse(Call<ListResponse<QuestionDetailItem>> call,
