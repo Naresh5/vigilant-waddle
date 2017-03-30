@@ -12,14 +12,41 @@ import retrofit2.http.Query;
  * Created by naresh on 24/3/17.
  */
 
+
 public interface ApiInterface {
+
+    /* @GET("questions")
+       Call<ListResponse<QuestionDetailItem>> getUserDetail(@Query("page") int page,
+                                                            @Query("order") String order,
+                                                            @Query("sort") String sort,
+                                                            @Query("fromdate") String fromDate,
+                                                            @Query("todate") String toDate,
+                                                            @Query("site") String site);
+       @GET("users")
+       Call<ListResponse<UserItem>> getUserList(@Query("page") int page,
+                                             @Query("fromdate") String fromdate,
+                                             @Query("todate") String todate,
+                                             @Query("order") String order,
+                                             @Query("sort") String sort,
+                                             @Query("inname") String inname,
+                                             @Query("site") String site);   */
     @GET("questions")
-    Call<ListResponse<QuestionDetailItem>> getUserDetail(@Query("page") int page,
-                                                         @Query("order") String order,
-                                                         @Query("sort") String sort,
-                                                         @Query("fromdate") String fromDate,
-                                                         @Query("todate") String toDate,
-                                                         @Query("site") String site);
+    Call<ListResponse<QuestionDetailItem>> getQuestionsList(@Query("page") int page,
+                                                            @Query("order") String order,
+                                                            @Query("sort") String sort,
+                                                            @Query("fromdate") String fromdate,
+                                                            @Query("todate") String todate,
+                                                            @Query("site") String site);
+
+
+    @GET("search")
+    Call<ListResponse<QuestionDetailItem>> getFilterQuestionList(@Query("page") int page,
+                                                                 @Query("order") String order,
+                                                                 @Query("sort") String sort,
+                                                                 @Query("fromdate") String fromdate,
+                                                                 @Query("todate") String todate,
+                                                                 @Query("intitle") String intitle,
+                                                                 @Query("site") String site);
 
     @GET("tags")
     Call<ListResponse<TagItem>> getTagList(@Query("page") int page,
@@ -30,5 +57,6 @@ public interface ApiInterface {
 
 //https://api.stackexchange.com/2.2/users/
 //https://api.stackexchange.com/2.2/questions?page=2&order=desc&sort=activity&site=stackoverflow
-
+// Question Search
+//https://api.stackexchange.com/2.2/search?order=desc&sort=activity&intitle=ionic&site=stackoverflow
 }

@@ -117,7 +117,6 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Drawe
         // NOTE: Make sure you pass in a valid toolbar reference.  ActionBarDrawToggle() does not require it
         // and will not render the hamburger icon without it.
 
-
         return new ActionBarDrawerToggle(this, mDrawer, toolbar, R.string.drawer_open, R.string.drawer_close);
     }
 
@@ -152,6 +151,7 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Drawe
     }
 
     @Override
+
     public void onDrawerClosed(View drawerView) {
 
     }

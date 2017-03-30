@@ -117,8 +117,6 @@ public class QuestionDetailAdapter extends BaseAdapter{
         return convertView;
     }
 
-
-
     private class ViewHolder {
         ImageView imageScore, imageAnswer;
         TextView textScore, textTotalAnswer, textQuestionTitle, textTag,

@@ -171,7 +171,6 @@ public class TagFragment extends Fragment {
                 }
             }
         });
-
         editTagSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {

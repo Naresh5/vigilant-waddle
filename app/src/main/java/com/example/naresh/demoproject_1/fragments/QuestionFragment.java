@@ -23,7 +23,6 @@ import android.widget.TextView;
 import com.example.naresh.demoproject_1.NavigationDrawerActivity;
 import com.example.naresh.demoproject_1.R;
 import com.example.naresh.demoproject_1.adapters.QuestionDetailAdapter;
-import com.example.naresh.demoproject_1.adapters.UserAdapter;
 import com.example.naresh.demoproject_1.dialog.FilterDialogFragment;
 import com.example.naresh.demoproject_1.models.ListResponse;
 import com.example.naresh.demoproject_1.models.QuestionDetailItem;
@@ -50,25 +49,19 @@ public class QuestionFragment extends Fragment implements FilterDialogFragment.O
 
     private boolean hasMore = true;
     public static final String ARG_TAG = "tagName";
-    private String tagName = null;
-    private String titleName = null;
+    // private String tagName = null;
+    private String titleName ;
 
     private static final String TAG = "QuestionDrawerFragment";
-    //   public String orderValue = "asc", sortValue = "reputation", fromDateValue, toDateValue;
 
     private String filterQuestionOrder = Constants.ORDER_DESC;
     private String filterQuestionSort = Constants.SORT_BY_VOTES;
     private String filterQuestionTodate = null;
     private String filterQuestionFromdate = null;
 
-    /* private String order = Constants.ORDER_DESC;
-     private String sort = Constants.SORT_BY_VOTES;
-   */  private String site = Constants.SITE;
-
     public QuestionFragment() {
 
     }
-
     public static QuestionFragment newInstance(String tag) {
         QuestionFragment questionDrawerFragment = new QuestionFragment();
         Bundle bundle = new Bundle();
@@ -100,13 +93,14 @@ public class QuestionFragment extends Fragment implements FilterDialogFragment.O
         footerView.setVisibility(View.GONE);
         listQuestionDetail.addFooterView(footerView);
 
-        //        Bundle bundle = getArguments();
-        //       tagName = bundle.getString(ARG_TAG);
+        Bundle bundle = getArguments();
+//        tagName = bundle.getString(ARG_TAG);
+
 
         questionDetailAdapter = new QuestionDetailAdapter(getActivity());
         listQuestionDetail.setAdapter(questionDetailAdapter);
 
-        getJsonQuestionListResponse();
+        getJsonQuestionListResponse(null);
 
 
         listQuestionDetail.setOnScrollListener(new AbsListView.OnScrollListener() {
@@ -124,7 +118,7 @@ public class QuestionFragment extends Fragment implements FilterDialogFragment.O
                         && !isQuestionLoading
                         && hasMore) {
                     mQuestionPageCount++;
-                    getJsonQuestionListResponse();
+                    getJsonQuestionListResponse(titleName);
                 }
             }
         });
@@ -162,7 +156,14 @@ public class QuestionFragment extends Fragment implements FilterDialogFragment.O
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                isSearch = !newText.isEmpty();
+                mQuestionPageCount = 1;
+                questionDetailAdapter.removeItems();
+                if (newText.isEmpty()) {
+                    getJsonQuestionListResponse(null);
+                } else {
+                    titleName = newText;
+                    getJsonQuestionListResponse(titleName);
+                }
                 return false;
             }
         });
@@ -189,42 +190,32 @@ public class QuestionFragment extends Fragment implements FilterDialogFragment.O
         this.filterQuestionFromdate = FromDate;
         this.filterQuestionTodate = ToDate;
 
-        getJsonQuestionListResponse();
+        getJsonQuestionListResponse(null);
 
     }
 
     private void getJsonQuestionListResponse(String titleName) {
         isQuestionLoading = true;
         showProgressBar();
-        Call<ListResponse<QuestionDetailItem>> call;
+        Call<ListResponse<QuestionDetailItem>> call = null;
         ApiInterface apiService =
                 ApiClient.getClient().create(ApiInterface.class);
-        call = apiService.getUserDetail
-                (mQuestionPageCount,
-                        filterQuestionOrder,
-                        filterQuestionSort,
-                        filterQuestionFromdate,
-                        filterQuestionTodate,
-                        site);
-        Log.e(TAG, "::: Retrofit URL ::: " + call);
-/*
-         if (titleName == null) {
-            call = apiService.getQuestionList(
+        if (titleName == null) {
+            call = apiService.getQuestionsList(
                     mQuestionPageCount,
-                    filterQuestionFromdate,
-                    filterQuestionTodate,
                     filterQuestionOrder,
                     filterQuestionSort,
-                    tagName,
-                    Constants.VALUE_STACKOVER_FLOW);
+                    filterQuestionFromdate,
+                    filterQuestionTodate,
+                    Constants.SITE);
         } else {
-            call = apiService.getSearchQuestionList(mQuestionPageCount,
-                    filterQuestionFromdate,
-                    filterQuestionTodate,
+            call = apiService.getFilterQuestionList(mQuestionPageCount,
                     filterQuestionOrder,
                     filterQuestionSort,
+                    filterQuestionFromdate,
+                    filterQuestionTodate,
                     titleName,
-                    Constants.VALUE_STACKOVER_FLOW);
+                    Constants.SITE);
 
         }
         call.enqueue(new Callback<ListResponse<QuestionDetailItem>>() {
@@ -238,34 +229,10 @@ public class QuestionFragment extends Fragment implements FilterDialogFragment.O
                     questionDetailAdapter.addItems(response.body().getItems());
                 }
             }
+
             @Override
             public void onFailure(Call<ListResponse<QuestionDetailItem>> call, Throwable t) {
                 // Log error here since request failed
-                Log.e(TAG, t.toString());
-            }
-        });
-    }
- */
-        call.enqueue(new Callback<ListResponse<QuestionDetailItem>>() {
-            @Override
-            public void onResponse(Call<ListResponse<QuestionDetailItem>> call,
-                                   Response<ListResponse<QuestionDetailItem>> response) {
-                isQuestionLoading = false;
-                hideProgressBar();
-
-                if (response.body() != null) {
-
-                    hasMore = response.body().isHasMore();
-                    questionDetailAdapter.addItems(response.body().getItems());
-
-                    Log.e(TAG, "Retrofit Response" + response.body());
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ListResponse<QuestionDetailItem>> call, Throwable t) {
-                hideProgressBar();
-                isQuestionLoading = false;
                 Log.e(TAG, t.toString());
             }
         });
