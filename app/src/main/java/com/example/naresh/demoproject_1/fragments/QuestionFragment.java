@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.SearchView;
@@ -30,6 +32,9 @@ import com.example.naresh.demoproject_1.retrofit.ApiClient;
 import com.example.naresh.demoproject_1.retrofit.ApiInterface;
 import com.example.naresh.demoproject_1.utils.Constants;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -50,7 +55,7 @@ public class QuestionFragment extends Fragment implements FilterDialogFragment.O
     private boolean hasMore = true;
     public static final String ARG_TAG = "tagName";
     // private String tagName = null;
-    private String titleName ;
+    private String titleName;
 
     private static final String TAG = "QuestionDrawerFragment";
 
@@ -59,9 +64,14 @@ public class QuestionFragment extends Fragment implements FilterDialogFragment.O
     private String filterQuestionTodate = null;
     private String filterQuestionFromdate = null;
 
+    Handler handler = new Handler(Looper.getMainLooper() /*UI thread*/);
+    private Runnable workRunnable;
+    private final long DELAY = 900;
+
     public QuestionFragment() {
 
     }
+
     public static QuestionFragment newInstance(String tag) {
         QuestionFragment questionDrawerFragment = new QuestionFragment();
         Bundle bundle = new Bundle();
@@ -133,6 +143,7 @@ public class QuestionFragment extends Fragment implements FilterDialogFragment.O
                 startActivity(intent);
             }
         });
+
         return rootView;
     }
 
@@ -155,21 +166,48 @@ public class QuestionFragment extends Fragment implements FilterDialogFragment.O
             }
 
             @Override
-            public boolean onQueryTextChange(String newText) {
-                mQuestionPageCount = 1;
-                questionDetailAdapter.removeItems();
-                if (newText.isEmpty()) {
-                    getJsonQuestionListResponse(null);
-                } else {
-                    titleName = newText;
-                    getJsonQuestionListResponse(titleName);
-                }
+            public boolean onQueryTextChange(final String newText) {
+
+                handler.removeCallbacksAndMessages(workRunnable);
+
+                workRunnable = new Runnable() {
+                    @Override
+                    public void run() {
+                        mQuestionPageCount = 1;
+                        questionDetailAdapter.removeItems();
+                        if (newText.isEmpty()) {
+                            getJsonQuestionListResponse(null);
+                        } else {
+                            titleName = newText;
+                            getJsonQuestionListResponse(titleName);
+                        }
+                    }
+                };
+                handler.postDelayed(workRunnable, DELAY);
                 return false;
             }
-        });
 
+
+        });
     }
 
+    /*
+      @Override
+            public void afterTextChanged(final Editable s) {
+                timer.cancel();
+                timer = new Timer();
+                timer.schedule(
+                    new TimerTask() {
+                        @Override
+                        public void run() {
+                            // TODO: do what you need here (refresh list)
+                            // you will probably need to use runOnUiThread(Runnable action) for some specific actions
+                        }
+                    },
+                    DELAY
+                );
+            }
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
