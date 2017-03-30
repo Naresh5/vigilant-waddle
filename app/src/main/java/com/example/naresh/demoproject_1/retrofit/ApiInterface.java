@@ -23,14 +23,14 @@ public interface ApiInterface {
                                                             @Query("fromdate") String fromDate,
                                                             @Query("todate") String toDate,
                                                             @Query("site") String site);*/
-       @GET("users")
-       Call<ListResponse<User>> getUserList(@Query("page") int page,
-                                            @Query("fromdate") String fromdate,
-                                            @Query("todate") String todate,
-                                            @Query("order") String order,
-                                            @Query("sort") String sort,
-                                            @Query("inname") String inname,
-                                            @Query("site") String site);
+    @GET("users")
+    Call<ListResponse<User>> getUserList(@Query("page") int page,
+                                         @Query("order") String order,
+                                         @Query("sort") String sort,
+                                         @Query("fromdate") String fromdate,
+                                         @Query("todate") String todate,
+                                         @Query("inname") String inname,
+                                         @Query("site") String site);
 
     @GET("questions")
     Call<ListResponse<QuestionDetailItem>> getQuestionsList(@Query("page") int page,

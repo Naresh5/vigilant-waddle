@@ -9,6 +9,7 @@ import android.os.Looper;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.SearchView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -27,8 +28,11 @@ import com.example.naresh.demoproject_1.R;
 import com.example.naresh.demoproject_1.UserDetailActivity;
 import com.example.naresh.demoproject_1.adapters.UserAdapter;
 import com.example.naresh.demoproject_1.dialog.FilterDialogFragment;
+import com.example.naresh.demoproject_1.models.ListResponse;
 import com.example.naresh.demoproject_1.models.User;
 import com.example.naresh.demoproject_1.models.UserResponse;
+import com.example.naresh.demoproject_1.retrofit.ApiClient;
+import com.example.naresh.demoproject_1.retrofit.ApiInterface;
 import com.example.naresh.demoproject_1.utils.Constants;
 import com.example.naresh.demoproject_1.utils.JSONParser;
 import com.example.naresh.demoproject_1.utils.Utility;
@@ -36,6 +40,10 @@ import com.google.gson.Gson;
 
 import java.net.MalformedURLException;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class UserFragment extends Fragment implements FilterDialogFragment.OnInfoChangedListener {
@@ -51,6 +59,11 @@ public class UserFragment extends Fragment implements FilterDialogFragment.OnInf
     private int pageCount = 0;
     public String orderValue = "asc", sortValue = "reputation", fromDateValue, toDateValue;
 
+    private String filterUserOrder = Constants.ORDER_ASC;
+    private String filterUserSort = Constants.SORT_BY_REPUTATION;
+    private String filterUserFromdate = null;
+    private String filterUserTodate = null;
+    private String inname;
     Handler handler = new Handler();
     private Runnable workRunnable;
     private final long DELAY = 900;
@@ -142,6 +155,7 @@ public class UserFragment extends Fragment implements FilterDialogFragment.OnInf
             public boolean onClose() {
                 pageCount = 1;
                 adapter.clearAdapter();
+
                 new LoadJsonData(Constants.ORDER_ASC, Constants.SORT_BY_REPUTATION, null, null, null).execute();
 
                 return false;
@@ -165,10 +179,14 @@ public class UserFragment extends Fragment implements FilterDialogFragment.OnInf
                     public void run() {
                         pageCount = 1;
                         adapter.clearAdapter();
-
-                        new LoadJsonData(Constants.ORDER_ASC,
-                                Constants.SORT_BY_REPUTATION,
-                                null, null, newText).execute();
+                        if (newText.isEmpty()) {
+                            new LoadJsonData(Constants.ORDER_ASC,
+                                    Constants.SORT_BY_REPUTATION,
+                                    null, null, newText).execute();
+                        } else {
+                             inname = newText;
+                            getJsonUserListResponse(inname);
+                        }
                     }
                 };
                 handler.postDelayed(workRunnable, DELAY);
@@ -272,6 +290,8 @@ public class UserFragment extends Fragment implements FilterDialogFragment.OnInf
             }
         }
 
+
+
         @Override
         protected void onPostExecute(List<User> userList) {
             super.onPostExecute(userList);
@@ -284,6 +304,45 @@ public class UserFragment extends Fragment implements FilterDialogFragment.OnInf
                     Toast.makeText(getActivity(), "Couldn't Load Json Data", Toast.LENGTH_SHORT).show();
             }
         }
+    }
+
+
+    private void getJsonUserListResponse(String inname) {
+        isLoading = true;
+        showProgressBar();
+        ApiInterface apiService =
+                ApiClient.getClient().create(ApiInterface.class);
+
+        Call<ListResponse<User>>  call = apiService.getUserList(
+                                                pageCount,
+                                                filterUserOrder,
+                                                filterUserSort,
+                                                filterUserFromdate,
+                                                filterUserTodate,
+                                                inname,
+                                                Constants.SITE);
+        Log.d(TAG, "getJsonUserListResponse: Search" + call);
+
+        call.enqueue(new Callback<ListResponse<User>>() {
+            @Override
+            public void onResponse(Call<ListResponse<User>> call,
+                                   Response<ListResponse<User>> response) {
+                isLoading = false;
+                hideProgressBar();
+                if (response.body() != null) {
+                    // = response.body().isHasMore();
+                    adapter.addItems(response.body().getItems());
+
+                    Log.d(TAG, "onResponse: " + response);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ListResponse<User>> call, Throwable t) {
+                // Log error here since request failed
+                Log.e(TAG, t.toString());
+            }
+        });
     }
 
     private void hideProgressBar() {
