@@ -13,7 +13,8 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".NavigationDrawerActivity"
-            android:configChanges="orientation|screenSize">
+            android:configChanges="orientation|screenSize"
+            android:theme="@style/AppThemeToolbar">
             <intent-filter>
                 <action
                     android:name="android.intent.action.MAIN"
@@ -24,11 +25,13 @@
         </activity>
         <activity
             android:name=".UserDetailActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_use_detail_activity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-            android:configChanges="orientation|keyboardHidden|screenSize">
+            android:theme="@style/AppThemeToolbar"/>
 
-        </activity>
+        <activity android:name=".TagDetailActivity"
+            android:theme="@style/AppTheme"/>
+
 
     </application>
 

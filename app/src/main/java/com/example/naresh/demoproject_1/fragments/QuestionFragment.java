@@ -54,8 +54,8 @@ public class QuestionFragment extends Fragment implements FilterDialogFragment.O
 
     private boolean hasMore = true;
     public static final String ARG_TAG = "tagName";
-
-    private String titleName;
+    private String tagName = null;
+    private String titleName = null;
 
     private static final String TAG = "QuestionDrawerFragment";
 
@@ -80,12 +80,12 @@ public class QuestionFragment extends Fragment implements FilterDialogFragment.O
         return questionDrawerFragment;
     }
 
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-        if (getArguments() != null) {
-        }
+
     }
 
     @Override
@@ -104,9 +104,9 @@ public class QuestionFragment extends Fragment implements FilterDialogFragment.O
         listQuestionDetail.addFooterView(footerView);
 
         Bundle bundle = getArguments();
-//        tagName = bundle.getString(ARG_TAG);
-
-
+        if(bundle != null) {
+            tagName = bundle.getString(ARG_TAG);
+        }
         questionDetailAdapter = new QuestionDetailAdapter(getActivity());
         listQuestionDetail.setAdapter(questionDetailAdapter);
 
@@ -153,7 +153,13 @@ public class QuestionFragment extends Fragment implements FilterDialogFragment.O
 
         inflater.inflate(R.menu.menu_search, menu);
         MenuItem item = menu.findItem(R.id.action_search);
-        SearchView searchView = new SearchView(((NavigationDrawerActivity) getActivity()).getSupportActionBar().getThemedContext());
+
+      /*  SearchView searchView = new SearchView(((NavigationDrawerActivity)
+                                                getActivity()).getSupportActionBar()
+                                                .getThemedContext());
+      */
+
+        final SearchView searchView = (SearchView) MenuItemCompat.getActionView(item);
         MenuItemCompat.setShowAsAction(item, MenuItemCompat.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW | MenuItemCompat.SHOW_AS_ACTION_ALWAYS);
         MenuItemCompat.setActionView(item, searchView);
 
@@ -185,28 +191,9 @@ public class QuestionFragment extends Fragment implements FilterDialogFragment.O
                 handler.postDelayed(workRunnable, DELAY);
                 return false;
             }
-
-
         });
     }
 
-    /*
-      @Override
-            public void afterTextChanged(final Editable s) {
-                timer.cancel();
-                timer = new Timer();
-                timer.schedule(
-                    new TimerTask() {
-                        @Override
-                        public void run() {
-                            // TODO: do what you need here (refresh list)
-                            // you will probably need to use runOnUiThread(Runnable action) for some specific actions
-                        }
-                    },
-                    DELAY
-                );
-            }
-     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
@@ -234,7 +221,7 @@ public class QuestionFragment extends Fragment implements FilterDialogFragment.O
     private void getJsonQuestionListResponse(String titleName) {
         isQuestionLoading = true;
         showProgressBar();
-        Call<ListResponse<QuestionDetailItem>> call = null;
+        Call<ListResponse<QuestionDetailItem>> call;
         ApiInterface apiService =
                 ApiClient.getClient().create(ApiInterface.class);
         if (titleName == null) {
@@ -244,6 +231,7 @@ public class QuestionFragment extends Fragment implements FilterDialogFragment.O
                     filterQuestionSort,
                     filterQuestionFromdate,
                     filterQuestionTodate,
+                    tagName,
                     Constants.SITE);
         } else {
             call = apiService.getFilterQuestionList(mQuestionPageCount,

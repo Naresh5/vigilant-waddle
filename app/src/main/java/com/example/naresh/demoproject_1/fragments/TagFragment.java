@@ -1,6 +1,7 @@
 package com.example.naresh.demoproject_1.fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
@@ -23,6 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.naresh.demoproject_1.R;
+import com.example.naresh.demoproject_1.TagDetailActivity;
 import com.example.naresh.demoproject_1.adapters.TagAdapter;
 import com.example.naresh.demoproject_1.models.ListResponse;
 import com.example.naresh.demoproject_1.models.TagItem;
@@ -37,6 +39,7 @@ import retrofit2.Response;
 
 
 public class TagFragment extends Fragment {
+
     private Spinner spinnerTagSearch;
     private EditText editTagSearch;
     private ListView listTag;
@@ -57,16 +60,17 @@ public class TagFragment extends Fragment {
 
     }
 
-    public static TagFragment newInstance() {
+    /*public static TagFragment newInstance() {
         TagFragment tagFragment = new TagFragment();
         return tagFragment;
-    }
+    }*/
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-        }
+     /*   if (getArguments() != null) {
+
+        }*/
     }
 
     @Override
@@ -117,7 +121,6 @@ public class TagFragment extends Fragment {
         listTag.setOnScrollListener(new AbsListView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(AbsListView view, int scrollState) {
-
             }
 
             @Override
@@ -191,13 +194,18 @@ public class TagFragment extends Fragment {
         listTag.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(getActivity(), "...", Toast.LENGTH_SHORT).show();
+
+                String tagName = tagAdapter.getItem(position).getName();
+                Intent intentQuestionListActivity = TagDetailActivity.getNewIntent(getActivity(), tagName);
+                startActivity(intentQuestionListActivity);
+
             }
         });
         return rootView;
     }
 
-    private void getJsonTagResponse() {
+    private void getJsonTagResponse()
+    {
         isTagLoading = true;
         showProgressBar();
         ApiInterface apiService =
@@ -229,7 +237,7 @@ public class TagFragment extends Fragment {
             public void onFailure(Call<ListResponse<TagItem>> call, Throwable t) {
                 // Log error here since request failed
                 Log.e(TAG, t.toString());
-                Toast.makeText(getActivity(), "Couldn't Load Json Data", Toast.LENGTH_SHORT);
+                Toast.makeText(getActivity(), "Couldn't Load Json Data", Toast.LENGTH_SHORT).show();
             }
         });
     }

@@ -38,8 +38,8 @@ public interface ApiInterface {
                                                             @Query("sort") String sort,
                                                             @Query("fromdate") String fromdate,
                                                             @Query("todate") String todate,
+                                                            @Query("tagged") String tagged,
                                                             @Query("site") String site);
-
 
     @GET("search")
     Call<ListResponse<QuestionDetailItem>> getFilterQuestionList(@Query("page") int page,
