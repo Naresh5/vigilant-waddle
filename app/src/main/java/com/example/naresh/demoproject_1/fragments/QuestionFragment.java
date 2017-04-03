@@ -85,7 +85,8 @@ public class QuestionFragment extends Fragment implements FilterDialogFragment.O
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-
+      /*  if (getArguments() != null) {
+        }*/
     }
 
     @Override

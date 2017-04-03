@@ -7,7 +7,9 @@
     <color name="badgeSilver">#C4C4C4</color>
     <color name="badgeBronze">#CF9862</color>
 
-    <color name="WHITE">#fffefd</color>
+    <color name="colorWhite">#fffefd</color>
+    //For Splash Screen
+    <color name="colorRedForSplash">#e11c0a</color>
 
     <color name="badgeText">#888888</color>
     <color name="reputation">#080808</color>
@@ -35,19 +37,19 @@
 
     //For Question Drawer Fragment
 
-        <color name="colorScore">#767F8E</color>
-        <color name="colorTotalAnswer">#498E69</color>
-        <color name="colorTags">#39729C</color>
-        <color name="colorNotAnswerTotal">#767F8E</color>
-        <color name="colorIsAnswerTotal">#498E69</color>
-        <color name="colorQuestionCreationDate">#9EA5AC</color>
-        <color name="colorQuestionTitle">#0176CB</color>
-        <color name="colorQuestionUserName">#0176D4</color>
-        <color name="colorTagSearchEditTextHint">#7F7F7F</color>
-        <color name="colorTagTextBackground">#F5FBFD</color>
-        <color name="colorTagText">#5C727A</color>
-        <color name="colorIsAnswerFalse">#F0F2F5</color>
-        <color name="colorIsAnswerTrue">#E3F7EB</color>
-
+    <color name="colorScore">#767F8E</color>
+    <color name="colorTotalAnswer">#498E69</color>
+    <color name="colorTags">#39729C</color>
+    <color name="colorNotAnswerTotal">#767F8E</color>
+    <color name="colorIsAnswerTotal">#498E69</color>
+    <color name="colorQuestionCreationDate">#9EA5AC</color>
+    <color name="colorQuestionTitle">#0176CB</color>
+    <color name="colorQuestionUserName">#0176D4</color>
+    <color name="colorTagSearchEditTextHint">#7F7F7F</color>
+    <color name="colorTagTextBackground">#F5FBFD</color>
+    <color name="colorTagText">#5C727A</color>
+    <color name="colorIsAnswerFalse">#F0F2F5</color>
+    <color name="colorIsAnswerTrue">#E3F7EB</color>
+    <color name="colorSilver">#bab7b7</color>
 
 </resources>

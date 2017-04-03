@@ -2,6 +2,7 @@ package com.example.naresh.demoproject_1.retrofit;
 
 import com.example.naresh.demoproject_1.models.ListResponse;
 import com.example.naresh.demoproject_1.models.QuestionDetailItem;
+import com.example.naresh.demoproject_1.models.SiteItem;
 import com.example.naresh.demoproject_1.models.TagItem;
 import com.example.naresh.demoproject_1.models.User;
 
@@ -56,6 +57,9 @@ public interface ApiInterface {
                                            @Query("sort") String sort,
                                            @Query("inname") String inname,
                                            @Query("site") String site);
+    @GET("sites")
+    Call<ListResponse<SiteItem>> getSiteList(@Query("page") int page,
+                                             @Query("filter") String filter);
 
 //https://api.stackexchange.com/2.2/users/
 //https://api.stackexchange.com/2.2/questions?page=2&order=desc&sort=activity&site=stackoverflow

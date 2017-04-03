@@ -37,6 +37,7 @@ dependencies {
     compile 'com.squareup.retrofit2:retrofit:2.0.2'
     compile 'com.squareup.retrofit2:converter-gson:2.0.2'
 
+    compile 'org.afinal.simplecache:a-simple-cache:1.0'
     testCompile 'junit:junit:4.12'
 }
 
