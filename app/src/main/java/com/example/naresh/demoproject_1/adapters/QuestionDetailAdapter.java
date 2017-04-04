@@ -7,8 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Filter;
-import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -16,7 +14,6 @@ import android.widget.TextView;
 import com.example.naresh.demoproject_1.R;
 import com.example.naresh.demoproject_1.models.OwnerItem;
 import com.example.naresh.demoproject_1.models.QuestionDetailItem;
-import com.example.naresh.demoproject_1.models.User;
 import com.example.naresh.demoproject_1.utils.Constants;
 import com.example.naresh.demoproject_1.utils.Utility;
 
@@ -28,7 +25,7 @@ import java.util.List;
  */
 
 
-public class QuestionDetailAdapter extends BaseAdapter{
+public class QuestionDetailAdapter extends BaseAdapter {
     private Context context;
     private List<QuestionDetailItem> questionDetailItemItems;
 

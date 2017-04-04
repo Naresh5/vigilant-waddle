@@ -8,14 +8,24 @@ import java.io.Serializable;
  * Created by naresh on 3/4/17.
  */
 
-public class SiteItem  implements Serializable{
+public class SiteItem implements Serializable {
 
-    public SiteItem(){
+    public SiteItem() {
 
     }
 
     @SerializedName("icon_url")
     private String iconUrl;
+
+    public String getAudience() {
+        return audience;
+    }
+
+    public void setAudience(String audience) {
+        this.audience = audience;
+    }
+
+    private String audience;
 
     @SerializedName("site_url")
     private String siteUrl;

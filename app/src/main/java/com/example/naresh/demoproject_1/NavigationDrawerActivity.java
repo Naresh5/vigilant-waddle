@@ -7,14 +7,12 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -39,7 +37,7 @@ import java.util.List;
 public class NavigationDrawerActivity extends AppCompatActivity implements DrawerLayout.DrawerListener, NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout mDrawer;
     private Toolbar toolbar;
-    private NavigationView nvDrawer;
+    private NavigationView navigationView;
     private ActionBarDrawerToggle drawerToggle;
     private LinearLayout headerRootView, siteListLayout;
     private ImageView imageArrow, imageNavigationIcon, imageSite;
@@ -50,7 +48,6 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Drawe
     ACache mCache;
     private List<SiteItem> siteItems;
 
-
     public static Intent getStartIntent(Context context) {
         Intent intent = new Intent(context, NavigationDrawerActivity.class);
         return intent;
@@ -60,23 +57,22 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Drawe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_navigation_drawer);
-
-        replaceFragment(new UserFragment());
-
+        //    replaceFragment(new UserFragment());
         toolbar = (Toolbar) findViewById(R.id.toolbar_for_navigation);
         setSupportActionBar(toolbar);
 
+
         mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawer.addDrawerListener(this);
-        nvDrawer = (NavigationView) findViewById(R.id.nvView);
-        setupDrawerContent(nvDrawer);
+        navigationView = (NavigationView) findViewById(R.id.nvView);
+        setupDrawerContent(navigationView);
         drawerToggle = setupDrawerToggle();
-
         mDrawer.addDrawerListener(drawerToggle);
 
         drawerToggle.syncState();
-        nvDrawer = (NavigationView) findViewById(R.id.nvView);
-        View headerView = nvDrawer.getHeaderView(0);
+
+        navigationView = (NavigationView) findViewById(R.id.nvView);
+        View headerView = navigationView.getHeaderView(0);
         headerRootView = (LinearLayout) headerView.findViewById(R.id.headerRootView);
         imageArrow = (ImageView) headerView.findViewById(R.id.image_arrow);
         imageNavigationIcon = (ImageView) headerView.findViewById(R.id.image_navigation_icon);
@@ -85,11 +81,11 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Drawe
         siteListLayout = (LinearLayout) findViewById(R.id.siteListLayout);
         listSite = (ListView) findViewById(R.id.list_site);
 
-        nvDrawer.setNavigationItemSelectedListener(this);
+        navigationView.setNavigationItemSelectedListener(this);
 
-        nvDrawer.setCheckedItem(R.id.nav_user);
+        navigationView.setCheckedItem(R.id.nav_user);
         Fragment fragment = UserFragment.newInstance();
-        //showFragment(R.string.nav_user_detail_title, fragment);
+        showFragment(R.string.nav_user_detail_title, fragment);
 
         mCache = ACache.get(this);
         siteItems = mCache.getAsObjectList(SplashActivity.KEY_CACHE, SiteItem.class);
@@ -97,8 +93,9 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Drawe
 
         siteAdapter = new SiteAdapter(NavigationDrawerActivity.this);
 
-        siteAdapter.addItems(siteItems);
         listSite.setAdapter(siteAdapter);
+
+        showSharedPreferenceDetail();
 
 
         mDrawer.addDrawerListener(drawerToggle);
@@ -117,13 +114,16 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Drawe
             }
         });
 
-    }
+        listSite.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                SessionManager.getInstance(NavigationDrawerActivity.this)
+                        .addSiteDetail(siteAdapter.getItem(position));
+                showSharedPreferenceDetail();
 
-    public void replaceFragment(Fragment fragment) {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.flContent, fragment);
-        fragmentTransaction.commit();
+                //ch
+            }
+        });
     }
 
     @Override
@@ -146,32 +146,25 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Drawe
     }
 
     public void selectDrawerItem(MenuItem menuItem) {
-
-        Fragment fragment = null;
-        Class fragmentClass;
-        switch (menuItem.getItemId()) {
+        int id = menuItem.getItemId();
+        navigationView.setCheckedItem(id);
+        Fragment fragment;
+        switch (id) {
             case R.id.nav_user:
-                fragmentClass = UserFragment.class;
+                fragment = UserFragment.newInstance();
+                showFragment(R.string.nav_user_detail_title, fragment);
                 break;
             case R.id.nav_question:
-                fragmentClass = QuestionFragment.class;
+                fragment = QuestionFragment.newInstance(null);
+                showFragment(R.string.nav_question_detail_title, fragment);
                 break;
             case R.id.nav_tag:
-                fragmentClass = TagFragment.class;
+                fragment = TagFragment.newInstance();
+                showFragment(R.string.nav_tag_title, fragment);
                 break;
-            default:
-                fragmentClass = UserFragment.class;
         }
-        try {
-            fragment = (Fragment) fragmentClass.newInstance();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        replaceFragment(fragment);
-        menuItem.setChecked(true);
-        setTitle(menuItem.getTitle());
-        mDrawer.closeDrawers();
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
     }
 
     private ActionBarDrawerToggle setupDrawerToggle() {
@@ -212,50 +205,53 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Drawe
         }
     }
 
-
     @Override
     public void onDrawerStateChanged(int newState) {
 
     }
 
-
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        //  openSelectedFragment(item);
+
         selectDrawerItem(item);
         return true;
-
     }
 
-
-    public void changeSite() {
-        Menu menu = nvDrawer.getMenu();
-        MenuItem selectedMenu = null;
-        for (int i = 0; i < menu.size(); i++) {
-            MenuItem menuItem = menu.getItem(i);
-            if (menuItem.isChecked()) {
-                selectedMenu = menuItem;
-                break;
-            }
-        }
-        if (selectedMenu != null) {
-            selectDrawerItem(selectedMenu);
+    public void showFragment(int fragmentNameRes, Fragment fragment) {
+        if (fragment != null) {
+            if (getSupportActionBar() != null)
+                getSupportActionBar().setTitle(fragmentNameRes);
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.replace(R.id.flContent, fragment);
+            ft.commit();
         }
     }
 
-    public void showCustomListView(String selectedSite) {
+    public void showSharedPreferenceDetail() {
 
-        //     siteAdapter.addItems(siteItems, selectedSite);
-        //   changeSite();
+        HashMap<String, String> siteDetail = SessionManager.getInstance(this).getSiteDetail();
+
+        String name = siteDetail.get(SessionManager.KEY_SITE_NAME);
+        String image = siteDetail.get(SessionManager.KEY_SITE_IMAGE);
+        final String audience = siteDetail.get(SessionManager.KEY_SITE_AUDIENCE);
+        String SITE;
+
+        SITE = siteDetail.get(SessionManager.KEY_SITE_PARAMETER);
+
+        textNavigationSiteName.setText(name);
+        textNavigationDescription.setText(Utility.convertTextToHTML(audience));
+        Picasso.with(getApplicationContext())
+                .load(image)
+                .into(imageNavigationIcon);
+        // showUpdatedList(siteDetail.get(SessionManager.KEY_SITE_PARAMETER));
+        siteAdapter.addItems(siteItems, SITE);
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == 222 && resultCode == 333) {
-            //   showSharedPreferenceDetail();
-            changeSite();
-        }
+  /*
+   public void showUpdatedList(String selectedSite) {
+        siteAdapter.addItems(siteItems, selectedSite);
     }
+    */
+
+
 }

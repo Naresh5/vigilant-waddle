@@ -8,6 +8,7 @@
         android:id="@+id/list_view_user_fragment_nav"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
+    
 
     <ProgressBar
         android:id="@+id/progress_bar_user_fragment_nav"

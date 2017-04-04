@@ -36,6 +36,7 @@ public class QuestionAdapter extends BaseAdapter {
         questionItems.addAll(arrayList);
         notifyDataSetChanged();
     }
+
     public void clearAdapter() {
         questionItems.clear();
         notifyDataSetChanged();

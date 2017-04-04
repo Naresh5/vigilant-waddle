@@ -2,11 +2,10 @@ package com.example.naresh.demoproject_1;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.naresh.demoproject_1.fragments.QuestionFragment;
@@ -37,7 +36,8 @@ public class TagDetailActivity extends AppCompatActivity {
         ft.commit();
 
     }
-   @Override
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:

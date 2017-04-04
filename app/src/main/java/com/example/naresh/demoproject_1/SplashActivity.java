@@ -1,8 +1,8 @@
 package com.example.naresh.demoproject_1;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -19,6 +19,7 @@ import com.example.naresh.demoproject_1.utils.Constants;
 import org.afinal.simplecache.ACache;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import retrofit2.Call;
@@ -39,9 +40,9 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-        mProgressbar = (ProgressBar)findViewById(R.id.progressbar_loading_splash);
-        textError = (TextView)findViewById(R.id.text_error);
-        buttonTryAgain = (Button)findViewById(R.id.button_try_again);
+        mProgressbar = (ProgressBar) findViewById(R.id.progressbar_loading_splash);
+        textError = (TextView) findViewById(R.id.text_error);
+        buttonTryAgain = (Button) findViewById(R.id.button_try_again);
         getAppList();
 
         buttonTryAgain.setOnClickListener(new View.OnClickListener() {
@@ -57,7 +58,6 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     public void getAppList() {
-
         ApiInterface apiService =
                 ApiClient.getClient().create(ApiInterface.class);
         Call<ListResponse<SiteItem>> call = apiService.getSiteList(pageNo,
@@ -69,21 +69,21 @@ public class SplashActivity extends AppCompatActivity {
                                    Response<ListResponse<SiteItem>> response) {
                 mProgressbar.setVisibility(View.GONE);
                 Log.d(TAG, "onResponse: " + response.body());
-                if(response.body()!=null){
-                    listSiteDetail = response.body().getItems();
 
-                  //  saveDataInSharedPreference();
+                if (response.body() != null) {
+                    listSiteDetail = response.body().getItems();
+                    saveDataInSharedPreference();
                     saveDataInCache();
                     openActivity();
-                    Log.e(TAG, "onResponse: "+response.body());
-                    Log.e(TAG, "onResponse: "+call );
+                    Log.e(TAG, "onResponse: " + response.body());
+                    Log.e(TAG, "onResponse: " + call);
                     Toast.makeText(SplashActivity.this, "Success...", Toast.LENGTH_SHORT).show();
-                }
-                else{
+                } else {
                     textError.setVisibility(View.VISIBLE);
                     buttonTryAgain.setVisibility(View.VISIBLE);
                 }
             }
+
             @Override
             public void onFailure(Call<ListResponse<SiteItem>> call, Throwable t) {
                 textError.setVisibility(View.VISIBLE);
@@ -94,15 +94,47 @@ public class SplashActivity extends AppCompatActivity {
         });
     }
 
-    private void saveDataInCache()
-    {
+    private void saveDataInCache() {
         ACache mCache = ACache.get(this);
         mCache.put(KEY_CACHE, listSiteDetail);
     }
 
     private void openActivity() {
-        Intent intent= NavigationDrawerActivity.getStartIntent(SplashActivity.this);
+        Intent intent = NavigationDrawerActivity.getStartIntent(SplashActivity.this);
         startActivity(intent);
         finish();
+    }
+
+    /*
+    /* private void saveDataInSharedPreference() {
+        for (int i = 0; i < listSiteDetail.size(); i++) {
+            SiteItem item = listSiteDetail.get(i);
+            item.getIconUrl();
+        }
+        int i=0;
+        for (SiteItem item : listSiteDetail) {
+            item.getIconUrl();
+            i++;
+        }*/
+
+    private void saveDataInSharedPreference() {
+        if (listSiteDetail.size() > 0) {
+            SiteItem siteItem = null;
+            // check for stackoverflow site item
+
+            for (SiteItem item : listSiteDetail) {
+                if (item.getApiSiteParameter() != null && item.getApiSiteParameter()
+                        .equalsIgnoreCase(Constants.SITE)) {
+                    siteItem = item;
+                    break;
+                }
+            }
+            // if stackoverflow not found then use first item from list
+
+            if (siteItem == null) {
+                siteItem = listSiteDetail.get(0);
+            }
+            SessionManager.getInstance(this).addSiteDetail(siteItem);
+        }
     }
 }

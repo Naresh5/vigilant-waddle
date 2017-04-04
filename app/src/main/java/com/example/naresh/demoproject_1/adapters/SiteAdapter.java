@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.example.naresh.demoproject_1.R;
 import com.example.naresh.demoproject_1.models.SiteItem;
+import com.example.naresh.demoproject_1.utils.Utility;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -29,29 +30,21 @@ public class SiteAdapter extends BaseAdapter {
         this.context = context;
     }
 
- /*   public void addItems(List<SiteItem> items,String selectedSite) {
+    public void addItems(List<SiteItem> items, String selectedSite) {
         siteItems.clear();
-        if(selectedSite!=null) {
+        if (selectedSite != null) {
             for (int i = 0; i < items.size(); i++) {
                 String audience = items.get(i).getApiSiteParameter();
                 if (audience != null && !audience.equalsIgnoreCase(selectedSite)) {
                     siteItems.add(items.get(i));
                 }
             }
-        }
-        else{
+        } else {
             siteItems.addAll(items);
         }
         notifyDataSetChanged();
-    }*/
-
-
-    public void addItems(List<SiteItem> items) {
-//      siteItems.clear();
-        siteItems.addAll(items);
-        notifyDataSetChanged();
-
     }
+
 
     @Override
     public int getCount() {
@@ -86,6 +79,7 @@ public class SiteAdapter extends BaseAdapter {
         SiteItem siteItem = getItem(position);
 
         holder.textSiteName.setText(siteItem.getName());
+     //   holder.textSiteName.setText(Utility.convertTextToHTML(siteItem.getName()));
         Picasso.with(context)
                 .load(siteItem.getIconUrl())
 

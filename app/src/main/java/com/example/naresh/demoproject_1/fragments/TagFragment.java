@@ -60,10 +60,10 @@ public class TagFragment extends Fragment {
 
     }
 
-    /*public static TagFragment newInstance() {
-        TagFragment tagFragment = new TagFragment();
+    public static TagFragment newInstance() {
+        TagFragment tagFragment=new TagFragment();
         return tagFragment;
-    }*/
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
