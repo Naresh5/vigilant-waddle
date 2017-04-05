@@ -82,8 +82,8 @@ public class TagFragment extends Fragment {
         spinnerTagSearch = (Spinner) rootView.findViewById(R.id.spinner_for_tag_search);
         editTagSearch = (EditText) rootView.findViewById(R.id.edit_tag_search);
         listTag = (ListView) rootView.findViewById(R.id.list_tag);
-        textLoading = (TextView) rootView.findViewById(R.id.text_loading);
-        progressBar = (ProgressBar) rootView.findViewById(R.id.progressbar);
+        textLoading = (TextView) rootView.findViewById(R.id.text_loading_site_list);
+        progressBar = (ProgressBar) rootView.findViewById(R.id.progressbar_site_list);
         imageCancel = (ImageButton) rootView.findViewById(R.id.image_cancel);
 
         footerView = ((LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE))

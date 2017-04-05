@@ -13,6 +13,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -33,6 +34,7 @@ import org.afinal.simplecache.ACache;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.zip.Inflater;
 
 public class NavigationDrawerActivity extends AppCompatActivity implements DrawerLayout.DrawerListener, NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout mDrawer;
@@ -57,7 +59,7 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Drawe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_navigation_drawer);
-        //    replaceFragment(new UserFragment());
+
         toolbar = (Toolbar) findViewById(R.id.toolbar_for_navigation);
         setSupportActionBar(toolbar);
 
@@ -81,20 +83,25 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Drawe
         siteListLayout = (LinearLayout) findViewById(R.id.siteListLayout);
         listSite = (ListView) findViewById(R.id.list_site);
 
-        navigationView.setNavigationItemSelectedListener(this);
+        footerView = ((LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE))
+                .inflate(R.layout.item_site, listSite, false);
+        imageSite = (ImageView) footerView.findViewById(R.id.image_site);
+        textSite = (TextView) footerView.findViewById(R.id.text_site_name);
+        imageSite.setImageResource(R.drawable.ic_more_horiz_black_24dp);
+        textSite.setText(R.string.siteTitle);
 
+        listSite.addFooterView(footerView);
+        footerView.setVisibility(View.VISIBLE);
+
+        navigationView.setNavigationItemSelectedListener(this);
         navigationView.setCheckedItem(R.id.nav_user);
         Fragment fragment = UserFragment.newInstance();
         showFragment(R.string.nav_user_detail_title, fragment);
 
         mCache = ACache.get(this);
         siteItems = mCache.getAsObjectList(SplashActivity.KEY_CACHE, SiteItem.class);
-
-
         siteAdapter = new SiteAdapter(NavigationDrawerActivity.this);
-
         listSite.setAdapter(siteAdapter);
-
         showSharedPreferenceDetail();
 
 
@@ -108,7 +115,7 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Drawe
                     imageArrow.setImageResource(R.drawable.ic_arrow_drop_down_black_24dp);
                 } else {
                     siteListLayout.setVisibility(View.VISIBLE);
-//                    footerView.setVisibility(View.VISIBLE);
+                    footerView.setVisibility(View.VISIBLE);
                     imageArrow.setImageResource(R.drawable.ic_arrow_drop_up_black_24dp);
                 }
             }
@@ -120,8 +127,15 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Drawe
                 SessionManager.getInstance(NavigationDrawerActivity.this)
                         .addSiteDetail(siteAdapter.getItem(position));
                 showSharedPreferenceDetail();
-
                 //ch
+            }
+        });
+
+        footerView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(NavigationDrawerActivity.this,SiteListActivity.class);
+                startActivity(intent);
             }
         });
     }
@@ -246,12 +260,5 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Drawe
         // showUpdatedList(siteDetail.get(SessionManager.KEY_SITE_PARAMETER));
         siteAdapter.addItems(siteItems, SITE);
     }
-
-  /*
-   public void showUpdatedList(String selectedSite) {
-        siteAdapter.addItems(siteItems, selectedSite);
-    }
-    */
-
 
 }

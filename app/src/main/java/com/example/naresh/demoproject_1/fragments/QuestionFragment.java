@@ -22,7 +22,6 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.example.naresh.demoproject_1.NavigationDrawerActivity;
 import com.example.naresh.demoproject_1.R;
 import com.example.naresh.demoproject_1.adapters.QuestionDetailAdapter;
 import com.example.naresh.demoproject_1.dialog.FilterDialogFragment;
@@ -31,9 +30,6 @@ import com.example.naresh.demoproject_1.models.QuestionDetailItem;
 import com.example.naresh.demoproject_1.retrofit.ApiClient;
 import com.example.naresh.demoproject_1.retrofit.ApiInterface;
 import com.example.naresh.demoproject_1.utils.Constants;
-
-import java.util.Timer;
-import java.util.TimerTask;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -95,8 +91,8 @@ public class QuestionFragment extends Fragment implements FilterDialogFragment.O
 
 
         View rootView = inflater.inflate(R.layout.question_fragment_navigation, container, false);
-        textLoading = (TextView) rootView.findViewById(R.id.text_loading);
-        progressBar = (ProgressBar) rootView.findViewById(R.id.progressbar);
+        textLoading = (TextView) rootView.findViewById(R.id.text_loading_site_list);
+        progressBar = (ProgressBar) rootView.findViewById(R.id.progressbar_site_list);
         listQuestionDetail = (ListView) rootView.findViewById(R.id.list_question_detail);
 
         footerView = ((LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE))

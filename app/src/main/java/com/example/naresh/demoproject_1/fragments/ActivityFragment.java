@@ -60,7 +60,7 @@ public class ActivityFragment extends Fragment {
                              Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_activity, container, false);
         mProgressBar = (ProgressBar) rootView.findViewById(R.id.progressbar_activity_fragment);
-        mTextLoading = (TextView) rootView.findViewById(R.id.text_loading);
+        mTextLoading = (TextView) rootView.findViewById(R.id.text_loading_site_list);
         mTextAboutUser = (TextView) rootView.findViewById(R.id.text_about_user);
         mTextAnswerCount = (TextView) rootView.findViewById(R.id.text_answer_count);
         mTextQuestionCount = (TextView) rootView.findViewById(R.id.text_question_count);

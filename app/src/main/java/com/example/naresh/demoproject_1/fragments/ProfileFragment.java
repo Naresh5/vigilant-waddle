@@ -71,7 +71,7 @@ public class ProfileFragment extends Fragment {
         rootView = inflater.inflate(R.layout.fragment_profile, container, false);
         mListViewProfileFragment = (ListView) rootView.findViewById(R.id.list_question_profile_fragment);
         mProgressBar = (ProgressBar) rootView.findViewById(R.id.progressbar_profile_fragment);
-        mTextPleaseWait = (TextView) rootView.findViewById(R.id.text_loading);
+        mTextPleaseWait = (TextView) rootView.findViewById(R.id.text_loading_site_list);
         mTextDetailNotFound = (TextView) rootView.findViewById(R.id.text_detail_not_available);
         mFooterView = inflater.inflate(R.layout.listview_footer, null, false);
         mListViewProfileFragment.addFooterView(mFooterView);
