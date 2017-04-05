@@ -34,7 +34,9 @@
         <activity
             android:name=".NavigationDrawerActivity"
             android:theme="@style/AppThemeToolbar" />
-        <activity android:name=".SiteListActivity"></activity>
+
+        <activity android:name=".SiteListActivity"
+            android:theme="@style/AppTheme"/>
     </application>
 
 </manifest>
