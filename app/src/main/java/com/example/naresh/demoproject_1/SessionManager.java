@@ -15,13 +15,13 @@ import java.util.HashMap;
 public class SessionManager {
 
     private SharedPreferences sharedpreferences;
-    private String MyPREFERENCES = "PREFERENCES";          //MyPrefs
-    private static final String KEY_SITE_NAME = "nameKey";
-    private static final String KEY_SITE_IMAGE = "imageKey";
-    private static final String KEY_SITE_PARAMETER = "parameterKey";
-    private static final String KEY_SITE_AUDIENCE = "audienceKey";
+    private String MyPREFERENCES = "MyPrefs";
+    public static final String KEY_SITE_NAME = "nameKey";
+    public static final String KEY_SITE_IMAGE = "imageKey";
+    public static final String KEY_SITE_PARAMETER = "parameterKey";
+    public static final String KEY_SITE_AUDIENCE = "audienceKey";
     private static SessionManager sessionManager;
-    private SharedPreferences.Editor editor;
+    private  SharedPreferences.Editor editor;
 
     private SessionManager(Context context) {
         sharedpreferences = context.getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
@@ -29,35 +29,28 @@ public class SessionManager {
     }
 
     public static SessionManager getInstance(Context context) {
-        if (sessionManager == null) {
+        if (null == sessionManager) {
             sessionManager = new SessionManager(context);
         }
         return sessionManager;
     }
-
-
-    public void addSiteDetail(SiteItem siteItem) {
+    public  void addSiteDetail(SiteItem siteItem) {
         editor.putString(KEY_SITE_NAME, siteItem.getName());
         editor.putString(KEY_SITE_IMAGE, siteItem.getIconUrl());
         editor.putString(KEY_SITE_PARAMETER, siteItem.getApiSiteParameter());
-        editor.putString(KEY_SITE_AUDIENCE, siteItem.getAudience());
+        editor.putString(KEY_SITE_AUDIENCE,siteItem.getAudience());
         editor.commit();
 
     }
-
-    public String getApiSiteParameter() {
-        return sharedpreferences.getString(KEY_SITE_PARAMETER, Constants.SITE);
+    public String getApiSiteParameter(){
+        return sharedpreferences.getString(KEY_SITE_PARAMETER,Constants.SITE);
     }
-
     public HashMap<String, String> getSiteDetail() {
         HashMap<String, String> site = new HashMap<>();
         site.put(KEY_SITE_NAME, sharedpreferences.getString(KEY_SITE_NAME, null));
         site.put(KEY_SITE_IMAGE, sharedpreferences.getString(KEY_SITE_IMAGE, null));
         site.put(KEY_SITE_PARAMETER, sharedpreferences.getString(KEY_SITE_PARAMETER, null));
         site.put(KEY_SITE_AUDIENCE, sharedpreferences.getString(KEY_SITE_AUDIENCE, null));
-
         return site;
     }
-
 }
-

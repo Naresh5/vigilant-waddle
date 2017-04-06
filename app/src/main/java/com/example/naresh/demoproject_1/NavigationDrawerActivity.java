@@ -260,6 +260,7 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Drawe
         builder.setMessage(R.string.alert_dialog_text);
         builder.setCancelable(true);
         builder.setIcon(R.drawable.ic_app_launcher_icon);
+        builder.setIcon(R.drawable.ic_app_launcher_icon);
         builder.setPositiveButton(
                 R.string.alert_dialog_positive_btn,
                 new DialogInterface.OnClickListener() {
