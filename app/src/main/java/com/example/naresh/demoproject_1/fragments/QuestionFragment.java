@@ -23,6 +23,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.naresh.demoproject_1.R;
+import com.example.naresh.demoproject_1.SessionManager;
 import com.example.naresh.demoproject_1.adapters.QuestionDetailAdapter;
 import com.example.naresh.demoproject_1.dialog.FilterDialogFragment;
 import com.example.naresh.demoproject_1.models.ListResponse;
@@ -151,11 +152,6 @@ public class QuestionFragment extends Fragment implements FilterDialogFragment.O
         inflater.inflate(R.menu.menu_search, menu);
         MenuItem item = menu.findItem(R.id.action_search);
 
-      /*  SearchView searchView = new SearchView(((NavigationDrawerActivity)
-                                                getActivity()).getSupportActionBar()
-                                                .getThemedContext());
-      */
-
         final SearchView searchView = (SearchView) MenuItemCompat.getActionView(item);
         MenuItemCompat.setShowAsAction(item, MenuItemCompat.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW | MenuItemCompat.SHOW_AS_ACTION_ALWAYS);
         MenuItemCompat.setActionView(item, searchView);
@@ -216,6 +212,9 @@ public class QuestionFragment extends Fragment implements FilterDialogFragment.O
     }
 
     private void getJsonQuestionListResponse(String titleName) {
+
+        String site = SessionManager.getInstance(getActivity()).getApiSiteParameter();
+
         isQuestionLoading = true;
         showProgressBar();
         Call<ListResponse<QuestionDetailItem>> call;
@@ -229,7 +228,7 @@ public class QuestionFragment extends Fragment implements FilterDialogFragment.O
                     filterQuestionFromdate,
                     filterQuestionTodate,
                     tagName,
-                    Constants.SITE);
+                    site);
         } else {
             call = apiService.getFilterQuestionList(mQuestionPageCount,
                     filterQuestionOrder,
@@ -237,7 +236,7 @@ public class QuestionFragment extends Fragment implements FilterDialogFragment.O
                     filterQuestionFromdate,
                     filterQuestionTodate,
                     titleName,
-                    Constants.SITE);
+                    site);
 
         }
         call.enqueue(new Callback<ListResponse<QuestionDetailItem>>() {

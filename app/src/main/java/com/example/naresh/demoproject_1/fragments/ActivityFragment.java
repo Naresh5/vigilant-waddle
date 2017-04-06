@@ -16,6 +16,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.naresh.demoproject_1.R;
+import com.example.naresh.demoproject_1.SessionManager;
 import com.example.naresh.demoproject_1.models.User;
 import com.example.naresh.demoproject_1.models.UserResponse;
 import com.example.naresh.demoproject_1.utils.Constants;
@@ -90,6 +91,8 @@ public class ActivityFragment extends Fragment {
         @Override
         protected List<User> doInBackground(Object... arg0) {
 
+            String site = SessionManager.getInstance(getActivity()).getApiSiteParameter();
+
             JSONParser sh = new JSONParser();    //Request to url and getting response
             String jsonStr = null;
             try {
@@ -98,7 +101,7 @@ public class ActivityFragment extends Fragment {
                         .appendPath("users")
                         .appendPath(String.valueOf(userId))
                         .appendQueryParameter("sort", Constants.SORT_BY_REPUTATION)
-                        .appendQueryParameter("site", Constants.SITE)
+                        .appendQueryParameter("site", site)
                         .appendQueryParameter("filter", Constants.VALUE_USER_ACTIVITY_FILTER);
 
                 //  https://api.stackexchange.com/2.2/users/

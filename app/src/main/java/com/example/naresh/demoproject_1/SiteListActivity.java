@@ -64,7 +64,7 @@ public class SiteListActivity extends AppCompatActivity {
         recyclerViewAdapter.setOnLoadMoreListener(new SiteDetailAdapter.OnLoadMoreListener() {
             @Override
             public void loadItems() {
-                sitePageNumber = sitePageNumber + 1;
+                sitePageNumber++;
                 getJsonSiteResponse();
             }
         });
@@ -89,14 +89,13 @@ public class SiteListActivity extends AppCompatActivity {
         ApiInterface apiService =
                 ApiClient.getClient().create(ApiInterface.class);
         Call<ListResponse<SiteItem>> call = apiService.getSiteList(sitePageNumber,
-                Constants.VALUE_SITE_FILTER);
+                                                       Constants.VALUE_SITE_FILTER);
 
 
         call.enqueue(new Callback<ListResponse<SiteItem>>() {
             @Override
             public void onResponse(Call<ListResponse<SiteItem>> call,
                                    Response<ListResponse<SiteItem>> response) {
-
                 hideProgressBar();
                 recyclerViewAdapter.setLoaded();
                 if (response.body() != null) {

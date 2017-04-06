@@ -25,6 +25,7 @@ import android.widget.Toast;
 
 import com.example.naresh.demoproject_1.NavigationDrawerActivity;
 import com.example.naresh.demoproject_1.R;
+import com.example.naresh.demoproject_1.SessionManager;
 import com.example.naresh.demoproject_1.UserDetailActivity;
 import com.example.naresh.demoproject_1.adapters.UserAdapter;
 import com.example.naresh.demoproject_1.dialog.FilterDialogFragment;
@@ -68,6 +69,7 @@ public class UserFragment extends Fragment implements FilterDialogFragment.OnInf
     private Runnable workRunnable;
     private final long DELAY = 900;
 
+    String site = SessionManager.getInstance(getActivity()).getApiSiteParameter();
 
     public static UserFragment newInstance() {
         UserFragment userFragment = new UserFragment();
@@ -188,10 +190,10 @@ public class UserFragment extends Fragment implements FilterDialogFragment.OnInf
                         pageCount = 1;
                         adapter.clearAdapter();
                         if (newText.isEmpty()) {
-                            new LoadJsonData(Constants.ORDER_ASC,Constants.SORT_BY_REPUTATION,
-                                                                  null, null, newText).execute();
+                            new LoadJsonData(Constants.ORDER_ASC, Constants.SORT_BY_REPUTATION,
+                                    null, null, newText).execute();
                         } else {
-                             inname = newText;
+                            inname = newText;
                             getJsonUserListResponse(inname);
                         }
                     }
@@ -239,6 +241,7 @@ public class UserFragment extends Fragment implements FilterDialogFragment.OnInf
             this.toDate = toDate;
             this.inname = inname;
         }
+
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -249,6 +252,7 @@ public class UserFragment extends Fragment implements FilterDialogFragment.OnInf
         @Override
         protected List<User> doInBackground(Object... arg0) {
 
+            Log.e(TAG, "doInBackground: " + site);
             JSONParser sh = new JSONParser();    //Request to url and getting response
             String jsonStr = null;
             try {
@@ -257,7 +261,7 @@ public class UserFragment extends Fragment implements FilterDialogFragment.OnInf
                         .appendPath("users")
                         .appendQueryParameter("pagesize", Constants.PAGE_SIZE)
                         .appendQueryParameter("page", String.valueOf(pageCount))
-                        .appendQueryParameter("site", Constants.SITE)
+                        .appendQueryParameter("site", site)
                         .appendQueryParameter("sort", sort)
                         .appendQueryParameter("order", order);
                 if (fromDate != null) {
@@ -270,11 +274,11 @@ public class UserFragment extends Fragment implements FilterDialogFragment.OnInf
                     uriBuilder.appendQueryParameter("inname", inname);
                 }
                 Uri uri = uriBuilder.build();
-//                Log.e(TAG, "doInBackground: " + uri.toString());
+                Log.e(TAG, "doInBackground: " + uri.toString());
                 Log.e(TAG, "Call : doInBackground: " + inname);
                 jsonStr = sh.makeServiceCall(uri.toString());
-//                Log.e(TAG, " JsonRes for DFragment" + jsonStr);
-//                Log.e(TAG, "::::--Main activity FULL  URL :::-- " + uri);
+                Log.e(TAG, " JsonRes for DFragment" + jsonStr);
+                Log.e(TAG, "::::--Main activity FULL  URL :::-- " + uri);
 
             } catch (MalformedURLException e) {
                 e.printStackTrace();
@@ -309,19 +313,20 @@ public class UserFragment extends Fragment implements FilterDialogFragment.OnInf
     }
 
     private void getJsonUserListResponse(String inname) {
+
         isLoading = true;
         showProgressBar();
         ApiInterface apiService =
                 ApiClient.getClient().create(ApiInterface.class);
 
-        Call<ListResponse<User>>  call = apiService.getUserList(
-                                                pageCount,
-                                                filterUserOrder,
-                                                filterUserSort,
-                                                filterUserFromdate,
-                                                filterUserTodate,
-                                                inname,
-                                                Constants.SITE);
+        Call<ListResponse<User>> call = apiService.getUserList(
+                pageCount,
+                filterUserOrder,
+                filterUserSort,
+                filterUserFromdate,
+                filterUserTodate,
+                inname,
+                site);
         Log.e(TAG, "Call : getJsonUserListResponse: Search" + call);
 
         call.enqueue(new Callback<ListResponse<User>>() {
@@ -342,7 +347,7 @@ public class UserFragment extends Fragment implements FilterDialogFragment.OnInf
             public void onFailure(Call<ListResponse<User>> call, Throwable t) {
                 // Log error here since request failed
                 Log.e(TAG, t.toString());
-                Log.e(TAG, "Call : onFailure: "+call );
+                Log.e(TAG, "Call : onFailure: " + call);
             }
         });
     }

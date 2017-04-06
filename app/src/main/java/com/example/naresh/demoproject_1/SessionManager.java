@@ -15,12 +15,11 @@ import java.util.HashMap;
 public class SessionManager {
 
     private SharedPreferences sharedpreferences;
-
     private String MyPREFERENCES = "PREFERENCES";          //MyPrefs
-    public static final String KEY_SITE_NAME = "nameKey";
-    public static final String KEY_SITE_IMAGE = "imageKey";
-    public static final String KEY_SITE_PARAMETER = "parameterKey";
-    public static final String KEY_SITE_AUDIENCE = "audienceKey";
+    private static final String KEY_SITE_NAME = "nameKey";
+    private static final String KEY_SITE_IMAGE = "imageKey";
+    private static final String KEY_SITE_PARAMETER = "parameterKey";
+    private static final String KEY_SITE_AUDIENCE = "audienceKey";
     private static SessionManager sessionManager;
     private SharedPreferences.Editor editor;
 
@@ -30,13 +29,12 @@ public class SessionManager {
     }
 
     public static SessionManager getInstance(Context context) {
-        sessionManager = new SessionManager(context);
+        if (sessionManager == null) {
+            sessionManager = new SessionManager(context);
+        }
         return sessionManager;
     }
 
-    // if (null == sessionManager) {
-    //    sessionManager = new SessionManager(context);
-    //  }
 
     public void addSiteDetail(SiteItem siteItem) {
         editor.putString(KEY_SITE_NAME, siteItem.getName());
@@ -47,12 +45,11 @@ public class SessionManager {
 
     }
 
-    /*public String getApiSiteParameter() {
+    public String getApiSiteParameter() {
         return sharedpreferences.getString(KEY_SITE_PARAMETER, Constants.SITE);
-    }*/
+    }
 
-    public HashMap<String, String> getSiteDetail()
-    {
+    public HashMap<String, String> getSiteDetail() {
         HashMap<String, String> site = new HashMap<>();
         site.put(KEY_SITE_NAME, sharedpreferences.getString(KEY_SITE_NAME, null));
         site.put(KEY_SITE_IMAGE, sharedpreferences.getString(KEY_SITE_IMAGE, null));
@@ -63,3 +60,4 @@ public class SessionManager {
     }
 
 }
+

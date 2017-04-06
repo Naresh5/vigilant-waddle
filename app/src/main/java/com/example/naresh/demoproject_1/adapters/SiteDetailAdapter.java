@@ -35,7 +35,7 @@ public class SiteDetailAdapter extends RecyclerView.Adapter {
 
     private int visibleThreshold = 1;
     private int lastVisibleItem, totalItemCount;
-    private boolean loading;
+    private boolean loading = false;
 
 
     public interface OnLoadMoreListener {
@@ -90,7 +90,7 @@ public class SiteDetailAdapter extends RecyclerView.Adapter {
         notifyDataSetChanged();
     }
 
-    static class LoadingViewHolder extends RecyclerView.ViewHolder {
+    private static class LoadingViewHolder extends RecyclerView.ViewHolder {
         public ProgressBar progressBar;
         public TextView textLoading;
 
@@ -102,10 +102,10 @@ public class SiteDetailAdapter extends RecyclerView.Adapter {
     }
 
     static class SiteViewHolder extends RecyclerView.ViewHolder {
-        public TextView textNameSite, textAudience;
-        public ImageView imageSiteList;
+        private TextView textNameSite, textAudience;
+        private ImageView imageSiteList;
 
-        public SiteViewHolder(View itemView) {
+        private SiteViewHolder(View itemView) {
             super(itemView);
             textNameSite = (TextView) itemView.findViewById(R.id.text_name_site);
             textAudience = (TextView) itemView.findViewById(R.id.text_audience);
@@ -139,8 +139,6 @@ public class SiteDetailAdapter extends RecyclerView.Adapter {
                     .load(siteItem.getIconUrl())
 
                     .into(((SiteViewHolder) holder).imageSiteList);
-
-
         } else {
             ((LoadingViewHolder) holder).progressBar.setVisibility(View.VISIBLE);
             ((LoadingViewHolder) holder).textLoading.setVisibility(View.VISIBLE);

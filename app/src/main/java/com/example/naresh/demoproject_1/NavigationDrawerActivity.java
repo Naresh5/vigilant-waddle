@@ -16,6 +16,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -139,6 +140,17 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Drawe
                 startActivity(intent);
             }
         });
+
+
+        listSite.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                SessionManager.getInstance(NavigationDrawerActivity.this)
+                        .addSiteDetail(siteAdapter.getItem(position));
+                showSharedPreferenceDetail();
+                changeSite();
+            }
+        });
     }
 
     @Override
@@ -248,7 +260,6 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Drawe
         builder.setMessage(R.string.alert_dialog_text);
         builder.setCancelable(true);
         builder.setIcon(R.drawable.ic_app_launcher_icon);
-        builder.setIcon(R.drawable.ic_app_launcher_icon);
         builder.setPositiveButton(
                 R.string.alert_dialog_positive_btn,
                 new DialogInterface.OnClickListener() {
@@ -297,6 +308,21 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Drawe
                 .load(image)
                 .into(imageNavigationIcon);
         siteAdapter.addItems(siteItems, SITE);
+    }
+
+    public void changeSite() {
+        Menu menu = navigationView.getMenu();
+        MenuItem selectedMenu = null;
+        for (int i = 0; i < menu.size(); i++) {
+            MenuItem menuItem = menu.getItem(i);
+            if (menuItem.isChecked()) {
+                selectedMenu = menuItem;
+                break;
+            }
+        }
+        if (selectedMenu != null) {
+            selectDrawerItem(selectedMenu);
+        }
     }
 
 }

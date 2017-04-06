@@ -17,6 +17,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.naresh.demoproject_1.R;
+import com.example.naresh.demoproject_1.SessionManager;
 import com.example.naresh.demoproject_1.adapters.QuestionAdapter;
 import com.example.naresh.demoproject_1.models.QuestionAnswerResponse;
 import com.example.naresh.demoproject_1.models.QuestionItem;
@@ -133,6 +134,9 @@ public class ProfileFragment extends Fragment {
 
         @Override
         protected String doInBackground(Void... params) {
+
+            String site = SessionManager.getInstance(getActivity()).getApiSiteParameter();
+
             String response = null;
             URLConnection urlConn = null;
             BufferedReader bufferedReader = null;
@@ -145,7 +149,7 @@ public class ProfileFragment extends Fragment {
                         .appendQueryParameter("page", String.valueOf(mQuestionPageCount))
                         .appendQueryParameter("order", Constants.ORDER_DESC)
                         .appendQueryParameter("sort", Constants.POST_SORT_ACTIVITY)
-                        .appendQueryParameter("site", Constants.SITE)
+                        .appendQueryParameter("site", site)
                         .appendQueryParameter("filter", Constants.VALUE_POST_TYPE_FILTER);
 
                 String questionListUrl = uriBuilder.build().toString();

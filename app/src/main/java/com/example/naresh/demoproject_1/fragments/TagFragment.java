@@ -24,6 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.naresh.demoproject_1.R;
+import com.example.naresh.demoproject_1.SessionManager;
 import com.example.naresh.demoproject_1.TagDetailActivity;
 import com.example.naresh.demoproject_1.adapters.TagAdapter;
 import com.example.naresh.demoproject_1.models.ListResponse;
@@ -61,7 +62,7 @@ public class TagFragment extends Fragment {
     }
 
     public static TagFragment newInstance() {
-        TagFragment tagFragment=new TagFragment();
+        TagFragment tagFragment = new TagFragment();
         return tagFragment;
     }
 
@@ -204,8 +205,10 @@ public class TagFragment extends Fragment {
         return rootView;
     }
 
-    private void getJsonTagResponse()
-    {
+    private void getJsonTagResponse() {
+
+        String site = SessionManager.getInstance(getActivity()).getApiSiteParameter();
+
         isTagLoading = true;
         showProgressBar();
         ApiInterface apiService =
@@ -215,7 +218,8 @@ public class TagFragment extends Fragment {
                 Constants.ORDER_ASC,
                 tagSortBy,
                 inname,
-                Constants.SITE);
+                site);
+
         Log.d(TAG, "getJsonTagResponse: " + call);
 
         call.enqueue(new Callback<ListResponse<TagItem>>() {
