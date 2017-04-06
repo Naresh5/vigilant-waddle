@@ -1,5 +1,7 @@
 package com.example.naresh.demoproject_1;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -26,14 +28,15 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class SiteListActivity extends AppCompatActivity {
-    private RecyclerView recyclerViewSite;
-    private TextView mTextLoading;
-    private ProgressBar mProgressaBar;
-    private int sitePageNumber = 1;
-    private SiteDetailAdapter recyclerViewAdapter;
-    private List<SiteItem> siteItems = new ArrayList<>();
+    private TextView textLoading;
+    private ProgressBar progressBar;
 
-    private static final String TAG =SiteListActivity.class.getSimpleName();
+    private RecyclerView recyclerViewSite;
+    private SiteDetailAdapter recyclerViewAdapter;
+    private RecyclerView.LayoutManager recylerViewLayoutManager;
+    private int sitePageNumber = 1;
+    private static final String TAG = SiteListActivity.class.getSimpleName();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,64 +45,92 @@ public class SiteListActivity extends AppCompatActivity {
 
         getSupportActionBar().setTitle(R.string.siteTitle);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
         recyclerViewSite = (RecyclerView) findViewById(R.id.recycler_view_site);
-        mTextLoading = (TextView) findViewById(R.id.text_loading_site_list);
-        mProgressaBar = (ProgressBar) findViewById(R.id.progressbar_site_list);
 
-        recyclerViewAdapter = new SiteDetailAdapter(siteItems);
-        getJsonSiteDetail();
+        textLoading = (TextView) findViewById(R.id.text_loading_site_list);
+        progressBar = (ProgressBar) findViewById(R.id.progressbar_site_list);
 
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
-        recyclerViewSite.setLayoutManager(mLayoutManager);
-        recyclerViewSite.setItemAnimator(new DefaultItemAnimator());
+        recyclerViewSite.setHasFixedSize(true);
+
+        recylerViewLayoutManager = new LinearLayoutManager(this);
+
+        recyclerViewSite.setLayoutManager(recylerViewLayoutManager);
+
+        recyclerViewAdapter = new SiteDetailAdapter(recyclerViewSite, this);
+
 
         recyclerViewSite.setAdapter(recyclerViewAdapter);
 
+        recyclerViewAdapter.setOnLoadMoreListener(new SiteDetailAdapter.OnLoadMoreListener() {
+            @Override
+            public void loadItems() {
+                sitePageNumber = sitePageNumber + 1;
+                getJsonSiteResponse();
+            }
+        });
+
+        getJsonSiteResponse();
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                SiteListActivity.this.finish();
-                break;
+
+        int id = item.getItemId();
+        if (id == android.R.id.home) {
+            this.finish();
+
         }
         return super.onOptionsItemSelected(item);
     }
 
-    private void getJsonSiteDetail(){
-       showProgressBar();
-        ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
-        Call<ListResponse<SiteItem>> call = apiInterface.getSiteList(sitePageNumber, Constants.VALUE_SITE_FILTER);
+    private void getJsonSiteResponse() {
+
+        showProgressBar();
+        ApiInterface apiService =
+                ApiClient.getClient().create(ApiInterface.class);
+        Call<ListResponse<SiteItem>> call = apiService.getSiteList(sitePageNumber,
+                Constants.VALUE_SITE_FILTER);
+
 
         call.enqueue(new Callback<ListResponse<SiteItem>>() {
             @Override
-            public void onResponse(Call<ListResponse<SiteItem>> call, Response<ListResponse<SiteItem>> response) {
+            public void onResponse(Call<ListResponse<SiteItem>> call,
+                                   Response<ListResponse<SiteItem>> response) {
 
                 hideProgressBar();
-                if (response.body() != null){
+                recyclerViewAdapter.setLoaded();
+                if (response.body() != null) {
                     recyclerViewAdapter.addItems(response.body().getItems());
-                    Log.e(TAG, "onResponse: "+response.body());
                 }
             }
+
             @Override
             public void onFailure(Call<ListResponse<SiteItem>> call, Throwable t) {
-                Log.e(TAG, "onFailure: "+t.toString());
+
+                Log.e(TAG, t.toString());
+                recyclerViewAdapter.setLoaded();
                 hideProgressBar();
             }
         });
     }
 
     private void hideProgressBar() {
-        mTextLoading.setVisibility(View.GONE);
-        mProgressaBar.setVisibility(View.GONE);
-
+        if (sitePageNumber == 1) {
+            textLoading.setVisibility(View.GONE);
+            progressBar.setVisibility(View.GONE);
+        } else {
+            recyclerViewAdapter.removeProcessItem();
+        }
     }
 
     private void showProgressBar() {
-        mTextLoading.setVisibility(View.VISIBLE);
-        mProgressaBar.setVisibility(View.VISIBLE);
-
+        if (sitePageNumber == 1) {
+            textLoading.setVisibility(View.VISIBLE);
+            progressBar.setVisibility(View.VISIBLE);
+        } else {
+            recyclerViewAdapter.showProcessItem();
+        }
     }
 }
+
 
