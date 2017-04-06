@@ -1,6 +1,7 @@
 package com.example.naresh.demoproject_1;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -34,7 +36,6 @@ import org.afinal.simplecache.ACache;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.zip.Inflater;
 
 public class NavigationDrawerActivity extends AppCompatActivity implements DrawerLayout.DrawerListener, NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout mDrawer;
@@ -141,6 +142,16 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Drawe
     }
 
     @Override
+    public void onBackPressed() {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            showAlertDialog();
+        }
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (drawerToggle.onOptionsItemSelected(item)) {
             return true;
@@ -231,6 +242,34 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Drawe
         return true;
     }
 
+
+    public void showAlertDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(NavigationDrawerActivity.this);
+        builder.setMessage(R.string.alert_dialog_text);
+        builder.setCancelable(true);
+        builder.setIcon(R.drawable.ic_app_launcher_icon);
+        builder.setIcon(R.drawable.ic_app_launcher_icon);
+        builder.setPositiveButton(
+                R.string.alert_dialog_positive_btn,
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                        NavigationDrawerActivity.this.finish();
+                    }
+                });
+        builder.setNegativeButton(
+                R.string.alert_dialog_negative_btn,
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+    }
+
+
+
     public void showFragment(int fragmentNameRes, Fragment fragment) {
         if (fragment != null) {
             if (getSupportActionBar() != null)
@@ -257,7 +296,6 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Drawe
         Picasso.with(getApplicationContext())
                 .load(image)
                 .into(imageNavigationIcon);
-        // showUpdatedList(siteDetail.get(SessionManager.KEY_SITE_PARAMETER));
         siteAdapter.addItems(siteItems, SITE);
     }
 

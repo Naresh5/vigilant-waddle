@@ -36,7 +36,7 @@ public class SiteDetailAdapter extends RecyclerView.Adapter {
     private int visibleThreshold = 1;
     private int lastVisibleItem, totalItemCount;
     private boolean loading;
-      private View view;
+
 
     public interface OnLoadMoreListener {
         void loadItems();
@@ -45,7 +45,7 @@ public class SiteDetailAdapter extends RecyclerView.Adapter {
 
     public SiteDetailAdapter(RecyclerView recyclerView, Context context) {
         this.context = context;
-        view=recyclerView;
+
         siteItems = new ArrayList<>();
         if (recyclerView.getLayoutManager() instanceof LinearLayoutManager) {
 
