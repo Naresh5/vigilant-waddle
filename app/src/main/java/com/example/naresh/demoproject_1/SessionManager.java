@@ -34,7 +34,7 @@ public class SessionManager {
         }
         return sessionManager;
     }
-    public  void addSiteDetail(SiteItem siteItem) {
+    public void addSiteDetail(SiteItem siteItem) {
         editor.putString(KEY_SITE_NAME, siteItem.getName());
         editor.putString(KEY_SITE_IMAGE, siteItem.getIconUrl());
         editor.putString(KEY_SITE_PARAMETER, siteItem.getApiSiteParameter());

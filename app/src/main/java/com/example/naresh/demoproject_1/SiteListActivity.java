@@ -2,9 +2,8 @@ package com.example.naresh.demoproject_1;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -20,7 +19,6 @@ import com.example.naresh.demoproject_1.retrofit.ApiClient;
 import com.example.naresh.demoproject_1.retrofit.ApiInterface;
 import com.example.naresh.demoproject_1.utils.Constants;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -37,6 +35,10 @@ public class SiteListActivity extends AppCompatActivity {
     private int sitePageNumber = 1;
     private static final String TAG = SiteListActivity.class.getSimpleName();
 
+    /*public static Intent startIntent(Context context) {
+        Intent intent = new Intent(context, SiteListActivity.class);
+        return intent;
+    }*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +70,16 @@ public class SiteListActivity extends AppCompatActivity {
                 getJsonSiteResponse();
             }
         });
+        recyclerViewAdapter.setOnItemClickListener(new SiteDetailAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(List<SiteItem> items, View view, int position) {
+                SessionManager.getInstance(SiteListActivity.this).addSiteDetail(items.get(position));
+                setResult(RESULT_OK);
+            //    khkljkjvkvjhhhhhhhhhhhhhhhhhh
+                finish();
+            }
+        });
+
 
         getJsonSiteResponse();
     }
@@ -89,7 +101,7 @@ public class SiteListActivity extends AppCompatActivity {
         ApiInterface apiService =
                 ApiClient.getClient().create(ApiInterface.class);
         Call<ListResponse<SiteItem>> call = apiService.getSiteList(sitePageNumber,
-                                                       Constants.VALUE_SITE_FILTER);
+                Constants.VALUE_SITE_FILTER);
 
 
         call.enqueue(new Callback<ListResponse<SiteItem>>() {
@@ -131,5 +143,3 @@ public class SiteListActivity extends AppCompatActivity {
         }
     }
 }
-
-

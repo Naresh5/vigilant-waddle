@@ -24,6 +24,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.naresh.demoproject_1.adapters.SiteAdapter;
 import com.example.naresh.demoproject_1.fragments.QuestionFragment;
@@ -65,7 +66,6 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Drawe
         toolbar = (Toolbar) findViewById(R.id.toolbar_for_navigation);
         setSupportActionBar(toolbar);
 
-
         mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawer.addDrawerListener(this);
         navigationView = (NavigationView) findViewById(R.id.nvView);
@@ -106,7 +106,6 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Drawe
         listSite.setAdapter(siteAdapter);
         showSharedPreferenceDetail();
 
-
         mDrawer.addDrawerListener(drawerToggle);
 
         headerRootView.setOnClickListener(new View.OnClickListener() {
@@ -122,25 +121,26 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Drawe
                 }
             }
         });
+/*
 
-        listSite.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        headerRootViewlistSite.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                SessionManager.getInstance(NavigationDrawerActivity.this)
+                SessionManager.getInstance(UserQuestionDrawerActivity.this)
                         .addSiteDetail(siteAdapter.getItem(position));
                 showSharedPreferenceDetail();
-                //ch
+                changeSite();
             }
         });
-
+    }
+ */
         footerView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(NavigationDrawerActivity.this,SiteListActivity.class);
-                startActivity(intent);
+                Intent intent = new Intent(NavigationDrawerActivity.this, SiteListActivity.class);
+                startActivityForResult(intent,222);
             }
         });
-
 
         listSite.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -151,6 +151,20 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Drawe
                 changeSite();
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 222 && resultCode == RESULT_OK) {
+            showSharedPreferenceDetail();
+            changeSite();
+            onDrawerClosed(mDrawer);
+        }
+        else {
+            onDrawerClosed(mDrawer);
+            Toast.makeText(this, "Bad Request Code", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
@@ -281,7 +295,6 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Drawe
     }
 
 
-
     public void showFragment(int fragmentNameRes, Fragment fragment) {
         if (fragment != null) {
             if (getSupportActionBar() != null)
@@ -295,13 +308,11 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Drawe
     public void showSharedPreferenceDetail() {
 
         HashMap<String, String> siteDetail = SessionManager.getInstance(this).getSiteDetail();
-
         String name = siteDetail.get(SessionManager.KEY_SITE_NAME);
         String image = siteDetail.get(SessionManager.KEY_SITE_IMAGE);
         final String audience = siteDetail.get(SessionManager.KEY_SITE_AUDIENCE);
-        String SITE;
 
-        SITE = siteDetail.get(SessionManager.KEY_SITE_PARAMETER);
+        String SITE = siteDetail.get(SessionManager.KEY_SITE_PARAMETER);
 
         textNavigationSiteName.setText(name);
         textNavigationDescription.setText(Utility.convertTextToHTML(audience));
@@ -327,3 +338,4 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Drawe
     }
 
 }
+

@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.naresh.demoproject_1.R;
@@ -33,15 +32,20 @@ public class SiteDetailAdapter extends RecyclerView.Adapter {
     private final int VIEW_PROG = 1;
     private OnLoadMoreListener mOnLoadMoreListener;
 
+    private OnItemClickListener onItemClickListener;
+
     private int visibleThreshold = 1;
     private int lastVisibleItem, totalItemCount;
     private boolean loading = false;
-
 
     public interface OnLoadMoreListener {
         void loadItems();
     }
 
+    public interface OnItemClickListener {
+        void onItemClick(List<SiteItem> items, View view, int position);
+
+    }
 
     public SiteDetailAdapter(RecyclerView recyclerView, Context context) {
         this.context = context;
@@ -56,18 +60,17 @@ public class SiteDetailAdapter extends RecyclerView.Adapter {
                 @Override
                 public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                     super.onScrolled(recyclerView, dx, dy);
-
                     totalItemCount = linearLayoutManager.getItemCount();
                     lastVisibleItem = linearLayoutManager.findLastVisibleItemPosition();
 
-                    if (!loading && totalItemCount <= (lastVisibleItem+ visibleThreshold)) {
+                    if (!loading && totalItemCount <= (lastVisibleItem + visibleThreshold)) {
                         if (mOnLoadMoreListener != null) {
                             mOnLoadMoreListener.loadItems();
                         }
                         loading = true;
-                        Log.e(TAG, "onScrolled : totalItemCount = "+totalItemCount );
-                        Log.e(TAG, "onScrolled: lastVisibleItem = "+lastVisibleItem );
-                        Log.e(TAG, "onScrolled: visibleThreshold = "+visibleThreshold );
+                        Log.e(TAG, "onScrolled : totalItemCount = " + totalItemCount);
+                        Log.e(TAG, "onScrolled: lastVisibleItem = " + lastVisibleItem);
+                        Log.e(TAG, "onScrolled: visibleThreshold = " + visibleThreshold);
                     }
                 }
 
@@ -77,6 +80,10 @@ public class SiteDetailAdapter extends RecyclerView.Adapter {
 
     public void setOnLoadMoreListener(OnLoadMoreListener mOnLoadMoreListener) {
         this.mOnLoadMoreListener = mOnLoadMoreListener;
+    }
+
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
     }
 
     @Override
@@ -120,13 +127,12 @@ public class SiteDetailAdapter extends RecyclerView.Adapter {
             return new SiteViewHolder(view);
         } else if (viewType == VIEW_PROG) {
             View view = LayoutInflater.from(context).inflate(R.layout.listview_footer, parent, false);
-            if(view instanceof LinearLayout){
+            if (view instanceof LinearLayout) {
 
             }
             return new LoadingViewHolder(view);
         }
         return null;
-
     }
 
     @Override
@@ -137,8 +143,16 @@ public class SiteDetailAdapter extends RecyclerView.Adapter {
             ((SiteViewHolder) holder).textAudience.setText(Utility.convertTextToHTML(siteItem.getAudience()));
             Picasso.with(context)
                     .load(siteItem.getIconUrl())
-
                     .into(((SiteViewHolder) holder).imageSiteList);
+
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onItemClickListener.onItemClick(siteItems, v, position);
+
+                }
+            });
+
         } else {
             ((LoadingViewHolder) holder).progressBar.setVisibility(View.VISIBLE);
             ((LoadingViewHolder) holder).textLoading.setVisibility(View.VISIBLE);
@@ -165,3 +179,4 @@ public class SiteDetailAdapter extends RecyclerView.Adapter {
         notifyItemRemoved(siteItems.size());
     }
 }
+

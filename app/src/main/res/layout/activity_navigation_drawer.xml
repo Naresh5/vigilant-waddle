@@ -44,7 +44,8 @@
                 android:layout_height="match_parent"
                 android:layout_marginTop="8dp"
                 android:divider="@null"
-                android:id="@+id/list_site"/>
+                android:id="@+id/list_site"
+                android:visibility="visible"/>
 
         </LinearLayout>
 
