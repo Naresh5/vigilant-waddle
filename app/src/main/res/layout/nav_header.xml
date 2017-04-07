@@ -15,15 +15,15 @@
 
     <ImageView
         android:id="@+id/image_navigation_icon"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
+        android:layout_width="@dimen/site_image_width_height"
+        android:layout_height="@dimen/site_image_width_height"
         android:paddingTop="14dp"
         />
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:text="Site Name"
+        android:text="@string/site_name_nav_header"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:id="@+id/text_navigation_site_name"/>
     <RelativeLayout

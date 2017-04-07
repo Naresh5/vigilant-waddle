@@ -23,7 +23,6 @@ import java.util.List;
 
 public class QuestionAdapter extends BaseAdapter {
 
-    private String TAG = QuestionAdapter.class.getSimpleName();
     private Context context;
     private List<QuestionItem> questionItems;
 
@@ -34,11 +33,6 @@ public class QuestionAdapter extends BaseAdapter {
 
     public void addItems(List<QuestionItem> arrayList) {
         questionItems.addAll(arrayList);
-        notifyDataSetChanged();
-    }
-
-    public void clearAdapter() {
-        questionItems.clear();
         notifyDataSetChanged();
     }
 
@@ -83,11 +77,10 @@ public class QuestionAdapter extends BaseAdapter {
 
         if (mPostType.equalsIgnoreCase(Constants.POST_TYPE_ANSWER)) {
             viewHolder.textPostType.setText(context.getResources().getString(R.string.post_answer_type));
-
             viewHolder.imagePostType.setImageResource(R.drawable.ic_answer_profile_fragment);
+
         } else if (mPostType.equalsIgnoreCase(Constants.POST_TYPE_QUESTION)) {
             viewHolder.textPostType.setText(context.getResources().getString(R.string.post_question_type));
-
             viewHolder.imagePostType.setImageResource(R.drawable.ic_question_profile_fragment);
         }
         viewHolder.textPostTitle.setText(Utility.convertTextToHTML(postTitle));

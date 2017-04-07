@@ -69,7 +69,6 @@
             android:id="@+id/tv_from_date"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="false"
             android:layout_weight="1"
             android:padding="@dimen/dialog_fragment_padding"
             android:text="@string/from_date_dialog_fragment" />
@@ -92,7 +91,7 @@
         android:paddingRight="@dimen/dialog_fragment_layout_padding_left">
 
 
-    <TextView
+        <TextView
             android:id="@+id/tv_to_date"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -120,8 +119,8 @@
 
         <Button
             android:id="@+id/btn_reset"
-            android:layout_width="60dp"
-            android:layout_height="35dp"
+            android:layout_width="@dimen/btn_layout_width"
+            android:layout_height="@dimen/btn_layout_height"
             android:gravity="center"
             android:layout_alignParentLeft="true"
             android:background="?selectableItemBackground"
@@ -130,8 +129,8 @@
 
         <Button
             android:id="@+id/btn_yes"
-            android:layout_width="60dp"
-            android:layout_height="35dp"
+            android:layout_width="@dimen/btn_layout_width"
+            android:layout_height="@dimen/btn_layout_height"
             android:gravity="center"
             android:layout_alignParentRight="true"
             android:background="?selectableItemBackground"
@@ -140,8 +139,8 @@
 
         <Button
             android:id="@+id/btn_no"
-            android:layout_width="60dp"
-            android:layout_height="35dp"
+            android:layout_width="@dimen/btn_layout_width"
+            android:layout_height="@dimen/btn_layout_height"
             android:layout_toLeftOf="@+id/btn_yes"
             android:background="?selectableItemBackground"
             android:text="@string/btn_no_dialog_fragment"

@@ -27,20 +27,18 @@ import java.util.Locale;
 
 public class FilterDialogFragment extends DialogFragment {
 
-    private String TAG = FilterDialogFragment.class.getSimpleName();
     private View rootView;
     private Button btnFromDatePicker, btnToDatePicker, btnYes, btnNo, btnReset;
     private Spinner spinnerOrder, spinnerSort;
     private String myDateFormat = "dd/MM/yyyy";
     private String toDateValue, fromDateValue;
-    Calendar FromCalender = Calendar.getInstance();
-    Calendar ToCalender = Calendar.getInstance();
+    private Calendar FromCalender = Calendar.getInstance();
+    private Calendar ToCalender = Calendar.getInstance();
 
     public static final String ARG_ORDER = "order";
     public static final String ARG_SORT = "sort";
     public static final String ARG_TODATE = "todate";
     public static final String ARG_FROMDATE = "fromdate";
-    public static final String ARG_DRAWER_NAME = "drawerName";
     public static final String ARG_SORT_ARRAY = "sortUserArray";
     public static final String ARG_ORDER_ARRAY = "orderUserArray";
 
@@ -48,9 +46,14 @@ public class FilterDialogFragment extends DialogFragment {
     private String selectedToDate = "";
     private String selectedFromDate = "";
     private String[] orderUserArray, sortUserArray;
-
-
     public OnInfoChangedListener listener;
+
+
+    // Interfaces Declarations
+
+    public interface OnInfoChangedListener {
+        void onInfoChanged(String order, String sort, String FromDate, String ToDate);
+    }
 
     public void setListener(OnInfoChangedListener listener) {
         this.listener = listener;
@@ -58,15 +61,14 @@ public class FilterDialogFragment extends DialogFragment {
 
     DatePickerDialog.OnDateSetListener fromDateListener, toDateListener;
 
-
     public static FilterDialogFragment newInstance(String[] sortUserArray,
                                                    String order,
                                                    String sort,
                                                    String todate,
                                                    String fromdate) {
         FilterDialogFragment filterDialogFragment = new FilterDialogFragment();
-        Bundle bundle = new Bundle();
 
+        Bundle bundle = new Bundle();
         bundle.putStringArray(ARG_SORT_ARRAY, sortUserArray);
         bundle.putString(ARG_ORDER, order);
         bundle.putString(ARG_SORT, sort);
@@ -75,12 +77,6 @@ public class FilterDialogFragment extends DialogFragment {
         filterDialogFragment.setArguments(bundle);
         return filterDialogFragment;
     }
-
-    // Interfaces Declarations
-    public interface OnInfoChangedListener {
-        void onInfoChanged(String order, String sort, String FromDate, String ToDate);
-    }
-
 
     @Nullable
     @Override
@@ -105,29 +101,14 @@ public class FilterDialogFragment extends DialogFragment {
         selectedFromDate = bundle.getString(ARG_FROMDATE);
         selectedToDate = bundle.getString(ARG_TODATE);
 
-   /*   Log.e(TAG, "Filter Bundle : Order Value" + selectedOrderData);
-        Log.e(TAG, "Filter Bundle : SortValue" + selectedSortData);
-        Log.e(TAG, "Filter Bundle : FromDate Value" + selectedFromDate);
-        Log.e(TAG, "Filter Bundle : ToDate Value" + selectedToDate);
-
-  */
         int orderPosition = getItemPosition(R.array.spinnerUserOrder, selectedOrderData);
         int sortPosition = getItemPosition(R.array.spinnerUserSort, selectedSortData);
 
-
-
-      /*  ArrayAdapter<CharSequence> adapterSpinnerOrder = new ArrayAdapter<CharSequence>(getActivity(),
-                android.R.layout.simple_spinner_item, orderUserArray);
-        adapterSpinnerOrder.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerOrder.setAdapter(adapterSpinnerOrder);
-*/
         ArrayAdapter<CharSequence> adapterSpinnerOrder = ArrayAdapter.createFromResource(
                 getActivity(), R.array.spinnerUserOrder, android.R.layout.simple_spinner_item);
         adapterSpinnerOrder.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerOrder.setAdapter(adapterSpinnerOrder);
-
         orderUserArray = getResources().getStringArray(R.array.spinnerUserOrder);
-
 
         ArrayAdapter<CharSequence> adapterSpinnerSort = new ArrayAdapter<CharSequence>(getActivity(),
                 android.R.layout.simple_spinner_item, sortUserArray);
@@ -159,7 +140,6 @@ public class FilterDialogFragment extends DialogFragment {
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-
             }
         });
 
@@ -194,7 +174,6 @@ public class FilterDialogFragment extends DialogFragment {
                 int month = FromCalender.get(Calendar.MONTH);
                 int day = FromCalender.get(Calendar.DAY_OF_MONTH);
                 new DatePickerDialog(getContext(), fromDateListener, year, month, day).show();
-
             }
         });
 
@@ -211,6 +190,7 @@ public class FilterDialogFragment extends DialogFragment {
 
             }
         });
+
         btnYes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -218,7 +198,6 @@ public class FilterDialogFragment extends DialogFragment {
                 String sort = (String) spinnerSort.getSelectedItem();
                 String fromDate = null;
                 String toDate = null;
-
                 if (fromDateValue != null) {
                     fromDate = convertDateFormat(FromCalender.getTimeInMillis(), "yyyy-MM-dd");
                 }
@@ -253,7 +232,6 @@ public class FilterDialogFragment extends DialogFragment {
                 getDialog().cancel();
             }
         });
-
         return rootView;
     }
 
@@ -265,24 +243,20 @@ public class FilterDialogFragment extends DialogFragment {
     }
 
     private void updateFromDatePicker() {
-
         SimpleDateFormat sdf = new SimpleDateFormat(myDateFormat, Locale.US);
         fromDateValue = sdf.format(FromCalender.getTime());
         btnFromDatePicker.setText(fromDateValue);
     }
 
     private void updateTODatePicker() {
-
         SimpleDateFormat sdf = new SimpleDateFormat(myDateFormat, Locale.US);
         toDateValue = sdf.format(ToCalender.getTime());
         btnToDatePicker.setText(toDateValue);
     }
 
     private int getItemPosition(int strArray, String value) {
-
         String[] listArray;
         listArray = getResources().getStringArray(strArray);
-
         int position = -1;
         for (int i = 0; i < listArray.length; i++) {
             if (listArray[i].equals(value)) {
@@ -292,5 +266,4 @@ public class FilterDialogFragment extends DialogFragment {
         }
         return position;
     }
-
 }

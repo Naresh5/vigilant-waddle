@@ -11,48 +11,27 @@ import com.google.gson.annotations.SerializedName;
 
 public class User implements Parcelable {
 
-    public User() {
-    }
-
-    public User(String displayName, String profileImage, int reputation, BadgeCounts badgeCounts) {
-        this.displayName = displayName;
-        this.profileImage = profileImage;
-        this.reputation = reputation;
-        this.badgeCounts = badgeCounts;
-    }
-
     @SerializedName("profile_image")
     private String profileImage;
-
     @SerializedName("display_name")
     private String displayName;
-
     private long reputation;
-
     @SerializedName("user_id")
     private int userId;
-
     @SerializedName("answer_count")
     private long answerCount;
-
     @SerializedName("question_count")
     private long questionCount;
-
     @SerializedName("view_count")
     private long viewCount;
-
     @SerializedName("badge_counts")
     private BadgeCounts badgeCounts;
-
     @SerializedName("location")
     private String location;
-
     @SerializedName("website_url")
     private String websiteUrl;
-
     @SerializedName("about_me")
     private String aboutMe;
-
     @SerializedName("link")
     private String profileLink;
 
@@ -63,10 +42,6 @@ public class User implements Parcelable {
     public void setProfileLink(String profileLink) {
         this.profileLink = profileLink;
     }
-
-    /*public User(Context context, List<User> userList) {
-
-    }*/
 
     public String getProfileImage() {
         return profileImage;

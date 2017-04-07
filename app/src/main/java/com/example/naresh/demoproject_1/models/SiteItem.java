@@ -10,12 +10,16 @@ import java.io.Serializable;
 
 public class SiteItem implements Serializable {
 
-    public SiteItem() {
-
-    }
 
     @SerializedName("icon_url")
     private String iconUrl;
+    private String audience;
+    @SerializedName("site_url")
+    private String siteUrl;
+    @SerializedName("api_site_parameter")
+    private String apiSiteParameter;
+    private String name;
+
 
     public String getAudience() {
         return audience;
@@ -24,16 +28,6 @@ public class SiteItem implements Serializable {
     public void setAudience(String audience) {
         this.audience = audience;
     }
-
-    private String audience;
-
-    @SerializedName("site_url")
-    private String siteUrl;
-
-    @SerializedName("api_site_parameter")
-    private String apiSiteParameter;
-
-    private String name;
 
     public String getIconUrl() {
         return iconUrl;

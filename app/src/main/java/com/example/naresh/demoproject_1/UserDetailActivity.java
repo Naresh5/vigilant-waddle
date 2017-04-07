@@ -29,7 +29,6 @@ import static com.example.naresh.demoproject_1.R.id.toolbar;
 
 public class UserDetailActivity extends AppCompatActivity {
     private String TAG = UserDetailActivity.class.getSimpleName();
-
     public static final String EXTRA_USER = "data";
 
     private Toolbar mToolBar;
@@ -40,7 +39,6 @@ public class UserDetailActivity extends AppCompatActivity {
     private ImageView imageUser;
     private User user;
     private String profileLink;
-
 
     public static Intent startIntent(Context context, User user) {
         Intent i = new Intent(context, UserDetailActivity.class);
@@ -115,13 +113,12 @@ public class UserDetailActivity extends AppCompatActivity {
                 ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
                 ClipData clip = ClipData.newPlainText("link", profileLink);
                 clipboard.setPrimaryClip(clip);
-                ClipData clipData = clipboard.getPrimaryClip();
                 ClipData.Item data = clip.getItemAt(0);
                 String text = data.getText().toString();
                 if (text != null) {
-                    Toast.makeText(getApplicationContext(), "Copied to ClipBoard ", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), R.string.copied_to_clipboard, Toast.LENGTH_LONG).show();
                 } else {
-                    Toast.makeText(getApplicationContext(), "Failed to Copy on ClipBoard", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), R.string.failed_copy_to_clipboard, Toast.LENGTH_LONG).show();
                 }
                 break;
 
@@ -129,7 +126,7 @@ public class UserDetailActivity extends AppCompatActivity {
                 Intent shareIntent = new Intent();
                 shareIntent.setAction(Intent.ACTION_SEND);
                 shareIntent.putExtra(Intent.EXTRA_TEXT, profileLink);
-                shareIntent.setType("text/plain");
+                shareIntent.setType(getString(R.string.share_profile_set_type));
                 startActivity(Intent.createChooser(shareIntent, getResources().getString(R.string.menu_open_in_browser_title)));
                 break;
         }

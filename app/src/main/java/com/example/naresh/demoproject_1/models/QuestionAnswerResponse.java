@@ -15,7 +15,6 @@ public class QuestionAnswerResponse {
     @SerializedName("has_more")
     private boolean hasMore;
 
-
     public ArrayList<QuestionItem> getItems() {
         return items;
     }
@@ -23,6 +22,4 @@ public class QuestionAnswerResponse {
     public boolean isHasMore() {
         return hasMore;
     }
-
-
 }

@@ -55,26 +55,23 @@ public class TagAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolder holder = null;
+        ViewHolder holder;
 
         LayoutInflater mInflater = (LayoutInflater)
                 context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
         if (convertView == null) {
             convertView = mInflater.inflate(R.layout.item_tag, parent, false);
-            holder = new ViewHolder();
 
+            holder = new ViewHolder();
             holder.textTagName = (TextView) convertView.findViewById(R.id.text_tag_name);
             holder.textTagCount = (TextView) convertView.findViewById(R.id.text_tag_count);
-
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
         TagItem tagItem = getItem(position);
         int tagCount = tagItem.getCount();
-
         holder.textTagName.setText(tagItem.getName());
-
         holder.textTagCount.setText(Utility.getReputation(tagCount));
 
         return convertView;

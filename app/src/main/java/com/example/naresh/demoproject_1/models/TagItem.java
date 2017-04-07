@@ -6,7 +6,6 @@ package com.example.naresh.demoproject_1.models;
 
 public class TagItem {
     private String name;
-
     private int count;
 
     public String getName() {

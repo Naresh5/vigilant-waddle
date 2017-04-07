@@ -19,7 +19,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:text="@string/progress_title"
-        android:textSize="10sp"
+        android:textSize="@dimen/please_wait_text_size"
         android:visibility="gone"
         android:layout_centerInParent="true"
         android:layout_below="@id/progressbar_activity_fragment"/>
@@ -61,7 +61,7 @@
 
                 <LinearLayout
                     android:layout_width="0dp"
-                    android:layout_height="60dp"
+                    android:layout_height="@dimen/layout_height_user_fragment"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
                     android:orientation="vertical">
@@ -87,11 +87,10 @@
 
                 <LinearLayout
                     android:layout_width="0dp"
-                    android:layout_height="60dp"
+                    android:layout_height="@dimen/layout_height_user_fragment"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
                     android:orientation="vertical">
-
 
                     <TextView
                         android:id="@+id/text_question_count"
@@ -113,7 +112,7 @@
 
                 <LinearLayout
                     android:layout_width="0dp"
-                    android:layout_height="60dp"
+                    android:layout_height="@dimen/layout_height_user_fragment"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
                     android:orientation="vertical">
@@ -144,7 +143,6 @@
                 android:layout_marginBottom="5dp"
                 android:background="@color/colorViewForLine" />
 
-
             <TextView
                 android:id="@+id/text_location"
                 android:layout_width="match_parent"
@@ -169,10 +167,6 @@
                 android:linksClickable="true"
                 android:text="UserWebSite"
                 android:textColorLink="@color/colorUrlText" />
-
-
         </LinearLayout>
-
     </ScrollView>
-
 </RelativeLayout>

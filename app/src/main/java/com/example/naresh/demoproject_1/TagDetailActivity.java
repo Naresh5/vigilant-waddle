@@ -11,7 +11,8 @@ import android.view.MenuItem;
 import com.example.naresh.demoproject_1.fragments.QuestionFragment;
 
 public class TagDetailActivity extends AppCompatActivity {
-    public static final String ARG_TAG_NAME = "tag_name";
+
+    public static final String ARG_TAG_NAME = TagDetailActivity.class.getSimpleName();
 
     public static Intent getNewIntent(Context context, String tagName) {
         Intent i = new Intent(context, TagDetailActivity.class);

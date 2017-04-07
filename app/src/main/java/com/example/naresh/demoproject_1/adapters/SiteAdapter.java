@@ -78,11 +78,9 @@ public class SiteAdapter extends BaseAdapter {
         }
         SiteItem siteItem = getItem(position);
 
-        holder.textSiteName.setText(siteItem.getName());
-     //   holder.textSiteName.setText(Utility.convertTextToHTML(siteItem.getName()));
+        holder.textSiteName.setText(Utility.convertTextToHTML(siteItem.getName()));
         Picasso.with(context)
                 .load(siteItem.getIconUrl())
-
                 .into(holder.imageSite);
         return convertView;
     }

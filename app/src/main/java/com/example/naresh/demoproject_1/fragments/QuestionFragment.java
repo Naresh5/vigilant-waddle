@@ -39,6 +39,7 @@ import retrofit2.Response;
 
 public class QuestionFragment extends Fragment implements FilterDialogFragment.OnInfoChangedListener {
 
+    public static final String ARG_TAG = QuestionFragment.class.getSimpleName();
     private TextView textLoading;
     private ProgressBar progressBar;
     private ListView listQuestionDetail;
@@ -46,28 +47,17 @@ public class QuestionFragment extends Fragment implements FilterDialogFragment.O
     private View footerView;
     private int mQuestionPageCount = 1;
     private boolean isQuestionLoading = false;
-
-    private boolean isSearch = false;
-
     private boolean hasMore = true;
-    public static final String ARG_TAG = "tagName";
     private String tagName = null;
     private String titleName = null;
-
-    private static final String TAG = "QuestionDrawerFragment";
-
     private String filterQuestionOrder = Constants.ORDER_DESC;
     private String filterQuestionSort = Constants.SORT_BY_VOTES;
-    private String filterQuestionTodate = null;
-    private String filterQuestionFromdate = null;
+    private String filterQuestionToDate = null;
+    private String filterQuestionFromDate = null;
 
-    Handler handler = new Handler(Looper.getMainLooper() /*UI thread*/);
+    Handler handler = new Handler(Looper.getMainLooper());
     private Runnable workRunnable;
     private final long DELAY = 900;
-
-    public QuestionFragment() {
-
-    }
 
     public static QuestionFragment newInstance(String tag) {
         QuestionFragment questionDrawerFragment = new QuestionFragment();
@@ -77,32 +67,28 @@ public class QuestionFragment extends Fragment implements FilterDialogFragment.O
         return questionDrawerFragment;
     }
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-      /*  if (getArguments() != null) {
-        }*/
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-
         View rootView = inflater.inflate(R.layout.question_fragment_navigation, container, false);
         textLoading = (TextView) rootView.findViewById(R.id.text_loading_site_list);
         progressBar = (ProgressBar) rootView.findViewById(R.id.progressbar_site_list);
         listQuestionDetail = (ListView) rootView.findViewById(R.id.list_question_detail);
 
-        footerView = ((LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE))
+        footerView = ((LayoutInflater) getActivity()
+                .getSystemService(Context.LAYOUT_INFLATER_SERVICE))
                 .inflate(R.layout.listview_footer, null, false);
         footerView.setVisibility(View.GONE);
         listQuestionDetail.addFooterView(footerView);
 
         Bundle bundle = getArguments();
-        if(bundle != null) {
+        if (bundle != null) {
             tagName = bundle.getString(ARG_TAG);
         }
         questionDetailAdapter = new QuestionDetailAdapter(getActivity());
@@ -110,11 +96,9 @@ public class QuestionFragment extends Fragment implements FilterDialogFragment.O
 
         getJsonQuestionListResponse(null);
 
-
         listQuestionDetail.setOnScrollListener(new AbsListView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(AbsListView view, int scrollState) {
-
             }
 
             @Override
@@ -141,23 +125,19 @@ public class QuestionFragment extends Fragment implements FilterDialogFragment.O
                 startActivity(intent);
             }
         });
-
         return rootView;
     }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-
         inflater.inflate(R.menu.menu_search, menu);
         MenuItem item = menu.findItem(R.id.action_search);
-
         final SearchView searchView = (SearchView) MenuItemCompat.getActionView(item);
         MenuItemCompat.setShowAsAction(item, MenuItemCompat.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW | MenuItemCompat.SHOW_AS_ACTION_ALWAYS);
         MenuItemCompat.setActionView(item, searchView);
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-
             @Override
             public boolean onQueryTextSubmit(String query) {
                 return false;
@@ -201,20 +181,17 @@ public class QuestionFragment extends Fragment implements FilterDialogFragment.O
 
         mQuestionPageCount = 1;
         questionDetailAdapter.removeItems();
-
         this.filterQuestionOrder = order;
         this.filterQuestionSort = sort;
-        this.filterQuestionFromdate = FromDate;
-        this.filterQuestionTodate = ToDate;
+        this.filterQuestionFromDate = FromDate;
+        this.filterQuestionToDate = ToDate;
 
         getJsonQuestionListResponse(null);
-
     }
 
     private void getJsonQuestionListResponse(String titleName) {
 
         String site = SessionManager.getInstance(getActivity()).getApiSiteParameter();
-
         isQuestionLoading = true;
         showProgressBar();
         Call<ListResponse<QuestionDetailItem>> call;
@@ -225,16 +202,16 @@ public class QuestionFragment extends Fragment implements FilterDialogFragment.O
                     mQuestionPageCount,
                     filterQuestionOrder,
                     filterQuestionSort,
-                    filterQuestionFromdate,
-                    filterQuestionTodate,
+                    filterQuestionFromDate,
+                    filterQuestionToDate,
                     tagName,
                     site);
         } else {
             call = apiService.getFilterQuestionList(mQuestionPageCount,
                     filterQuestionOrder,
                     filterQuestionSort,
-                    filterQuestionFromdate,
-                    filterQuestionTodate,
+                    filterQuestionFromDate,
+                    filterQuestionToDate,
                     titleName,
                     site);
 
@@ -254,7 +231,7 @@ public class QuestionFragment extends Fragment implements FilterDialogFragment.O
             @Override
             public void onFailure(Call<ListResponse<QuestionDetailItem>> call, Throwable t) {
                 // Log error here since request failed
-                Log.e(TAG, t.toString());
+                Log.e(ARG_TAG, t.toString());
             }
         });
     }
@@ -283,8 +260,8 @@ public class QuestionFragment extends Fragment implements FilterDialogFragment.O
                 array,
                 filterQuestionOrder,
                 filterQuestionSort,
-                filterQuestionTodate,
-                filterQuestionFromdate);
+                filterQuestionToDate,
+                filterQuestionFromDate);
         filterDialog.setListener(this);
         filterDialog.show(getActivity().getSupportFragmentManager(),
                 getResources().getString(R.string.dialog_tag));

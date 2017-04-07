@@ -5,7 +5,7 @@
     android:orientation="vertical">
 
     <ProgressBar
-        android:id="@+id/prgress_bar_footer_view"
+        android:id="@+id/progress_bar_footer_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
@@ -17,6 +17,6 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:text="@string/progress_title"
-        android:textSize="17sp"
+        android:textSize="@dimen/please_wait_text_size"
         android:visibility="visible" />
 </RelativeLayout>

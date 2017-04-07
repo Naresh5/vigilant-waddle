@@ -46,8 +46,6 @@
                 android:divider="@null"
                 android:id="@+id/list_site"
                 android:visibility="visible"/>
-
         </LinearLayout>
-
 </android.support.design.widget.NavigationView>
 </android.support.v4.widget.DrawerLayout>

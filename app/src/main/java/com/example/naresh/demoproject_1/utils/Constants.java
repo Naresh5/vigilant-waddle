@@ -25,7 +25,6 @@ public class Constants {
     public static final String SORT_BY_MONTH = "month";
 
     public static final String SITE = "stackoverflow";
-
     public static final String PARAMS_FILTER = "filter";
 
     public static final String DATE_FORMAT = "yyyy-MM-dd";
@@ -38,5 +37,4 @@ public class Constants {
     public static final String VALUE_USER_ACTIVITY_FILTER = "!Ln3laa2*D5bDJaDKcVvXa0";
     public static final String VALUE_POST_TYPE_FILTER = "!)s6)1vyI2*_QmCjnp.fl";
     public static final String VALUE_SITE_FILTER = "!SlEYrR1.xfqLmA1iDB";
-
 }

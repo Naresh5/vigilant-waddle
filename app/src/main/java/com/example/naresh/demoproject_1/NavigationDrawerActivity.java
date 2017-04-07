@@ -62,20 +62,17 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Drawe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_navigation_drawer);
-
         toolbar = (Toolbar) findViewById(R.id.toolbar_for_navigation);
         setSupportActionBar(toolbar);
-
         mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawer.addDrawerListener(this);
         navigationView = (NavigationView) findViewById(R.id.nvView);
         setupDrawerContent(navigationView);
         drawerToggle = setupDrawerToggle();
         mDrawer.addDrawerListener(drawerToggle);
-
         drawerToggle.syncState();
-
         navigationView = (NavigationView) findViewById(R.id.nvView);
+
         View headerView = navigationView.getHeaderView(0);
         headerRootView = (LinearLayout) headerView.findViewById(R.id.headerRootView);
         imageArrow = (ImageView) headerView.findViewById(R.id.image_arrow);
@@ -84,17 +81,14 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Drawe
         textNavigationSiteName = (TextView) headerView.findViewById(R.id.text_navigation_site_name);
         siteListLayout = (LinearLayout) findViewById(R.id.siteListLayout);
         listSite = (ListView) findViewById(R.id.list_site);
-
         footerView = ((LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE))
                 .inflate(R.layout.item_site, listSite, false);
         imageSite = (ImageView) footerView.findViewById(R.id.image_site);
         textSite = (TextView) footerView.findViewById(R.id.text_site_name);
         imageSite.setImageResource(R.drawable.ic_more_horiz_black_24dp);
         textSite.setText(R.string.siteTitle);
-
         listSite.addFooterView(footerView);
         footerView.setVisibility(View.VISIBLE);
-
         navigationView.setNavigationItemSelectedListener(this);
         navigationView.setCheckedItem(R.id.nav_user);
         Fragment fragment = UserFragment.newInstance();
@@ -105,7 +99,6 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Drawe
         siteAdapter = new SiteAdapter(NavigationDrawerActivity.this);
         listSite.setAdapter(siteAdapter);
         showSharedPreferenceDetail();
-
         mDrawer.addDrawerListener(drawerToggle);
 
         headerRootView.setOnClickListener(new View.OnClickListener() {
@@ -121,19 +114,7 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Drawe
                 }
             }
         });
-/*
 
-        headerRootViewlistSite.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                SessionManager.getInstance(UserQuestionDrawerActivity.this)
-                        .addSiteDetail(siteAdapter.getItem(position));
-                showSharedPreferenceDetail();
-                changeSite();
-            }
-        });
-    }
- */
         footerView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -184,7 +165,6 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Drawe
         }
         return super.onOptionsItemSelected(item);
     }
-
     private void setupDrawerContent(NavigationView navigationView) {
         navigationView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
@@ -195,7 +175,6 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Drawe
                     }
                 });
     }
-
     public void selectDrawerItem(MenuItem menuItem) {
         int id = menuItem.getItemId();
         navigationView.setCheckedItem(id);
@@ -217,18 +196,14 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Drawe
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
     }
-
     private ActionBarDrawerToggle setupDrawerToggle() {
-
         return new ActionBarDrawerToggle(this, mDrawer, toolbar, R.string.drawer_open, R.string.drawer_close);
     }
-
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
         drawerToggle.syncState();
     }
-
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
@@ -245,7 +220,6 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Drawe
         Utility.hideSoftKeyboard(this);
 
     }
-
     @Override
     public void onDrawerClosed(View drawerView) {
         Utility.hideSoftKeyboard(this);
@@ -255,25 +229,19 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Drawe
             imageArrow.setImageResource(R.drawable.ic_arrow_drop_down_black_24dp);
         }
     }
-
     @Override
     public void onDrawerStateChanged(int newState) {
-
     }
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
         selectDrawerItem(item);
         return true;
     }
-
-
     public void showAlertDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(NavigationDrawerActivity.this);
         builder.setMessage(R.string.alert_dialog_text);
         builder.setCancelable(true);
-        builder.setIcon(R.drawable.ic_app_launcher_icon);
         builder.setIcon(R.drawable.ic_app_launcher_icon);
         builder.setPositiveButton(
                 R.string.alert_dialog_positive_btn,
@@ -294,7 +262,6 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Drawe
         alertDialog.show();
     }
 
-
     public void showFragment(int fragmentNameRes, Fragment fragment) {
         if (fragment != null) {
             if (getSupportActionBar() != null)
@@ -306,14 +273,11 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Drawe
     }
 
     public void showSharedPreferenceDetail() {
-
         HashMap<String, String> siteDetail = SessionManager.getInstance(this).getSiteDetail();
         String name = siteDetail.get(SessionManager.KEY_SITE_NAME);
         String image = siteDetail.get(SessionManager.KEY_SITE_IMAGE);
         final String audience = siteDetail.get(SessionManager.KEY_SITE_AUDIENCE);
-
         String SITE = siteDetail.get(SessionManager.KEY_SITE_PARAMETER);
-
         textNavigationSiteName.setText(name);
         textNavigationDescription.setText(Utility.convertTextToHTML(audience));
         Picasso.with(getApplicationContext())
@@ -336,6 +300,5 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Drawe
             selectDrawerItem(selectedMenu);
         }
     }
-
 }
 

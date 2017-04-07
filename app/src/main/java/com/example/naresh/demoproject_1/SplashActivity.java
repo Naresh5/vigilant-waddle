@@ -33,8 +33,8 @@ public class SplashActivity extends AppCompatActivity {
     private ProgressBar mProgressbar;
     private TextView textError;
     private Button buttonTryAgain;
-    private int pageNo = 1;
     private List<SiteItem> listSiteDetail = new ArrayList<>();
+    private int pageNo = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +43,7 @@ public class SplashActivity extends AppCompatActivity {
         mProgressbar = (ProgressBar) findViewById(R.id.progressbar_loading_splash);
         textError = (TextView) findViewById(R.id.text_error);
         buttonTryAgain = (Button) findViewById(R.id.button_try_again);
+
         getAppList();
 
         buttonTryAgain.setOnClickListener(new View.OnClickListener() {
@@ -52,7 +53,6 @@ public class SplashActivity extends AppCompatActivity {
                 textError.setVisibility(View.GONE);
                 mProgressbar.setVisibility(View.VISIBLE);
                 getAppList();
-
             }
         });
     }
@@ -68,15 +68,11 @@ public class SplashActivity extends AppCompatActivity {
             public void onResponse(Call<ListResponse<SiteItem>> call,
                                    Response<ListResponse<SiteItem>> response) {
                 mProgressbar.setVisibility(View.GONE);
-                Log.d(TAG, "onResponse: " + response.body());
-
                 if (response.body() != null) {
                     listSiteDetail = response.body().getItems();
                     saveDataInSharedPreference();
                     saveDataInCache();
                     openActivity();
-                    Log.e(TAG, "onResponse: " + response.body());
-                    Log.e(TAG, "onResponse: " + call);
                     Toast.makeText(SplashActivity.this, "Success...", Toast.LENGTH_SHORT).show();
                 } else {
                     textError.setVisibility(View.VISIBLE);
@@ -93,35 +89,19 @@ public class SplashActivity extends AppCompatActivity {
             }
         });
     }
-
     private void saveDataInCache() {
         ACache mCache = ACache.get(this);
         mCache.put(KEY_CACHE, listSiteDetail);
     }
-
     private void openActivity() {
         Intent intent = NavigationDrawerActivity.getStartIntent(SplashActivity.this);
         startActivity(intent);
         finish();
     }
-
-    /*
-    /* private void saveDataInSharedPreference() {
-        for (int i = 0; i < listSiteDetail.size(); i++) {
-            SiteItem item = listSiteDetail.get(i);
-            item.getIconUrl();
-        }
-        int i=0;
-        for (SiteItem item : listSiteDetail) {
-            item.getIconUrl();
-            i++;
-        }*/
-
     private void saveDataInSharedPreference() {
         if (listSiteDetail.size() > 0) {
             SiteItem siteItem = null;
-            // check for stackoverflow site item
-
+            // check for stackOverflow site item
             for (SiteItem item : listSiteDetail) {
                 if (item.getApiSiteParameter() != null && item.getApiSiteParameter()
                         .equalsIgnoreCase(Constants.SITE)) {
@@ -129,8 +109,7 @@ public class SplashActivity extends AppCompatActivity {
                     break;
                 }
             }
-            // if stackoverflow not found then use first item from list
-
+            // if stackOverflow not found then use first item from list
             if (siteItem == null) {
                 siteItem = listSiteDetail.get(0);
             }

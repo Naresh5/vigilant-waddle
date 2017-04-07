@@ -5,20 +5,20 @@
     android:padding="10dp">
 
     <TextView
-        android:text="Tag Name"
+        android:text="@string/tag_name_item_tag"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/text_tag_name"
-        android:textSize="18sp"
+        android:textSize="@dimen/tag_text_size"
         android:textColor="@color/colorTagText"
         android:padding="5dp"/>
 
     <TextView
-        android:text="Tag Count"
+        android:text="@string/tag_count_item_tag"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/text_tag_count"
-        android:textSize="18sp"
+        android:textSize="@dimen/tag_text_size"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:textColor="@color/colorTagText"/>

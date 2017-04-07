@@ -1,35 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="60dp"
+    android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:padding="10dp">
+
     <ImageView
         android:id="@+id/image_site_list"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="@dimen/image_width_height_site_detail"
+        android:layout_height="@dimen/image_width_height_site_detail"
         android:layout_gravity="center_vertical"
-        android:src="@drawable/ic_user_demo"/>
+        android:src="@drawable/ic_user_demo" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
         android:layout_gravity="center_vertical"
+        android:layout_marginLeft="15dp"
         android:orientation="vertical">
+
         <TextView
+            android:id="@+id/text_name_site"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:textSize="16sp"
-            android:text="Site Name"
+            android:text="@string/site_name_item_site_detail"
             android:textColor="@color/colorPrimary"
-            android:textStyle="bold"
-            android:id="@+id/text_name_site"/>
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
         <TextView
+            android:id="@+id/text_audience"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Site Description"
-            android:textColor="@color/colorBlack"
-            android:id="@+id/text_audience"/>
+            android:text="@string/site_description_item_site_detail"
+            android:textColor="@color/colorBlack" />
     </LinearLayout>
 
 </LinearLayout>

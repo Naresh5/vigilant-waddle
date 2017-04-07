@@ -17,13 +17,6 @@ import retrofit2.http.Query;
 
 public interface ApiInterface {
 
-    /* @GET("questions")
-       Call<ListResponse<QuestionDetailItem>> getUserDetail(@Query("page") int page,
-                                                            @Query("order") String order,
-                                                            @Query("sort") String sort,
-                                                            @Query("fromdate") String fromDate,
-                                                            @Query("todate") String toDate,
-                                                            @Query("site") String site);*/
     @GET("users")
     Call<ListResponse<User>> getUserList(@Query("page") int page,
                                          @Query("order") String order,
@@ -57,6 +50,7 @@ public interface ApiInterface {
                                            @Query("sort") String sort,
                                            @Query("inname") String inname,
                                            @Query("site") String site);
+
     @GET("sites")
     Call<ListResponse<SiteItem>> getSiteList(@Query("page") int page,
                                              @Query("filter") String filter);
@@ -65,4 +59,5 @@ public interface ApiInterface {
 //https://api.stackexchange.com/2.2/questions?page=2&order=desc&sort=activity&site=stackoverflow
 // Question Search
 //https://api.stackexchange.com/2.2/search?order=desc&sort=activity&intitle=ionic&site=stackoverflow
+
 }

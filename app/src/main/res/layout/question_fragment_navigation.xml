@@ -20,7 +20,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/progress_title"
-        android:textSize="10sp"
+        android:textSize="@dimen/please_wait_text_size"
         android:layout_above="@+id/progressbar_site_list"
         android:layout_centerInParent="true"
         android:visibility="gone"/>

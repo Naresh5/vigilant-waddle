@@ -29,20 +29,15 @@ public class QuestionDetailAdapter extends BaseAdapter {
     private Context context;
     private List<QuestionDetailItem> questionDetailItemItems;
 
-    private List<QuestionDetailItem> items;
-
     public QuestionDetailAdapter(Context context) {
         this.context = context;
         this.questionDetailItemItems = new ArrayList<>();
-
     }
 
     public void addItems(List<QuestionDetailItem> items) {
         questionDetailItemItems.addAll(items);
-
         notifyDataSetChanged();
     }
-
 
     public void removeItems() {
         questionDetailItemItems.clear();
@@ -65,7 +60,7 @@ public class QuestionDetailAdapter extends BaseAdapter {
     }
 
     public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolder holder = null;
+        ViewHolder holder;
         LayoutInflater mInflater = (LayoutInflater)
                 context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
         if (convertView == null) {
@@ -85,6 +80,7 @@ public class QuestionDetailAdapter extends BaseAdapter {
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
+
         QuestionDetailItem questionDetailItem = getItem(position);
         OwnerItem ownerItem = questionDetailItem.getOwnerItem();
 
@@ -92,6 +88,7 @@ public class QuestionDetailAdapter extends BaseAdapter {
         holder.textTag.setText(Utility.arrayToStringConvert(listTag));
 
         int conditionColor;
+
         if (questionDetailItem.isAnswered()) {
             conditionColor = R.color.colorIsAnswerTrue;
             holder.imageAnswer.setImageResource(R.drawable.ic_answer_green);
@@ -120,7 +117,5 @@ public class QuestionDetailAdapter extends BaseAdapter {
                 textQuestionCreationDate, textUserName;
         LinearLayout linearLayoutScore;
     }
-
-
 }
 

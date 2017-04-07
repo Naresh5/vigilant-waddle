@@ -33,22 +33,16 @@ import java.net.URLConnection;
 
 public class ProfileFragment extends Fragment {
     private String TAG = ProfileFragment.class.getSimpleName();
-    private View rootView, mFooterView;
+    private View mFooterView;
     private QuestionAdapter questionAdapter;
-    private int userId;
     private ListView mListViewProfileFragment;
     private TextView mTextPleaseWait, mTextDetailNotFound;
     private ProgressBar mProgressBar;
-    private static final String ARG_USER_ID = "user_id";
-
-    private int mQuestionPageCount = 0;
+    private int userId;
+    private int mQuestionPageCount = 1;
     public boolean isLoading = false;
     public boolean hasMoreData = true;
-
-
-    public ProfileFragment() {
-        // Required empty public constructor
-    }
+    private static final String ARG_USER_ID = "user_id";
 
     public static Fragment newInstance(int userId) {
         ProfileFragment profileFragment = new ProfileFragment();
@@ -61,14 +55,12 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-
+        View rootView;
         rootView = inflater.inflate(R.layout.fragment_profile, container, false);
         mListViewProfileFragment = (ListView) rootView.findViewById(R.id.list_question_profile_fragment);
         mProgressBar = (ProgressBar) rootView.findViewById(R.id.progressbar_profile_fragment);
@@ -80,8 +72,6 @@ public class ProfileFragment extends Fragment {
 
         Bundle bundle = getArguments();
         userId = bundle.getInt("user_id");
-
-        // new getQuestionAnswerDetailFromJson().execute();
 
         mListViewProfileFragment.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -95,6 +85,7 @@ public class ProfileFragment extends Fragment {
         });
 
         mListViewProfileFragment.setOnScrollListener(new AbsListView.OnScrollListener() {
+
             @Override
             public void onScrollStateChanged(AbsListView view, int scrollState) {
 
@@ -116,13 +107,11 @@ public class ProfileFragment extends Fragment {
                 }
             }
         });
-
-        //SETTING ADAPTER ...
+        //Set Adapter here
         questionAdapter = new QuestionAdapter(getActivity());
         mListViewProfileFragment.setAdapter(questionAdapter);
         return rootView;
     }
-
 
     private class getQuestionAnswerDetailFromJson extends AsyncTask<Void, Void, String> {
         @Override
@@ -136,9 +125,8 @@ public class ProfileFragment extends Fragment {
         protected String doInBackground(Void... params) {
 
             String site = SessionManager.getInstance(getActivity()).getApiSiteParameter();
-
             String response = null;
-            URLConnection urlConn = null;
+            URLConnection urlConn;
             BufferedReader bufferedReader = null;
             try {
                 Uri.Builder uriBuilder = Uri.parse(Constants.BASE_URL).buildUpon()
@@ -165,14 +153,11 @@ public class ProfileFragment extends Fragment {
                     stringBuffer.append(line);
                 }
                 response = stringBuffer.toString();
-
             } catch (Exception ex) {
-
                 if (bufferedReader != null) {
                     try {
                         bufferedReader.close();
                     } catch (IOException e) {
-
                         e.printStackTrace();
                     }
                 }
@@ -193,7 +178,6 @@ public class ProfileFragment extends Fragment {
 
                 hasMoreData = userResponse.isHasMore();
                 Log.e(TAG, "Has More : " + hasMoreData);
-
                 questionAdapter.addItems(userResponse.getItems());
 
                 if (questionAdapter.getCount() == 0) {
@@ -206,18 +190,6 @@ public class ProfileFragment extends Fragment {
         }
     }
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-
-    }
-
     private void hideProgressBar() {
         if (mQuestionPageCount == 1) {
             mProgressBar.setVisibility(View.GONE);
@@ -226,7 +198,6 @@ public class ProfileFragment extends Fragment {
             mFooterView.setVisibility(View.GONE);
         }
     }
-
     private void showProgressBar() {
         if (mQuestionPageCount == 1) {
             mProgressBar.setVisibility(View.VISIBLE);

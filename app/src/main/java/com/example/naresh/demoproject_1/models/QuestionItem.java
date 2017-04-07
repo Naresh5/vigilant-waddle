@@ -11,7 +11,6 @@ public class QuestionItem {
     private String title;
     private String link;
     private String body;
-
     @SerializedName("post_type")
     private String postType;
 

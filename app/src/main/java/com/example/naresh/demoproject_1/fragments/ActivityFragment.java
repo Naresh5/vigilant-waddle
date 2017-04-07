@@ -30,17 +30,12 @@ import java.util.List;
 
 public class ActivityFragment extends Fragment {
     private String TAG = ActivityFragment.class.getSimpleName();
-    private View rootView;
     private ProgressBar mProgressBar;
     private TextView mTextLoading, mTextAboutUser, mTextAnswerCount, mTextQuestionCount, mTextViewCount;
     private TextView mTextUserLocation, mTextWebSiteURL;
     private LinearLayout mLinerLayout;
     private int userId;
     private static final String ARG_USER_ID = "user_id";
-
-    public ActivityFragment() {
-        // Required empty public constructor
-    }
 
     public static Fragment newInstance(int userId) {
         ActivityFragment activityFragment = new ActivityFragment();
@@ -59,6 +54,7 @@ public class ActivityFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        View rootView;
         rootView = inflater.inflate(R.layout.fragment_activity, container, false);
         mProgressBar = (ProgressBar) rootView.findViewById(R.id.progressbar_activity_fragment);
         mTextLoading = (TextView) rootView.findViewById(R.id.text_loading_site_list);
@@ -72,12 +68,10 @@ public class ActivityFragment extends Fragment {
         mLinerLayout.setVisibility(View.GONE);
 
         Bundle bundle = getArguments();
-        userId = bundle.getInt("user_id");
+        userId = bundle.getInt(ARG_USER_ID);
 
         new getUserDetailFromJson().execute();
-
         return rootView;
-
     }
 
     private class getUserDetailFromJson extends AsyncTask<Object, Object, List<User>> {
@@ -92,7 +86,6 @@ public class ActivityFragment extends Fragment {
         protected List<User> doInBackground(Object... arg0) {
 
             String site = SessionManager.getInstance(getActivity()).getApiSiteParameter();
-
             JSONParser sh = new JSONParser();    //Request to url and getting response
             String jsonStr = null;
             try {
@@ -104,9 +97,6 @@ public class ActivityFragment extends Fragment {
                         .appendQueryParameter("site", site)
                         .appendQueryParameter("filter", Constants.VALUE_USER_ACTIVITY_FILTER);
 
-                //  https://api.stackexchange.com/2.2/users/
-                //226565?order=desc&sort=reputation&site=stackoverflow
-
                 Uri uri = uriBuilder.build();
                 jsonStr = sh.makeServiceCall(uri.toString());
                 Log.e(TAG, " Json Response for activity fragment" + jsonStr);
@@ -115,8 +105,8 @@ public class ActivityFragment extends Fragment {
                 e.printStackTrace();
                 Log.e("ERROR OCCURRED", "FAILED TO LOAD Json");
             }
-
             Log.e(TAG, "Response from url ACTIVITY FRAGMENT: " + jsonStr);
+
             if (jsonStr != null) {
                 Gson gson = new Gson();
                 UserResponse userResponse = gson.fromJson(jsonStr, UserResponse.class);
@@ -129,15 +119,13 @@ public class ActivityFragment extends Fragment {
         @Override
         protected void onPostExecute(List<User> userList) {
             super.onPostExecute(userList);
-
             hideProgressBar();
             mLinerLayout.setVisibility(View.VISIBLE);
             if (userList != null && userList.size() > 0) {
                 User user = userList.get(0);
                 setUserDetail(user);
-
             } else {
-                Log.e(TAG, "Couldn't Fetch Data .....");
+                Log.e(TAG, "Couldn't Fetch Data ... Network Error");
             }
         }
     }
@@ -164,14 +152,12 @@ public class ActivityFragment extends Fragment {
 
     public void setUserDetail(User user) {
         String aboutMeException = getString(R.string.user_detail_exception_activity_fragment);
-
         String aboutMe = user.getAboutMe();
         String answers = String.valueOf(user.getAnswerCount());
         String questions = String.valueOf(user.getQuestionCount());
         String views = String.valueOf(user.getViewCount());
         String location = user.getLocation();
         String websiteURL = user.getWebsiteUrl();
-
 
         if (TextUtils.isEmpty(aboutMe)) {
             mTextAboutUser.setText(aboutMeException);
@@ -184,14 +170,12 @@ public class ActivityFragment extends Fragment {
         mTextQuestionCount.setText(questions);
         mTextViewCount.setText(views);
 
-        //For Location
         if (TextUtils.isEmpty(location)) {
             mTextUserLocation.setVisibility(View.GONE);
         } else {
             mTextUserLocation.setText(Utility.convertTextToHTML(location));
             mTextUserLocation.setMovementMethod(LinkMovementMethod.getInstance());
         }
-
         if (TextUtils.isEmpty(websiteURL)) {
             mTextWebSiteURL.setVisibility(View.GONE);
         } else {

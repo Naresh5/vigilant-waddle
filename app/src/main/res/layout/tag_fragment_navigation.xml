@@ -10,14 +10,12 @@
         android:layout_height="50dp"
         android:orientation="horizontal"
         android:padding="6dp"
-        android:background="#E4EAED">
-
+        android:background="@color/colorSearchTagBackground">
 
         <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1">
-
 
             <EditText
                 android:layout_width="match_parent"
@@ -42,7 +40,6 @@
                 android:visibility="gone"
                 android:background="@drawable/ic_cancel_black_24dp" />
 
-
         </RelativeLayout>
 
         <Spinner
@@ -63,7 +60,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/progress_title"
-        android:textSize="10sp"
+        android:textSize="@dimen/please_wait_text_size"
         android:layout_above="@+id/progressbar_site_list"
         android:layout_gravity="center"
         android:visibility="gone"/>

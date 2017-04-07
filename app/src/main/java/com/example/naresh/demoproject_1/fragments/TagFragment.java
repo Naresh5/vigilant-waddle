@@ -33,6 +33,7 @@ import com.example.naresh.demoproject_1.retrofit.ApiClient;
 import com.example.naresh.demoproject_1.retrofit.ApiInterface;
 import com.example.naresh.demoproject_1.utils.Constants;
 import com.example.naresh.demoproject_1.utils.Utility;
+import com.google.gson.annotations.SerializedName;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -41,6 +42,7 @@ import retrofit2.Response;
 
 public class TagFragment extends Fragment {
 
+    private static final String TAG = TagFragment.class.getSimpleName();
     private Spinner spinnerTagSearch;
     private EditText editTagSearch;
     private ListView listTag;
@@ -50,48 +52,35 @@ public class TagFragment extends Fragment {
     private View footerView;
     private TagAdapter tagAdapter;
     private int mTagPageCount = 1;
-    private static final String TAG = "Tag Detail";
     private String tagSortBy = "popular";
     private String inname = null;
-    private boolean isTagLoading = false;
     private String[] tagArray;
+    private boolean isTagLoading = false;
     private boolean hasMoreTag = true;
-
-    public TagFragment() {
-
-    }
 
     public static TagFragment newInstance() {
         TagFragment tagFragment = new TagFragment();
         return tagFragment;
     }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-     /*   if (getArguments() != null) {
-
-        }*/
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        //Utility.hideSoftKeyboard(getActivity());
-
-        final View rootView = inflater.inflate(R.layout.tag_fragment_navigation, container, false);
+        View rootView = inflater.inflate(R.layout.tag_fragment_navigation, container, false);
         spinnerTagSearch = (Spinner) rootView.findViewById(R.id.spinner_for_tag_search);
         editTagSearch = (EditText) rootView.findViewById(R.id.edit_tag_search);
         listTag = (ListView) rootView.findViewById(R.id.list_tag);
         textLoading = (TextView) rootView.findViewById(R.id.text_loading_site_list);
         progressBar = (ProgressBar) rootView.findViewById(R.id.progressbar_site_list);
         imageCancel = (ImageButton) rootView.findViewById(R.id.image_cancel);
-
         footerView = ((LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE))
-                .inflate(R.layout.listview_footer, null, false);
+                                                        .inflate(R.layout.listview_footer, null, false);
         footerView.setVisibility(View.GONE);
         listTag.addFooterView(footerView);
-
         tagAdapter = new TagAdapter(getActivity());
         listTag.setAdapter(tagAdapter);
 
@@ -112,7 +101,6 @@ public class TagFragment extends Fragment {
                 tagAdapter.removeItems();
                 getJsonTagResponse();
             }
-
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
@@ -123,7 +111,6 @@ public class TagFragment extends Fragment {
             @Override
             public void onScrollStateChanged(AbsListView view, int scrollState) {
             }
-
             @Override
             public void onScroll(AbsListView view, int firstVisibleItem,
                                  int visibleItemCount, int totalItemCount) {
@@ -146,14 +133,12 @@ public class TagFragment extends Fragment {
                 tagAdapter.removeItems();
                 Utility.hideSoftKeyboard(getActivity());
                 getJsonTagResponse();
-
             }
         });
 
         editTagSearch.addTextChangedListener(new TextWatcher() {
             @Override
             public void afterTextChanged(Editable arg0) {
-
             }
 
             @Override
@@ -163,7 +148,6 @@ public class TagFragment extends Fragment {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 Log.e(TAG, "onTextChanged() called with: s = [" + s + "], start = [" + start + "], before = [" + before + "], count = [" + count + "]");
-                //String text = editTagSearch.getText().toString();
 
                 if (s.length() != 0) {
                     Log.e(TAG, "onTextChanged: " + s);
@@ -175,6 +159,7 @@ public class TagFragment extends Fragment {
                 }
             }
         });
+
         editTagSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
@@ -195,7 +180,6 @@ public class TagFragment extends Fragment {
         listTag.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
                 String tagName = tagAdapter.getItem(position).getName();
                 Intent intentQuestionListActivity = TagDetailActivity.getNewIntent(getActivity(), tagName);
                 startActivity(intentQuestionListActivity);
@@ -208,7 +192,6 @@ public class TagFragment extends Fragment {
     private void getJsonTagResponse() {
 
         String site = SessionManager.getInstance(getActivity()).getApiSiteParameter();
-
         isTagLoading = true;
         showProgressBar();
         ApiInterface apiService =
@@ -219,7 +202,6 @@ public class TagFragment extends Fragment {
                 tagSortBy,
                 inname,
                 site);
-
         Log.d(TAG, "getJsonTagResponse: " + call);
 
         call.enqueue(new Callback<ListResponse<TagItem>>() {
@@ -231,12 +213,10 @@ public class TagFragment extends Fragment {
                 if (response.body() != null) {
                     hasMoreTag = response.body().isHasMore();
                     Log.e(TAG, "Has More ?: " + hasMoreTag);
-
                     tagAdapter.addItems(response.body().getItems());
                     Log.e(TAG, "Tag Response : " + response.body());
                 }
             }
-
             @Override
             public void onFailure(Call<ListResponse<TagItem>> call, Throwable t) {
                 // Log error here since request failed
@@ -245,7 +225,6 @@ public class TagFragment extends Fragment {
             }
         });
     }
-
     private void hideProgressBar() {
         if (mTagPageCount == 1) {
             textLoading.setVisibility(View.GONE);
@@ -254,7 +233,6 @@ public class TagFragment extends Fragment {
             footerView.setVisibility(View.GONE);
         }
     }
-
     private void showProgressBar() {
         if (mTagPageCount == 1) {
             textLoading.setVisibility(View.VISIBLE);

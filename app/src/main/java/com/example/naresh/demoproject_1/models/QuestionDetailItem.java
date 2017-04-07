@@ -12,21 +12,14 @@ public class QuestionDetailItem {
 
     @SerializedName("is_answered")
     private boolean isAnswered;
-
     private String title;
-
     private int score;
-
     private String link;
-
     private ArrayList<String> tags;
-
     @SerializedName("answer_count")
     private int answerCount;
-
     @SerializedName("creation_date")
     private int questionCreationDate;
-
     @SerializedName("owner")
     private OwnerItem ownerItem;
 

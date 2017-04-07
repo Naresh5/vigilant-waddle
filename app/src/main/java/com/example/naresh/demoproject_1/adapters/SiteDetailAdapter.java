@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -25,15 +24,14 @@ import static android.content.ContentValues.TAG;
 /**
  * Created by naresh on 4/4/17.
  */
+
 public class SiteDetailAdapter extends RecyclerView.Adapter {
     private Context context;
     private List<SiteItem> siteItems;
     private final int VIEW_ITEM = 0;
     private final int VIEW_PROG = 1;
     private OnLoadMoreListener mOnLoadMoreListener;
-
     private OnItemClickListener onItemClickListener;
-
     private int visibleThreshold = 1;
     private int lastVisibleItem, totalItemCount;
     private boolean loading = false;
@@ -44,18 +42,14 @@ public class SiteDetailAdapter extends RecyclerView.Adapter {
 
     public interface OnItemClickListener {
         void onItemClick(List<SiteItem> items, View view, int position);
-
     }
 
     public SiteDetailAdapter(RecyclerView recyclerView, Context context) {
         this.context = context;
-
         siteItems = new ArrayList<>();
         if (recyclerView.getLayoutManager() instanceof LinearLayoutManager) {
-
             final LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView
                     .getLayoutManager();
-
             recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
                 @Override
                 public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
@@ -103,7 +97,7 @@ public class SiteDetailAdapter extends RecyclerView.Adapter {
 
         public LoadingViewHolder(View itemView) {
             super(itemView);
-            progressBar = (ProgressBar) itemView.findViewById(R.id.prgress_bar_footer_view);
+            progressBar = (ProgressBar) itemView.findViewById(R.id.progress_bar_footer_view);
             textLoading = (TextView) itemView.findViewById(R.id.text_loading_footer_view);
         }
     }
@@ -127,9 +121,7 @@ public class SiteDetailAdapter extends RecyclerView.Adapter {
             return new SiteViewHolder(view);
         } else if (viewType == VIEW_PROG) {
             View view = LayoutInflater.from(context).inflate(R.layout.listview_footer, parent, false);
-            if (view instanceof LinearLayout) {
 
-            }
             return new LoadingViewHolder(view);
         }
         return null;
@@ -157,7 +149,6 @@ public class SiteDetailAdapter extends RecyclerView.Adapter {
             ((LoadingViewHolder) holder).progressBar.setVisibility(View.VISIBLE);
             ((LoadingViewHolder) holder).textLoading.setVisibility(View.VISIBLE);
         }
-
     }
 
     @Override

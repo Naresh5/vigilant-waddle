@@ -5,11 +5,9 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Looper;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.SearchView;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -48,37 +46,31 @@ import retrofit2.Response;
 
 
 public class UserFragment extends Fragment implements FilterDialogFragment.OnInfoChangedListener {
-    private View rootView;
     private String TAG = UserFragment.class.getSimpleName();
     private ProgressBar mProgressBar;
     private ListView mListView;
     private View footerView;
     private UserAdapter adapter;
+    private String site = SessionManager.getInstance(getActivity()).getApiSiteParameter();
+    public  String orderValue = "asc", sortValue = "reputation", fromDateValue, toDateValue;
+    private String filterUserOrder = Constants.ORDER_ASC;
+    private String filterUserSort = Constants.SORT_BY_REPUTATION;
+    private String filterUserFromDate = null;
+    private String filterUserToDate = null;
+    private String inname;
+    private int pageCount = 0;
     private boolean isSearch = false;
     private boolean isLoading = false;
     private boolean hasMoreData = true;
-    private int pageCount = 0;
-    public String orderValue = "asc", sortValue = "reputation", fromDateValue, toDateValue;
 
-    private String filterUserOrder = Constants.ORDER_ASC;
-    private String filterUserSort = Constants.SORT_BY_REPUTATION;
-    private String filterUserFromdate = null;
-    private String filterUserTodate = null;
-    private String inname;
     Handler handler = new Handler();
     private Runnable workRunnable;
     private final long DELAY = 900;
 
-    String site = SessionManager.getInstance(getActivity()).getApiSiteParameter();
 
     public static UserFragment newInstance() {
         UserFragment userFragment = new UserFragment();
         return userFragment;
-    }
-
-
-    public UserFragment() {
-        // Required empty public constructor
     }
 
     @Override
@@ -90,6 +82,7 @@ public class UserFragment extends Fragment implements FilterDialogFragment.OnInf
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        View rootView;
         rootView = inflater.inflate(R.layout.user_fragment_navigation, container, false);
         mListView = (ListView) rootView.findViewById(R.id.list_view_user_fragment_nav);
         mProgressBar = (ProgressBar) rootView.findViewById(R.id.progress_bar_user_fragment_nav);
@@ -100,17 +93,14 @@ public class UserFragment extends Fragment implements FilterDialogFragment.OnInf
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
                 User user = (User) adapter.getItem(position);
                 Intent intentUserDetailActivity = UserDetailActivity.startIntent(getActivity(), user);
                 startActivity(intentUserDetailActivity);
-
             }
         });
         mListView.setOnScrollListener(new AbsListView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(AbsListView view, int scrollState) {
-
             }
 
             @Override
@@ -123,7 +113,6 @@ public class UserFragment extends Fragment implements FilterDialogFragment.OnInf
                 Log.e("FIRST VISIBLE ITEM   :", last);
                 Log.e("VISIBLE ITEM  Count  :", first);
                 Log.e("Total ITEM  Count  :", visible);
-
                 if ((lastInScreen == totalItemCount)
                         && (totalItemCount - 1 != 0)
                         && !isSearch) {
@@ -163,9 +152,7 @@ public class UserFragment extends Fragment implements FilterDialogFragment.OnInf
             public boolean onClose() {
                 pageCount = 1;
                 adapter.clearAdapter();
-
                 new LoadJsonData(Constants.ORDER_ASC, Constants.SORT_BY_REPUTATION, null, null, null).execute();
-
                 return false;
             }
         });
@@ -177,7 +164,6 @@ public class UserFragment extends Fragment implements FilterDialogFragment.OnInf
             public boolean onQueryTextSubmit(String query) {
                 return false;
             }
-
             @Override
             public boolean onQueryTextChange(final String newText) {
                 //   isSearch = !newText.isEmpty();
@@ -207,7 +193,6 @@ public class UserFragment extends Fragment implements FilterDialogFragment.OnInf
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-
         if (id == R.id.action_option) {
             showDialogFragment();
             return true;
@@ -323,8 +308,8 @@ public class UserFragment extends Fragment implements FilterDialogFragment.OnInf
                 pageCount,
                 filterUserOrder,
                 filterUserSort,
-                filterUserFromdate,
-                filterUserTodate,
+                filterUserFromDate,
+                filterUserToDate,
                 inname,
                 site);
         Log.e(TAG, "Call : getJsonUserListResponse: Search" + call);
@@ -336,9 +321,7 @@ public class UserFragment extends Fragment implements FilterDialogFragment.OnInf
                 isLoading = false;
                 hideProgressBar();
                 if (response.body() != null) {
-                    // = response.body().isHasMore();
                     adapter.addItems(response.body().getItems());
-
                     Log.e(TAG, "Call : onResponse: " + response);
                 }
             }
@@ -359,7 +342,6 @@ public class UserFragment extends Fragment implements FilterDialogFragment.OnInf
             footerView.setVisibility(View.GONE);
         }
     }
-
     private void showProgressBar() {
         if (pageCount == 1) {
             mProgressBar.setVisibility(View.VISIBLE);
@@ -372,7 +354,6 @@ public class UserFragment extends Fragment implements FilterDialogFragment.OnInf
 
     public void showDialogFragment() {
         String[] array = getResources().getStringArray(R.array.spinnerUserSort);
-
         FilterDialogFragment filterDialog = FilterDialogFragment.newInstance(
                 array,
                 orderValue, sortValue,

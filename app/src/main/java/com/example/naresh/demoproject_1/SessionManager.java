@@ -34,17 +34,19 @@ public class SessionManager {
         }
         return sessionManager;
     }
+
     public void addSiteDetail(SiteItem siteItem) {
         editor.putString(KEY_SITE_NAME, siteItem.getName());
         editor.putString(KEY_SITE_IMAGE, siteItem.getIconUrl());
         editor.putString(KEY_SITE_PARAMETER, siteItem.getApiSiteParameter());
         editor.putString(KEY_SITE_AUDIENCE,siteItem.getAudience());
         editor.commit();
-
     }
+
     public String getApiSiteParameter(){
         return sharedpreferences.getString(KEY_SITE_PARAMETER,Constants.SITE);
     }
+
     public HashMap<String, String> getSiteDetail() {
         HashMap<String, String> site = new HashMap<>();
         site.put(KEY_SITE_NAME, sharedpreferences.getString(KEY_SITE_NAME, null));

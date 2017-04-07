@@ -2,10 +2,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@color/colorActivityToolBar"
     android:orientation="horizontal"
-    android:paddingTop="@dimen/user_item_padding_top"
     android:paddingLeft="@dimen/user_item_padding_left"
-    android:background="@color/colorActivityToolBar">
+    android:paddingTop="@dimen/user_item_padding_top">
 
     <ImageView
         android:id="@+id/item_image_user"
@@ -18,8 +18,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
-        android:paddingTop="5dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingTop="5dp">
 
         <TextView
             android:id="@+id/item_user_name"
@@ -50,11 +50,11 @@
                 android:id="@+id/item_user_gold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/item_list_margin_right"
                 android:drawableLeft="@drawable/badge_gold"
                 android:drawablePadding="@dimen/badge_drawable_padding"
                 android:gravity="center"
                 android:text="@string/user_itm_demo_gold_badge"
-                android:layout_marginRight="@dimen/item_list_margin_right"
                 android:textColor="@color/colorItemBadgeText"
                 android:textSize="@dimen/item_badge_text_size" />
 
@@ -62,11 +62,11 @@
                 android:id="@+id/item_user_silver"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/item_list_margin_right"
                 android:drawableLeft="@drawable/badge_silver"
                 android:drawablePadding="@dimen/badge_drawable_padding"
                 android:gravity="center"
                 android:text="@string/user_itm_demo_silver_badge"
-                android:layout_marginRight="@dimen/item_list_margin_right"
                 android:textColor="@color/colorItemBadgeText"
                 android:textSize="@dimen/item_badge_text_size" />
 
@@ -74,11 +74,11 @@
                 android:id="@+id/item_user_bronze"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/item_list_margin_right"
                 android:drawableLeft="@drawable/badge_bronze"
                 android:drawablePadding="@dimen/badge_drawable_padding"
                 android:gravity="center"
                 android:text="@string/user_itm_demo_bronze_badge"
-                android:layout_marginRight="@dimen/item_list_margin_right"
                 android:textColor="@color/colorItemBadgeText"
                 android:textSize="@dimen/item_badge_text_size" />
         </LinearLayout>

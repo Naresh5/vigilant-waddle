@@ -16,7 +16,6 @@ import java.net.URL;
 public class JSONParser {
 
     public JSONParser() {
-
     }
 
     public String makeServiceCall(String reqUrl) throws MalformedURLException {

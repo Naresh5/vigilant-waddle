@@ -36,7 +36,6 @@ public class UserAdapter extends BaseAdapter implements Filterable {
         this.context = context;
         this.items = new ArrayList<>();
         this.myStringFilterList = new ArrayList<>();
-
     }
 
     public void addItems(List<User> arrayList) {
@@ -94,10 +93,7 @@ public class UserAdapter extends BaseAdapter implements Filterable {
         User currentItem = (User) getItem(position);
         BadgeCounts badgeCount = currentItem.getBadgeCounts();
 
-        //  String reputation =currentItem.getReputation();
-
         Picasso.with(context).load(currentItem.getProfileImage()).into(viewHolder.userImage);
-
         viewHolder.userName.setText(Utility.convertTextToHTML(currentItem.getDisplayName()));
         viewHolder.userReputation.setText(currentItem.getReputation());
         viewHolder.userBadgeGold.setText(String.valueOf(badgeCount.getGold()));
@@ -135,7 +131,6 @@ public class UserAdapter extends BaseAdapter implements Filterable {
                         filterList.add(user);
                     }
                 }
-
                 results.count = filterList.size();
                 results.values = filterList;
             } else {
