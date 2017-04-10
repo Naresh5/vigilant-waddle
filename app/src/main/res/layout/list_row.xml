@@ -12,7 +12,7 @@
         android:layout_width="@dimen/image_size"
         android:layout_height="@dimen/image_size"
         android:layout_alignParentLeft="true"
-        android:layout_marginRight="8dp"
+        android:layout_marginRight="10dp"
         android:background="@color/imageBackground" />
 
     <TextView
@@ -22,7 +22,7 @@
         android:layout_toRightOf="@id/user_image"
         android:text="@string/list_raw_user_name"
         android:textColor="@color/userName"
-        android:textSize="15sp"
+        android:textSize="19sp"
         android:textStyle="bold" />
 
     <LinearLayout
@@ -38,7 +38,7 @@
             android:layout_height="wrap_content"
             android:text="@string/reputation_demo"
             android:textColor="@color/reputation"
-            android:textSize="12sp"
+            android:textSize="16sp"
             android:textStyle="bold" />
 
         <TextView

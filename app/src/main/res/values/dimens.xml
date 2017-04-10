@@ -5,8 +5,8 @@
     <dimen name="activity_vertical_margin">10dp</dimen>
     <dimen name="please_wait_text_size">17sp</dimen>
     <dimen name="badge_size">8dp</dimen>
-    <dimen name="image_size">50dp</dimen>
-    <dimen name="badge_text_size">14sp</dimen>
+    <dimen name="image_size">60dp</dimen>
+    <dimen name="badge_text_size">16sp</dimen>
     <dimen name="badge_drawable_padding">7dp</dimen>
     <dimen name="badge_padding_left">8dp</dimen>
     <dimen name="dialog_fragment_padding">8dp</dimen>
