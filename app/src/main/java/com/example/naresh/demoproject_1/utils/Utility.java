@@ -14,6 +14,8 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
+import com.example.naresh.demoproject_1.HtmlImageGetter;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -23,6 +25,22 @@ import java.util.Calendar;
  */
 
 public class Utility {
+
+        public static Spanned convertTextToHTML(String body) {
+        return convertTextToHTML(body, null);
+    }
+
+    public static Spanned convertTextToHTML(String body, HtmlImageGetter imageGetter) {
+        Spanned spanned;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            spanned = Html.fromHtml(body, Html.FROM_HTML_MODE_LEGACY, imageGetter, null);
+        } else {
+            spanned = Html.fromHtml(body, imageGetter, null);
+        }
+        return spanned;
+    }
+
+
 
     public static boolean networkIsAvailable(Context context) {
         ConnectivityManager manager = (ConnectivityManager)
@@ -46,16 +64,6 @@ public class Utility {
             repString = (Math.round((rep / 1000f) * 10) / 10f) + "k";
         }
         return repString;
-    }
-
-    public static Spanned convertTextToHTML(String body) {
-        Spanned spanned;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            spanned = Html.fromHtml(body, Html.FROM_HTML_MODE_LEGACY);
-        } else {
-            spanned = Html.fromHtml(body, null, null);
-        }
-        return spanned;
     }
 
     public static String arrayToStringConvert(ArrayList<String> listTag) {

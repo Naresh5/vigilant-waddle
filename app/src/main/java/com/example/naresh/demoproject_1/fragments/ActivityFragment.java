@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.method.LinkMovementMethod;
 import android.util.Log;
@@ -15,6 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.example.naresh.demoproject_1.HtmlImageGetter;
 import com.example.naresh.demoproject_1.R;
 import com.example.naresh.demoproject_1.SessionManager;
 import com.example.naresh.demoproject_1.models.User;
@@ -123,21 +125,13 @@ public class ActivityFragment extends Fragment {
             mLinerLayout.setVisibility(View.VISIBLE);
             if (userList != null && userList.size() > 0) {
                 User user = userList.get(0);
+
                 setUserDetail(user);
+
             } else {
                 Log.e(TAG, "Couldn't Fetch Data ... Network Error");
             }
         }
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
     }
 
     private void showProgressBar() {
@@ -151,6 +145,7 @@ public class ActivityFragment extends Fragment {
     }
 
     public void setUserDetail(User user) {
+
         String aboutMeException = getString(R.string.user_detail_exception_activity_fragment);
         String aboutMe = user.getAboutMe();
         String answers = String.valueOf(user.getAnswerCount());
@@ -159,12 +154,30 @@ public class ActivityFragment extends Fragment {
         String location = user.getLocation();
         String websiteURL = user.getWebsiteUrl();
 
-        if (TextUtils.isEmpty(aboutMe)) {
+        if ((aboutMe==null) || (aboutMe.isEmpty())) {
+            mTextAboutUser.setText(aboutMeException);
+        } else {
+            HtmlImageGetter imageGetter = new HtmlImageGetter(
+                    getActivity(),R.drawable.image_html_response_background) {
+                @Override
+                public void onTextUpdate() {
+                    CharSequence sequence = mTextAboutUser.getText();
+                    mTextAboutUser.setText(sequence);
+                }
+            };
+            Spanned spannedBody = Utility.convertTextToHTML(aboutMe,imageGetter);
+            mTextAboutUser.setText(spannedBody);
+        }
+
+
+
+
+       /* if (TextUtils.isEmpty(aboutMe)) {
             mTextAboutUser.setText(aboutMeException);
         } else {
             mTextAboutUser.setText(Utility.convertTextToHTML(aboutMe));
             mTextAboutUser.setMovementMethod(LinkMovementMethod.getInstance());
-        }
+        }*/
 
         mTextAnswerCount.setText(answers);
         mTextQuestionCount.setText(questions);

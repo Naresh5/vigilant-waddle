@@ -26,7 +26,7 @@
     <color name="colorTabBorderLine">#D0D4D7</color>
 
     <!-- FOR ACTIVITY FRAGMENT LAYOUT -->
-
+    <color name="colorHtmlImageGetter">#F6F6F6</color>
     <color name="colorUrlText">#0275CC</color>
     <color name="colorAboutUser">#0F0F0F</color>
     <color name="colorViewForLine">#D0D4D7</color>
