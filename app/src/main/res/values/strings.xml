@@ -82,10 +82,9 @@
 
 
     <string-array name="spinnerUserOrder">
-        <item>desc</item>
         <item>asc</item>
+        <item>desc</item>
     </string-array>
-
 
     <string-array name="spinnerUserSort">
         <item>reputation</item>
@@ -127,7 +126,7 @@
     <string name="error">Failed To Load Application Data\n Please Try Again…</string>
     <string name="btn_try_again_splash">Try Again…</string>
 
-    <string name="alert_dialog_text">Pakku...?</string>
+    <string name="alert_dialog_text">Pakku…?</string>
     <string name="alert_dialog_positive_btn">Yes </string>
     <string name="alert_dialog_negative_btn">Cancel</string>
 

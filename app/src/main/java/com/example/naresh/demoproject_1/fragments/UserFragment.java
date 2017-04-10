@@ -1,8 +1,6 @@
 package com.example.naresh.demoproject_1.fragments;
 
 import android.content.Intent;
-import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -21,7 +19,6 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.example.naresh.demoproject_1.NavigationDrawerActivity;
 import com.example.naresh.demoproject_1.R;
 import com.example.naresh.demoproject_1.SessionManager;
 import com.example.naresh.demoproject_1.UserDetailActivity;
@@ -29,44 +26,36 @@ import com.example.naresh.demoproject_1.adapters.UserAdapter;
 import com.example.naresh.demoproject_1.dialog.FilterDialogFragment;
 import com.example.naresh.demoproject_1.models.ListResponse;
 import com.example.naresh.demoproject_1.models.User;
-import com.example.naresh.demoproject_1.models.UserResponse;
 import com.example.naresh.demoproject_1.retrofit.ApiClient;
 import com.example.naresh.demoproject_1.retrofit.ApiInterface;
 import com.example.naresh.demoproject_1.utils.Constants;
-import com.example.naresh.demoproject_1.utils.JSONParser;
 import com.example.naresh.demoproject_1.utils.Utility;
-import com.google.gson.Gson;
-
-import java.net.MalformedURLException;
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-
 public class UserFragment extends Fragment implements FilterDialogFragment.OnInfoChangedListener {
     private String TAG = UserFragment.class.getSimpleName();
+
     private ProgressBar mProgressBar;
     private ListView mListView;
     private View footerView;
     private UserAdapter adapter;
-    private String site = SessionManager.getInstance(getActivity()).getApiSiteParameter();
-    public  String orderValue = "asc", sortValue = "reputation", fromDateValue, toDateValue;
-    private String filterUserOrder = Constants.ORDER_ASC;
-    private String filterUserSort = Constants.SORT_BY_REPUTATION;
-    private String filterUserFromDate = null;
-    private String filterUserToDate = null;
-    private String inname;
-    private int pageCount = 0;
+
+    private final long DELAY = 700;
+    private int pageCount = 1;
     private boolean isSearch = false;
     private boolean isLoading = false;
-    private boolean hasMoreData = true;
+    private boolean hasMoreUsers = true;
+    private String userName = null;
+    private String site = SessionManager.getInstance(getActivity()).getApiSiteParameter();
+    private String filterOrder = Constants.ORDER_DESC;
+    private String filterSort = Constants.SORT_BY_REPUTATION;
+    private String filterTodate = null;
+    private String filterFromdate = null;
 
-    Handler handler = new Handler();
-    private Runnable workRunnable;
-    private final long DELAY = 900;
-
+    private Handler handler;
 
     public static UserFragment newInstance() {
         UserFragment userFragment = new UserFragment();
@@ -98,38 +87,35 @@ public class UserFragment extends Fragment implements FilterDialogFragment.OnInf
                 startActivity(intentUserDetailActivity);
             }
         });
+
         mListView.setOnScrollListener(new AbsListView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(AbsListView view, int scrollState) {
             }
 
             @Override
-            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-
-                int lastInScreen = firstVisibleItem + visibleItemCount;
-                String last = String.valueOf(lastInScreen);
-                String first = String.valueOf(firstVisibleItem);
-                String visible = String.valueOf(visibleItemCount);
-                Log.e("FIRST VISIBLE ITEM   :", last);
-                Log.e("VISIBLE ITEM  Count  :", first);
-                Log.e("Total ITEM  Count  :", visible);
-                if ((lastInScreen == totalItemCount)
-                        && (totalItemCount - 1 != 0)
-                        && !isSearch) {
-                    if (!isLoading) {
-                        Log.e("ERR -:", "Scrolling List view");
-                        pageCount++;
-                        new LoadJsonData(Constants.ORDER_ASC, Constants.SORT_BY_REPUTATION, null, null, null).execute();
-                    }
+            public void onScroll(AbsListView view, int firstVisibleItem,
+                                 int visibleItemCount,
+                                 int totalItemCount) {
+                if (firstVisibleItem + visibleItemCount == totalItemCount
+                        && (totalItemCount - 1) != 0
+                        && !isLoading
+                        && !isSearch
+                        && hasMoreUsers) {
+                    pageCount++;
+                    getUserDetail();
+                    // new GetDataFromJson().execute();
                 }
             }
         });
+        handler = new Handler();
         adapter = new UserAdapter(getActivity());
         mListView.setAdapter(adapter);
+        getUserDetail();
 
         boolean isNetwork = Utility.networkIsAvailable(getActivity());
         if (!isNetwork) {
-            Toast.makeText(getActivity(), "Failed to Connect with Internet", Toast.LENGTH_SHORT).show();
+            Toast.makeText((getActivity()), "Failed to Connect with Internet", Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(getActivity(), "Network Available. . .!", Toast.LENGTH_SHORT).show();
         }
@@ -137,58 +123,43 @@ public class UserFragment extends Fragment implements FilterDialogFragment.OnInf
     }
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
-
+    public void onCreateOptionsMenu(final Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu_search, menu);
-
-        MenuItem item = menu.findItem(R.id.action_search);
-        SearchView searchView = new SearchView(((NavigationDrawerActivity) getActivity()).getSupportActionBar().getThemedContext());
-        MenuItemCompat.setShowAsAction(item, MenuItemCompat.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW | MenuItemCompat.SHOW_AS_ACTION_IF_ROOM);
-        MenuItemCompat.setActionView(item, searchView);
-
-        searchView.setOnCloseListener(new SearchView.OnCloseListener() {
-            @Override
-            public boolean onClose() {
-                pageCount = 1;
-                adapter.clearAdapter();
-                new LoadJsonData(Constants.ORDER_ASC, Constants.SORT_BY_REPUTATION, null, null, null).execute();
-                return false;
-            }
-        });
-
+        MenuItem searchItem = menu.findItem(R.id.action_search);
+        SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-
             @Override
             public boolean onQueryTextSubmit(String query) {
                 return false;
             }
+
             @Override
             public boolean onQueryTextChange(final String newText) {
-                //   isSearch = !newText.isEmpty();
-                //   adapter.getFilter().filter(newText);
+                handler.removeCallbacksAndMessages(null);
 
-                handler.removeCallbacksAndMessages(workRunnable);
-                workRunnable = new Runnable() {
+                handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         pageCount = 1;
                         adapter.clearAdapter();
-                        if (newText.isEmpty()) {
-                            new LoadJsonData(Constants.ORDER_ASC, Constants.SORT_BY_REPUTATION,
-                                    null, null, newText).execute();
+                        if (!newText.isEmpty()) {
+                            userName = newText;
                         } else {
-                            inname = newText;
-                            getJsonUserListResponse(inname);
+                            filterOrder = Constants.ORDER_DESC;
+                            filterSort = Constants.SORT_BY_REPUTATION;
+                            userName = null;
                         }
+                        getUserDetail();
                     }
-                };
-                handler.postDelayed(workRunnable, DELAY);
+                }, DELAY);
+
                 return false;
             }
         });
+        super.onCreateOptionsMenu(menu, inflater);
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -204,125 +175,41 @@ public class UserFragment extends Fragment implements FilterDialogFragment.OnInf
 
     @Override
     public void onInfoChanged(String order, String sort, String FromDate, String ToDate) {
-
-        this.orderValue = order;
-        this.sortValue = sort;
-        this.fromDateValue = FromDate;
-        this.toDateValue = ToDate;
-
+        //reset the page index
+        pageCount = 1;
         adapter.clearAdapter();
-        new LoadJsonData(order, sort, FromDate, ToDate, null).execute();
+
+        filterOrder = order;
+        filterSort = sort;
+        filterFromdate = FromDate;
+        filterTodate = ToDate;
+
+        //  new LoadJsonData(order, sort, FromDate, ToDate, null).execute();
+        getUserDetail();
     }
 
-    public class LoadJsonData extends AsyncTask<Object, Object, List<User>> {
-
-        String order, sort, fromDate, toDate, inname;
-
-        public LoadJsonData(String order, String sort, String fromDate, String toDate, String inname) {
-            Log.d(TAG, "LoadJsonData: ");
-            this.order = order;
-            this.sort = sort;
-            this.fromDate = fromDate;
-            this.toDate = toDate;
-            this.inname = inname;
-        }
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            isLoading = true;
-            showProgressBar();
-        }
-
-        @Override
-        protected List<User> doInBackground(Object... arg0) {
-
-            Log.e(TAG, "doInBackground: " + site);
-            JSONParser sh = new JSONParser();    //Request to url and getting response
-            String jsonStr = null;
-            try {
-                Uri.Builder uriBuilder = Uri.parse(Constants.BASE_URL).buildUpon()
-                        .appendPath("2.2")
-                        .appendPath("users")
-                        .appendQueryParameter("pagesize", Constants.PAGE_SIZE)
-                        .appendQueryParameter("page", String.valueOf(pageCount))
-                        .appendQueryParameter("site", site)
-                        .appendQueryParameter("sort", sort)
-                        .appendQueryParameter("order", order);
-                if (fromDate != null) {
-                    uriBuilder.appendQueryParameter("fromdate", fromDate);
-                }
-                if (toDate != null) {
-                    uriBuilder.appendQueryParameter("todate", toDate);
-                }
-                if (inname != null) {
-                    uriBuilder.appendQueryParameter("inname", inname);
-                }
-                Uri uri = uriBuilder.build();
-                Log.e(TAG, "doInBackground: " + uri.toString());
-                Log.e(TAG, "Call : doInBackground: " + inname);
-                jsonStr = sh.makeServiceCall(uri.toString());
-                Log.e(TAG, " JsonRes for DFragment" + jsonStr);
-                Log.e(TAG, "::::--Main activity FULL  URL :::-- " + uri);
-
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-                Log.e("ERROR OCCURRED", "FAILED TO LOAD Json");
-            }
-
-            Log.e(TAG, "Response from url: " + jsonStr);
-            if (jsonStr != null) {
-                Gson gson = new Gson();
-                UserResponse userResponse = gson.fromJson(jsonStr, UserResponse.class);
-
-                hasMoreData = userResponse.isHasMore();
-                Log.e(TAG, "Call : UserFragment HAS MORE " + hasMoreData);
-                return userResponse.getItems();
-            } else {
-                return null;
-            }
-        }
-
-        @Override
-        protected void onPostExecute(List<User> userList) {
-            super.onPostExecute(userList);
-            isLoading = false;
-            hideProgressBar();
-            if (userList != null) {
-                adapter.addItems(userList);
-            } else {
-                if (getActivity() != null)
-                    Toast.makeText(getActivity(), "Couldn't Load Json Data", Toast.LENGTH_SHORT).show();
-            }
-        }
-    }
-
-    private void getJsonUserListResponse(String inname) {
-
+    private void getUserDetail() {
         isLoading = true;
         showProgressBar();
-        ApiInterface apiService =
+        final ApiInterface apiService =
                 ApiClient.getClient().create(ApiInterface.class);
-
-        Call<ListResponse<User>> call = apiService.getUserList(
-                pageCount,
-                filterUserOrder,
-                filterUserSort,
-                filterUserFromDate,
-                filterUserToDate,
-                inname,
+        Call<ListResponse<User>> call = apiService.getUserList(pageCount,
+                filterOrder,
+                filterSort,
+                filterFromdate,
+                filterTodate,
+                userName,
                 site);
-        Log.e(TAG, "Call : getJsonUserListResponse: Search" + call);
 
         call.enqueue(new Callback<ListResponse<User>>() {
             @Override
             public void onResponse(Call<ListResponse<User>> call,
                                    Response<ListResponse<User>> response) {
-                isLoading = false;
                 hideProgressBar();
+                isLoading = false;
                 if (response.body() != null) {
+                    hasMoreUsers = response.body().isHasMore();
                     adapter.addItems(response.body().getItems());
-                    Log.e(TAG, "Call : onResponse: " + response);
                 }
             }
 
@@ -330,7 +217,6 @@ public class UserFragment extends Fragment implements FilterDialogFragment.OnInf
             public void onFailure(Call<ListResponse<User>> call, Throwable t) {
                 // Log error here since request failed
                 Log.e(TAG, t.toString());
-                Log.e(TAG, "Call : onFailure: " + call);
             }
         });
     }
@@ -342,6 +228,7 @@ public class UserFragment extends Fragment implements FilterDialogFragment.OnInf
             footerView.setVisibility(View.GONE);
         }
     }
+
     private void showProgressBar() {
         if (pageCount == 1) {
             mProgressBar.setVisibility(View.VISIBLE);
@@ -356,10 +243,11 @@ public class UserFragment extends Fragment implements FilterDialogFragment.OnInf
         String[] array = getResources().getStringArray(R.array.spinnerUserSort);
         FilterDialogFragment filterDialog = FilterDialogFragment.newInstance(
                 array,
-                orderValue, sortValue,
-                fromDateValue, toDateValue);
+                filterOrder, filterSort,
+                filterTodate, filterFromdate);
         filterDialog.setListener(this);
         filterDialog.show(getActivity().getSupportFragmentManager(),
                 getResources().getString(R.string.dialog_tag));
+
     }
 }

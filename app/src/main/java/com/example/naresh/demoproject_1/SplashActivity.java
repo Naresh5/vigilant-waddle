@@ -1,5 +1,6 @@
 package com.example.naresh.demoproject_1;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -15,6 +16,7 @@ import com.example.naresh.demoproject_1.models.SiteItem;
 import com.example.naresh.demoproject_1.retrofit.ApiClient;
 import com.example.naresh.demoproject_1.retrofit.ApiInterface;
 import com.example.naresh.demoproject_1.utils.Constants;
+import com.example.naresh.demoproject_1.utils.Utility;
 
 import org.afinal.simplecache.ACache;
 
@@ -27,13 +29,14 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class SplashActivity extends AppCompatActivity {
-
-    private static final String TAG = SplashActivity.class.getSimpleName();
     public static final String KEY_CACHE = "caseKey";
+    private static final String TAG = SplashActivity.class.getSimpleName();
+    private Context context;
     private ProgressBar mProgressbar;
     private TextView textError;
     private Button buttonTryAgain;
     private List<SiteItem> listSiteDetail = new ArrayList<>();
+
     private int pageNo = 1;
 
     @Override
@@ -55,9 +58,11 @@ public class SplashActivity extends AppCompatActivity {
                 getAppList();
             }
         });
+
     }
 
     public void getAppList() {
+
         ApiInterface apiService =
                 ApiClient.getClient().create(ApiInterface.class);
         Call<ListResponse<SiteItem>> call = apiService.getSiteList(pageNo,
