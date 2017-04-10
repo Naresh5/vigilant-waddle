@@ -52,8 +52,8 @@ public class UserFragment extends Fragment implements FilterDialogFragment.OnInf
     private String site = SessionManager.getInstance(getActivity()).getApiSiteParameter();
     private String filterOrder = Constants.ORDER_DESC;
     private String filterSort = Constants.SORT_BY_REPUTATION;
-    private String filterTodate = null;
-    private String filterFromdate = null;
+    private String filterToDate = null;
+    private String filterFromDate = null;
 
     private Handler handler;
 
@@ -181,8 +181,8 @@ public class UserFragment extends Fragment implements FilterDialogFragment.OnInf
 
         filterOrder = order;
         filterSort = sort;
-        filterFromdate = FromDate;
-        filterTodate = ToDate;
+        filterFromDate = FromDate;
+        filterToDate = ToDate;
 
         //  new LoadJsonData(order, sort, FromDate, ToDate, null).execute();
         getUserDetail();
@@ -196,8 +196,8 @@ public class UserFragment extends Fragment implements FilterDialogFragment.OnInf
         Call<ListResponse<User>> call = apiService.getUserList(pageCount,
                 filterOrder,
                 filterSort,
-                filterFromdate,
-                filterTodate,
+                filterFromDate,
+                filterToDate,
                 userName,
                 site);
 
@@ -244,7 +244,7 @@ public class UserFragment extends Fragment implements FilterDialogFragment.OnInf
         FilterDialogFragment filterDialog = FilterDialogFragment.newInstance(
                 array,
                 filterOrder, filterSort,
-                filterTodate, filterFromdate);
+                filterToDate, filterFromDate);
         filterDialog.setListener(this);
         filterDialog.show(getActivity().getSupportFragmentManager(),
                 getResources().getString(R.string.dialog_tag));
