@@ -79,7 +79,8 @@ public class UserDetailActivity extends AppCompatActivity {
 
         BadgeCounts badgeCounts = user.getBadgeCounts();
         textUserName.setText(Utility.convertTextToHTML(user.getDisplayName()));
-        textUserReputation.setText(user.getReputation());
+        textUserReputation.setText(Utility.getReputation(user.getReputation()));
+             //   (user.getReputation());
         textBronzeBadge.setText(String.valueOf(badgeCounts.getBronze()));
         textSilverBadge.setText(String.valueOf(badgeCounts.getSilver()));
         textGoldBadge.setText(String.valueOf(badgeCounts.getGold()));

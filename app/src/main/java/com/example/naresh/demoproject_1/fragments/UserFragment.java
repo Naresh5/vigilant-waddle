@@ -248,6 +248,5 @@ public class UserFragment extends Fragment implements FilterDialogFragment.OnInf
         filterDialog.setListener(this);
         filterDialog.show(getActivity().getSupportFragmentManager(),
                 getResources().getString(R.string.dialog_tag));
-
     }
 }

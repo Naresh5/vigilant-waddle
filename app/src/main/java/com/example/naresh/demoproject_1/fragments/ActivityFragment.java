@@ -169,9 +169,6 @@ public class ActivityFragment extends Fragment {
             mTextAboutUser.setText(spannedBody);
         }
 
-
-
-
        /* if (TextUtils.isEmpty(aboutMe)) {
             mTextAboutUser.setText(aboutMeException);
         } else {

@@ -95,7 +95,8 @@ public class UserAdapter extends BaseAdapter implements Filterable {
 
         Picasso.with(context).load(currentItem.getProfileImage()).into(viewHolder.userImage);
         viewHolder.userName.setText(Utility.convertTextToHTML(currentItem.getDisplayName()));
-        viewHolder.userReputation.setText(currentItem.getReputation());
+        viewHolder.userReputation.setText(Utility.getReputation(currentItem.getReputation()));
+      //  (currentItem.getReputation());
         viewHolder.userBadgeGold.setText(String.valueOf(badgeCount.getGold()));
         viewHolder.userBadgeSilver.setText(String.valueOf((badgeCount.getSilver())));
         viewHolder.userBadgeBronze.setText(String.valueOf((badgeCount.getBronze())));

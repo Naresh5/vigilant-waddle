@@ -13,9 +13,12 @@ public class User implements Parcelable {
 
     @SerializedName("profile_image")
     private String profileImage;
+
     @SerializedName("display_name")
     private String displayName;
+
     private long reputation;
+
     @SerializedName("user_id")
     private int userId;
     @SerializedName("answer_count")
@@ -51,7 +54,14 @@ public class User implements Parcelable {
         return displayName;
     }
 
-    public String getReputation() {
+    public long getReputation() {
+        return reputation;
+    }
+
+    public void setReputation(long reputation) {
+        this.reputation = reputation;
+    }
+    /*public String getReputation() {
         String repString;
         if (reputation < 1000) {
             repString = String.valueOf(reputation);
@@ -66,7 +76,7 @@ public class User implements Parcelable {
             repString = (Math.round((reputation / 1000) * 10) / 10) + "k";
         }
         return repString;
-    }
+    }*/
 
     public BadgeCounts getBadgeCounts() {
         return badgeCounts;
@@ -80,9 +90,6 @@ public class User implements Parcelable {
         this.displayName = displayName;
     }
 
-    public void setReputation(long reputation) {
-        this.reputation = reputation;
-    }
 
     public void setBadgeCounts(BadgeCounts badgeCounts) {
         this.badgeCounts = badgeCounts;
